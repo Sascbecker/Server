@@ -32,10 +32,11 @@ public class MessageDaoImpl implements MessageDao{
 
 	
 	public void saveMessage() {
-		String insert = "";
+		String message="";
+		String insert = "Insert into ... () Values(:Message) ";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue(paramName, value);
+		paramSource.addValue("Message", message);
 		jdbc.update(insert, paramSource);
 		
 	}
