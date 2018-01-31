@@ -18,7 +18,7 @@ public class ServerConnector
 		final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(
 				URI.create( baseUrl ), new ResourceConfig( ServerService.class ));
 		Runtime.getRuntime().addShutdownHook( new Thread( new Runnable() {
-			@Override
+			
 			public void run() {
 				server.shutdownNow();
 			}
