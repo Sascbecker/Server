@@ -41,7 +41,6 @@ public class MessageDaoImpl implements MessageDao{
 		
 	}
 	
-	@Override
 	public void readMessage() {
 		
 	}
