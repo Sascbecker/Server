@@ -19,6 +19,9 @@ public class Member {
 		this.password = password;
 	}
 	
+	public Member()
+	{}
+	
 	public boolean getBenutzerAnlegen()
 	{
 		return newMember;
