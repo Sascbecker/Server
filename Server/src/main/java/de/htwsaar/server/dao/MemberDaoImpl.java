@@ -41,6 +41,17 @@ public class MemberDaoImpl {
 		return null;
 	}
 	
+	public void memberAnlegen(Member member)
+	{
+		String anlegen = "Insert into ... () Values(:Password, :Timestamp) ";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Password", member.getPassword());
+		
+		jdbc.update(anlegen, paramSource);
+		
+	}
+	
 
 	/**
 	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das

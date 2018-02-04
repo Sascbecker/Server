@@ -12,7 +12,7 @@ public class MemberServiceImpl {
 	
 	public void memberAnlegen(Member memberObj)
 	{
-		
+		memberDao.memberAnlegen(memberObj);
 	}
 	
 	public void memberEdit(Member memberObj)
@@ -22,18 +22,11 @@ public class MemberServiceImpl {
 	
 	public boolean memberAuthenfication (Member memberObj)
 	{	
-		int dbId;
-		String dbPassword;
+		 Member member = new Member(); 
+		 member = memberDao.getPassword(memberObj.getId());
 		
-		int memberId = memberObj.getId();
-		String memberPassword = memberObj.getPassword();
-		
-		 Member member = new Member();
 		 
-		 member = memberDao.getPassword(memberId);
-		 dbPassword = member.getPassword();
-		 
-		 if(memberPassword == dbPassword)
+		 if(memberObj.getPassword() == member.getPassword())
 		 {
 			 return true;
 		 }
