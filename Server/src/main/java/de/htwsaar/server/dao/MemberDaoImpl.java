@@ -25,13 +25,24 @@ public class MemberDaoImpl {
 		this.jdbc = new NamedParameterJdbcTemplate(SQLiteJDBC.getConnection());
 	}
 	
+	public void updatePassword(Member member)
+	{
+		String update = "Update User set Passwort = :Passwort where Id = :Id ";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Passwort", member.getPassword());
+		paramSource.addValue("Id", member.getId());
+		
+		jdbc.update(update, paramSource);
+	}
+	
 	
 	public Member getPassword(int memberId) {
 
-		String query = "SELECT Password FROM  WHERE Id = :MemberId";
+		String query = "SELECT Passwort FROM  WHERE RegisterNr = :Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("MemberId", memberId);
+		paramSource.addValue("Id", memberId);
 
 		try {
 			return (Member) jdbc.queryForObject(query, paramSource, new MemberRowMapper());
@@ -41,9 +52,10 @@ public class MemberDaoImpl {
 		return null;
 	}
 	
+	
 	public void memberAnlegen(Member member)
 	{
-		String anlegen = "Insert into ... () Values(:Password, :Timestamp) ";
+		String anlegen = "Insert into User (Passwort, Timestamp) Values(:Password, :Timestamp) ";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Password", member.getPassword());
@@ -61,7 +73,7 @@ public class MemberDaoImpl {
 	 */
 	private class MemberRowMapper implements RowMapper<Member> {
 
-		@Override
+		
 		public Member mapRow(ResultSet results, int rowNum) throws SQLException {
 
 			Member member = new Member();
