@@ -5,18 +5,11 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import de.htwsaar.service.serverConnector.Singleton;
-import de.htwsaar.service.serverConnector.ClientConnector;
+import de.htwsaar.service.serverConnector.*;
 
-@Path( "/{parameter: sendMessage|login|getMessage|kontakte}" )
+@Path( "/{parameter: login|getMessage|kontakte}" )
 public class ServerService
 {
-	@Path("/sendMessage")//evtl ohne slash? weil es oben vor der klammer steht
-   	@GET
-   	public void requestMessage( @QueryParam("absender") String absender ){
-   		ClientConnector.getMessage(absender);
-   	}
-	
 	@Path("/login")
 	@GET
    	@Produces( MediaType.APPLICATION_JSON )
@@ -35,26 +28,18 @@ public class ServerService
 	@Path("/getMessage")
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public String getMessage() {
-		JsonObjectBuilder builder = Json.createObjectBuilder();
-   		
-   		builder.add("Message", Singleton.getMessage());// VON WEM .... NAME REQUIRED !!!!!
+	public boolean getMessage( @QueryParam("absender") String absender, @QueryParam( "empfaenger" ) String  empfaenger,
+							@QueryParam( "absenderID" ) int absenderID, @QueryParam( "empfaengerID" ) int empfaengerID,
+							@QueryParam( "gruppenID" ) int gruppenID, @QueryParam( "timestamp" ) int timestamp,
+							@QueryParam( "message" ) String message ) {
+		//JsonObjectBuilder builder = Json.createObjectBuilder();
+   		//builder.add("Message", Singleton.getMessage());// VON WEM .... NAME REQUIRED !!!!!
 		
-		return builder.build().toString();
+		//EVENT HANDLER FUER MESSAGE EMPFANGEN
+		
+		return true;//Nachricht angekommen
 	}
 	
-	/*
-	@Path("/getMessage")
-	@GET
-	@Produces( MediaType.APPLICATION_JSON )
-	public String getMessage( @QueryParam("absender"), String absender ) {
-		JsonObjectBuilder builder = Json.createObjectBuilder();
-   		
-   		builder.add("Message", Singleton.getMessage());// VON WEM .... NAME REQUIRED !!!!!
-		
-		return builder.build().toString();
-	}
-	*/
 	@Path("/kontakte")
    	@GET
    	public void kontaktVerwaltung( @QueryParam("absender") String absender, @QueryParam("empfaenger") String empfaenger, @QueryParam("aktion") int aktion ){
