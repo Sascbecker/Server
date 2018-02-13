@@ -33,17 +33,13 @@ public class MessageDaoImpl implements MessageDao{
 
 	
 	public void saveGroupMessage(Message messageObj) {
-		int sender = messageObj.getSender();
-		int groupId = messageObj.getGroupId();
-		String message = messageObj.getMessage();
-		int timestamp = messageObj.getTimestamp();
+		
 		String insert = "Insert into ... () Values(:Sender, :GroupId, :Message, :Timestamp) ";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Sender", sender);
-		paramSource.addValue("GroupId", groupId);
-		paramSource.addValue("Message", message);
-		paramSource.addValue("Timestamp", timestamp);
+		//paramSource.addValue("GroupId", groupId);
+		//paramSource.addValue("Message", message);
+		//paramSource.addValue("Timestamp", timestamp);
 
 		jdbc.update(insert, paramSource);
 		
@@ -57,4 +53,27 @@ public class MessageDaoImpl implements MessageDao{
 		
 	}
 
+	/**
+	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
+	 * Ergebnis einer Datenbankanfrage war
+	 * 
+	 * @return Member - object
+	 */
+	private class MessageRowMapper implements RowMapper<Message> {
+
+		
+		public Message mapRow(ResultSet results, int rowNum) throws SQLException {
+
+			Message message = new Message();
+
+			try {
+				message.setMessage(results.getString("Message"));
+				
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return message;
+		}
+	}
 }

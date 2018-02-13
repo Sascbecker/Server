@@ -9,45 +9,23 @@ import de.htwsaar.server.dataclass.*;
  */
 public class start {
 
-	MessageService mesService;
+	MessageService messageService;
 	UserService userService;
 
-	public void messageStart()
+	public void messageStart(String absenderId, int groupId, String empfaengerId, String message, int timestamp)
 	{
+		Message nachricht = new Message(absenderId, groupId, empfaengerId, message, timestamp);
+		messageService.start(nachricht);
 		
 	}
 	
 	public void userStart(int aktion, String absender, String empfaenger, String passwort)
 	{
-		boolean returnValue = true;
 		User user = new User(aktion, absender, empfaenger, passwort);
 		
-		switch(user.getAktion()) {
+		userService.start(user);
 		
-		//User anlegen
-		case 1: userService.userAnlegen(user);
-			break;
-		//User login
-		case 2: returnValue = userService.userAuthenfizierung(user);
-			break;
-		//Kontakt hinzufügen
-		case 3: userService.kontaktHinzufuege(user);
-			break;
-		//Kontakt löschen
-		case 4: userService.kontaktLoeschen(user);
-			break;
-		//Kontakt blockieren
-		case 5: userService.kontaktBlockieren(user);
-			break;
-		default :
-			break;
-			
-		}
-		
-		if(returnValue == false)
-		{
-			//Message an Client keine Berechtigung für login
-		}
+		//message an Client mit returnCode
 	}
 	
 }

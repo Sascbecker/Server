@@ -7,35 +7,66 @@ public class UserServiceImpl {
 	
 	UserDao userDao;
 	
-	public void userAnlegen(User user)
+	public void start(User user)
 	{
-		userDao.userAnlegen(user);
+		switch(user.getAktion()) {
+		
+		//User anlegen
+		case 1: userAnlegen(user);
+			break;
+		//User login
+		case 2: userAuthenfizierung(user);
+			break;
+		//Kontakt hinzufügen
+		case 3: kontaktHinzufuege(user);
+			break;
+		//Kontakt löschen
+		case 4: kontaktLoeschen(user);
+			break;
+		//Kontakt blockieren
+		case 5: kontaktBlockieren(user);
+			break;
+		default :
+			break;
+			
+		}
 	}
 	
-	public boolean UserAuthenfizierung(User user)
+	private void userAnlegen(User user)
+	{
+		try {
+			userDao.userAnlegen(user);
+		}
+		catch(Exception ex)
+		{
+			user.setReturnCode("User konnte nicht angelegt werden");
+		}
+	}
+	
+	private void userAuthenfizierung(User user)
 	{
 		User vergleichsUser = new User();
 		vergleichsUser = userDao.getPasswort(user.getAbsenderId());
 		
 		if(vergleichsUser.getPasswort() == user.getPasswort())
 		{
-			return true;
+			user.setReturnCode("Authentifizierung erfolgreich");
 		}
 		else
-			return false;
+			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
 	}
 	
-	public void kontaktHinzufuege(User uesr)
+	private void kontaktHinzufuege(User uesr)
 	{
 		
 	}
 	
-	public void kontaktLoeschen(User user)
+	private void kontaktLoeschen(User user)
 	{
 		
 	}
 	
-	public void kontaktBlockieren(User user)
+	private void kontaktBlockieren(User user)
 	{
 		
 	}

@@ -7,6 +7,8 @@ package de.htwsaar.server.dataclass;
  * 3 = Kontakt hinzufügen
  * 4 = Kontakt löschen
  * 5 = Kontakt blockieren
+ * 
+ * 
  */
 public class User {
 	
@@ -14,6 +16,7 @@ public class User {
 	private String absenderId;
 	private String empfaengerId;
 	private String passwort;
+	private String returnCode;
 	
 	public User() {}
 	
@@ -36,10 +39,12 @@ public class User {
 	public String getAbsenderId() { return absenderId;}
 	public String getEmpfaengerId() { return empfaengerId;}
 	public String getPasswort() { return passwort;}
+	public String getReturnCode() { return returnCode;}
 	
 	public void setAktion(int aktion) { this.aktion = aktion;}
 	public void setAbsenderId(String absenderId) {this.absenderId = absenderId;}
 	public void setEmpfaengerId(String empfaengerId) {this.empfaengerId = empfaengerId;}
 	public void setPasswort(String passwort) {this.passwort = passwort;}
+	public void setReturnCode(String returnCode) {this.returnCode = returnCode;}
 	
 }
