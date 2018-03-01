@@ -19,7 +19,7 @@ import org.sqlite.SQLiteConfig.Pragma;
 public class SQLiteJDBC {
 	// System.getProperty("user.home") + "/" + "testdb.db";
 	private static final String DRIVER = "org.sqlite.JDBC";
-	private static final String URL = "";
+	private static final String URL = "jdbc:sqlite:";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	

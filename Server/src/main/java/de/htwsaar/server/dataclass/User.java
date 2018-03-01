@@ -1,23 +1,24 @@
 package de.htwsaar.server.dataclass;
 
-/*
+/**
+ * Klasse für alle aktionen mit Benutzer.
+ * Speichern der IP-Adresse eines Benutzers in dieser Klasse
+ * 
+ * 
  * Dekleration für Aktion
+ * 0 = nix
  * 1 = BenutzerAnlegen
  * 2 = LogIn
- * 3 = Kontakt hinzufügen
- * 4 = Kontakt löschen
- * 5 = Kontakt blockieren
- * 
- * 
  */
 public class User {
 	
 	private int aktion;
 	private String absenderId;
-	private String empfaengerId;
 	private String passwort;
+	private String ipAdresse;
 	private String returnCode;
 	
+
 	public User() {}
 	
 	public User(int aktion, String absenderId, String passwort)
@@ -31,20 +32,20 @@ public class User {
 	{
 		this.aktion = aktion;
 		this.absenderId = absenderId;
-		this.empfaengerId = empfaengerId;
 		this.passwort = passwort;
 	}
 	
+	
 	public int getAktion() { return aktion;}
 	public String getAbsenderId() { return absenderId;}
-	public String getEmpfaengerId() { return empfaengerId;}
 	public String getPasswort() { return passwort;}
+	public String getIpAdresse() { return ipAdresse;}
 	public String getReturnCode() { return returnCode;}
 	
 	public void setAktion(int aktion) { this.aktion = aktion;}
 	public void setAbsenderId(String absenderId) {this.absenderId = absenderId;}
-	public void setEmpfaengerId(String empfaengerId) {this.empfaengerId = empfaengerId;}
 	public void setPasswort(String passwort) {this.passwort = passwort;}
+	public void setIpAdresse(String ipAdresse) { this.ipAdresse = ipAdresse;}
 	public void setReturnCode(String returnCode) {this.returnCode = returnCode;}
 	
 }

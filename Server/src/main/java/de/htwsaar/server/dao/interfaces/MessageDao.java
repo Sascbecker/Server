@@ -4,8 +4,10 @@ import java.util.List;
 import de.htwsaar.server.dataclass.*;
 
 public interface MessageDao {
-	public void saveGroupMessage(Message messageObj);
-	public void SaveSingleMessage(Message messageObj);
-	public void readMessage();
+	public void SaveMessage(Message message, User empfaenger);
+	public void kontaktHinzufügen(Message message);
+	public void kontaktLöschen(Message message);
+	public void kontaktBlockieren(Message message);
+	public Message readMessage();
 
 }

@@ -17,15 +17,6 @@ public class UserServiceImpl {
 		//User login
 		case 2: userAuthenfizierung(user);
 			break;
-		//Kontakt hinzufügen
-		case 3: kontaktHinzufuege(user);
-			break;
-		//Kontakt löschen
-		case 4: kontaktLoeschen(user);
-			break;
-		//Kontakt blockieren
-		case 5: kontaktBlockieren(user);
-			break;
 		default :
 			break;
 			
@@ -56,20 +47,6 @@ public class UserServiceImpl {
 			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
 	}
 	
-	private void kontaktHinzufuege(User uesr)
-	{
-		
-	}
-	
-	private void kontaktLoeschen(User user)
-	{
-		
-	}
-	
-	private void kontaktBlockieren(User user)
-	{
-		
-	}
-	
+
 	
 }

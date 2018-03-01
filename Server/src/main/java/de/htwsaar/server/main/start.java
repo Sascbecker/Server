@@ -19,9 +19,9 @@ public class start {
 		
 	}
 	
-	public void userStart(int aktion, String absender, String empfaenger, String passwort)
+	public void userStart(int aktion, String absender,  String passwort)
 	{
-		User user = new User(aktion, absender, empfaenger, passwort);
+		User user = new User(aktion, absender, passwort);
 		
 		userService.start(user);
 		

@@ -32,25 +32,52 @@ public class MessageDaoImpl implements MessageDao{
 	}
 
 	
-	public void saveGroupMessage(Message messageObj) {
-		
-		String insert = "Insert into ... () Values(:Sender, :GroupId, :Message, :Timestamp) ";
-		
-		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		//paramSource.addValue("GroupId", groupId);
-		//paramSource.addValue("Message", message);
-		//paramSource.addValue("Timestamp", timestamp);
-
-		jdbc.update(insert, paramSource);
-		
-	}
-	public void SaveSingleMessage(Message messageObj)
+	/**
+	 * Speichert eine Nachricht auf Server
+	 * bekommt Message objekt für Absender, Nachricht, Timestamp,
+	 * bekommt User objekt für Empfänger
+	 * Speichert die Nachricht mit dem Flag, dass die Nachricht noch nicht zugestellt wurde
+	 */
+	public void SaveMessage(Message message, User empfaenger)
 	{
 		
 	}
 	
-	public void readMessage() {
+	
+	/**
+	 * Eintrag auf Datenbank, dass Benutzer zur Kontaktliste hinzugefügt werden soll
+	 */
+	public void kontaktHinzufügen(Message message)
+	{
 		
+	}
+	
+	/**
+	 * Eintrag auf Datenbank, dass Benutzer aus Kontaktliste gelöscht werden soll
+	 */
+	public void kontaktLöschen(Message message)
+	{
+		
+	}
+	
+	/**
+	 * Eintrag auf Datenbank, dass Benutzer blockiert werden soll
+	 */
+	public void kontaktBlockieren(Message message)
+	{
+		
+	}
+	
+
+	
+	/**
+	 * Reads a message from DB
+	 * @return MessageObject
+	 */
+	public Message readMessage() {
+		Message message = new Message();
+		
+		return message;
 	}
 
 	/**

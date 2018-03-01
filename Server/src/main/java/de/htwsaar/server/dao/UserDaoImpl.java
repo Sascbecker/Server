@@ -2,6 +2,7 @@ package de.htwsaar.server.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import de.htwsaar.server.dataclass.User;
+import de.htwsaar.server.dataclass.*;
 
 public class UserDaoImpl {
 
@@ -23,6 +24,28 @@ public class UserDaoImpl {
 
 	public UserDaoImpl() {
 		this.jdbc = new NamedParameterJdbcTemplate(SQLiteJDBC.getConnection());
+	}
+	
+	/**
+	 * Auslesen eines UserObjektes aus der Datenbank anhand der empfaengerId
+	 * @param empfaengerId
+	 * @return UserObjekt 
+	 */
+	public User getUser(String empfaengerId)
+	{
+		//SQL Statement
+		String query = "";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		//paramSource.addValue(paramName, value);
+		
+		try {
+			return (User) jdbc.queryForObject(query, paramSource, new UserRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 	
 	public User getPasswort(String memberId) {
@@ -38,6 +61,18 @@ public class UserDaoImpl {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	public List<User> selectGruppenUser(int gruppenId)
+	{
+		//Insert SQL Statement
+		String query="";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("","");
+		
+		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
 	
 

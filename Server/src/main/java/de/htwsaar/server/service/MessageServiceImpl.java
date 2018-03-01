@@ -1,9 +1,18 @@
 package de.htwsaar.server.service;
 
-import de.htwsaar.server.dataclass.Message;
+import de.htwsaar.server.dao.interfaces.UserDao;
+import de.htwsaar.server.dao.interfaces.MessageDao;
+
+import java.util.Iterator;
+import java.util.List;
+import de.htwsaar.server.dataclass.*;
 
 
 public class MessageServiceImpl {
+	
+	UserDao userDao;
+	MessageDao messageDao;
+	
 
 	private Thread messageServiceDaemon;
 	/**
@@ -32,14 +41,30 @@ public class MessageServiceImpl {
 	 */
 	public void handleMessage(Message message)
 	{
-		if(message.getGroupId() == 0)
+		switch (message.getAktion())
 		{
-			gruppenNachrichten(message);
+		case 0: 
+			if(message.getGroupId() == 0)
+			{
+				gruppenNachrichten(message);
+			}
+			else
+			{
+				einzelNachricht(message);
+			}
+			break;
+			//Kontakt hinzufügen
+		case 1:
+			break;
+			//Kontakt löschen
+		case 2:
+			break;
+			//Kontakt blockieren
+		case 3:
+			break;
 		}
-		else
-		{
-			einzelNachricht(message);
-		}
+		
+		
 	}
 	
 	
@@ -50,14 +75,30 @@ public class MessageServiceImpl {
 	 */
 	private void gruppenNachrichten(Message message)
 	{
+		
 		//empfangen:
-		//entnehme der message die gruppenid
-		//frage die teilnehmer der gruppe aus der datenbank ab
-		//für jeden teilnehmer:
-			//senden:
-			//sende die nachricht wie empfangen an jeden user der gruppe
-			//(verwende dazu die selbe funktion wie für einzelnachricht
+				//entnehme der message die gruppenid
+				//frage die teilnehmer der gruppe aus der datenbank ab
+				//für jeden teilnehmer:
+					//senden:
+					//sende die nachricht wie empfangen an jeden user der gruppe
+					//(verwende dazu die selbe funktion wie für einzelnachricht
+		
+		
+		List<User> gruppenUser;
+		User nextUser = new User();
+		gruppenUser = userDao.selectGruppenUser(message.getGroupId());
+		
+		Iterator<User> i = gruppenUser.iterator();
+		
+		//Durchlaufe die Liste solange es einen next eintrag gibt und sendet die Nachricht
+		while(i.hasNext() == true)
+		{
+			nextUser = i.next();
+			sendeNachricht(message, nextUser);
+		}
 	}
+	
 	
 	/**
 	 * handles the processing of a direct message
@@ -70,16 +111,24 @@ public class MessageServiceImpl {
 		
 		//senden:
 		//sende die nachricht wie empfangen an den empfänger
+		
+		//Liest empfaengerDaten aus Datenbank aus.
+		User empfaenger = userDao.getUser(message.getRecipient());
+		
+		
+		sendeNachricht(message, empfaenger);
 	}
 	
 	/**
 	 * sends a message as it was received to its recipient
 	 * @param message
-	 * @param recipient
+	 * @param User
 	 */
-	private void sendeNachricht(Message message, String recipient){
+	private void sendeNachricht(Message message, User user){
 		//schreibe nachricht-empfänger tupel in die datenbank
 		//setze den erfolgreich-gesendet wert der nachricht in der datenbank auf false
 		//der Thread in startMessageServiceDaemon hier in der Klasse erledigt dann den rest.
+		//Gibt true zurück wenn die Nachricht versendet wurde und beim Benutzer angekommen ist
+		
 	}
 }
