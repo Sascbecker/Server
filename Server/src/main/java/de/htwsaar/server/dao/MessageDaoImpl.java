@@ -40,7 +40,15 @@ public class MessageDaoImpl implements MessageDao{
 	 */
 	public void SaveMessage(Message message, User empfaenger)
 	{
-		
+		String sqlStatement = "INSERT INTO Nachrichten VALUES( :Time, :Content, :IdSender, :IdEmpf )";
+                
+                MapSqlParameterSource paramSource = new MapSqlParameterSource();
+                paramSource.addValue("Time", message.getTimestamp());
+                paramSource.addValue("Content", message.getMessage());
+                paramSource.addValue("IdSender", message.getSender());
+                paramSource.addValue("IdEmpf", empfaenger.getAbsenderId());
+                
+                jdbc.update(sqlStatement, paramSource);
 	}
 	
 	
