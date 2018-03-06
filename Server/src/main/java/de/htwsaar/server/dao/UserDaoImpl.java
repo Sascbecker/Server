@@ -27,6 +27,22 @@ public class UserDaoImpl {
 	}
 	
 	/**
+	 * Beispiel für SQl-Statement mit ParamSoruce.
+	 * @param user
+	 */
+	public void insertUser(User user)
+	{
+		String sqlStatement= "Insert into @Tabal Values(:BenutzerId, :Passwort, :IP-Adresse)";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("BenutzerId", user.getAbsenderId());
+		paramSource.addValue("Passwort", user.getPasswort());
+		paramSource.addValue("IP-Adresse", user.getIpAdresse());
+		
+		//Ausführen des SQL-Statements mit dem String sql-Statement und der paramSource
+		jdbc.update(sqlStatement, paramSource);
+	}
+	
+	/**
 	 * Auslesen eines UserObjektes aus der Datenbank anhand der empfaengerId
 	 * @param empfaengerId
 	 * @return UserObjekt 
