@@ -27,13 +27,29 @@ public class UserDaoImpl {
 	}
 	
 	/**
+	 * Beispiel für SQl-Statement mit ParamSoruce.
+	 * @param user
+	 */
+	public void insertUser(User user)
+	{
+		String sqlStatement= "Insert into @Tabal Values(:BenutzerId, :Passwort, :IP-Adresse)";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("BenutzerId", user.getAbsenderId());
+		paramSource.addValue("Passwort", user.getPasswort());
+		paramSource.addValue("IP-Adresse", user.getIpAdresse());
+		
+		//Ausführen des SQL-Statements mit dem String sql-Statement und der paramSource
+		jdbc.update(sqlStatement, paramSource);
+	}
+	
+	/**
 	 * Auslesen eines UserObjektes aus der Datenbank anhand der empfaengerId
 	 * @param empfaengerId
 	 * @return UserObjekt 
 	 */
 	public User getUser(String empfaengerId)
 	{
-		//SQL Statement
+            //SQL Statement
 		String query = "SELECT * FROM User WHERE User_id = :IdEmpf";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
@@ -46,11 +62,12 @@ public class UserDaoImpl {
 		}
 		return null;
 		
+		
 	}
 	
 	public User getPasswort(String memberId) {
-
-		String query = "SELECT Passwort FROM User WHERE RegisterNr = :Id";
+            
+            String query = "SELECT Passwort FROM User WHERE RegisterNr = :Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Id", memberId);
@@ -61,18 +78,20 @@ public class UserDaoImpl {
 			e.printStackTrace();
 		}
 		return null;
+
 	}
 	
 	
 	public List<User> selectGruppenUser(int gruppenId)
 	{
-		//Insert SQL Statement
+            //Insert SQL Statement
 		String query="SELECT User_id FROM Gruppen WHERE Gruppen_id = :IdGroup";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("IdGroup",gruppenId);
 		
 		return jdbc.query(query,paramSource, new UserRowMapper());
+		
 	}
 	
 
