@@ -9,6 +9,8 @@ public class GroupServiceImpl {
 	UserDao userDao;
 	MessageDao messageDao;
 	GroupDao groupDao;
+	private Thread groupServiceDaemon;
+
 	
 	public static final int CREATE=5;	//TODO: Das sind alles placeholder werte
 	public static final int KICK=6;	//maurice sollte wissen was die korrekten werte sind
@@ -47,6 +49,22 @@ public class GroupServiceImpl {
 		
 		
 	}
+	
+	private void startGroupServiceDaemon(){
+		groupServiceDaemon= new Thread(new Runnable() {
+			
+			public void run() {
+				//TODO: implement
+				//Datenbank abfragen nach nutzern die grade online sind
+				//für jeden von denen:
+				//sende ihnen die gesamten informationen aller gruppen zu in denen sie sind
+				//schlafe für ein paar sekunden, damit das alles nicht zu oft gesendet wird
+				
+			}
+		});
+		groupServiceDaemon.start();
+	}
+
 	
 	/**
 	 * creates a group in the database

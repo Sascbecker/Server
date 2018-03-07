@@ -114,8 +114,7 @@ public class MessageServiceImpl {
 		
 		//Liest empfaengerDaten aus Datenbank aus.
 		User empfaenger = userDao.getUser(message.getRecipient());
-		
-		
+				
 		sendeNachricht(message, empfaenger);
 	}
 	
