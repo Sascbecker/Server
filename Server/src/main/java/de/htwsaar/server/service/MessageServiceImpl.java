@@ -50,7 +50,7 @@ public class MessageServiceImpl {
 	{
 		switch (message.getAktion())
 		{
-		case 0: 
+		case Actions.Nachricht: 
 			if(message.getGroupId() == 0)
 			{
 				gruppenNachrichten(message);
@@ -61,13 +61,13 @@ public class MessageServiceImpl {
 			}
 			break;
 			//Kontakt hinzufügen
-		case 1:
+		case Actions.Kontakt_Hinzufuegen:
 			break;
 			//Kontakt löschen
-		case 2:
+		case Actions.Kontakt_Loeschen:
 			break;
 			//Kontakt blockieren
-		case 3:
+		case Actions.Kontakt_Blockieren:
 			break;
 		}
 		
