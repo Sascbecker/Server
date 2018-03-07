@@ -4,6 +4,7 @@ import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
+import de.htwsaar.server.dataclass.Actions;
 import de.htwsaar.server.dataclass.Message;
 
 public class GroupServiceImpl {
@@ -13,11 +14,6 @@ public class GroupServiceImpl {
 	private Thread groupServiceDaemon;
 
 	
-	public static final int CREATE=5;	//TODO: Das sind alles placeholder werte
-	public static final int KICK=6;	//maurice sollte wissen was die korrekten werte sind
-	public static final int DELETE=7;
-	public static final int RENAME=8;
-	public static final int ADD=9;
 	
 	public GroupServiceImpl() {
 		userDao = DaoObjectBuilder.getUserDao();
@@ -31,23 +27,24 @@ public class GroupServiceImpl {
 	public void handleGroupConfig(Message message)
 	{
 		switch (message.getAktion()) {
-		case CREATE:
+		case Actions.Create_Group:
+						
 			create(message);
 			break;
 			
-		case KICK:
+		case Actions.Kick_From_Group:
 			kick(message);
 			break;
 			
-		case DELETE:
+		case Actions.Delete_Group:
 			delete(message);
 			break;
 			
-		case RENAME:
+		case Actions.Rename_Group:
 			rename(message);
 			break;
 			
-		case ADD:
+		case Actions.Add_To_Group:
 			add(message);
 			break;
 

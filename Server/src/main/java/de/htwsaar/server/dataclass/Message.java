@@ -23,18 +23,7 @@ public class Message {
 	private String message;
 	private int timestamp;
 	
-	public enum actions{
-		Nachricht, 
-		Kontakt_Hinzufuegen,
-		Kontakt_Loeschen, 
-		Kontakt_Blockieren, 
-		Create_Group, 
-		Kick_From_Group, 
-		Delete_Group, 
-		Rename_Group
-
-	};
-
+	
 	public Message() {}
 	
 	public Message(String sender, int groupId, String recipient, String message, int timestamp)
