@@ -8,7 +8,7 @@ public interface MessageDao {
 	public void kontaktHinzufügen(Message message);
 	public void kontaktLöschen(Message message);
 	public void kontaktBlockieren(Message message);
-	public List<Message> alleUngeleseneNachrichten(int timestamp)
+	public List<Message> alleUngeleseneNachrichten(int timestamp);
 	public Message readMessage();
 
 }
