@@ -6,8 +6,9 @@ import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.Actions;
 import de.htwsaar.server.dataclass.Message;
+import de.htwsaar.server.service.interfaces.GroupService;
 
-public class GroupServiceImpl {
+public class GroupServiceImpl implements GroupService{
 	UserDao userDao;
 	MessageDao messageDao;
 	GroupDao groupDao;
