@@ -22,6 +22,18 @@ public class Message {
 	private String recipient;
 	private String message;
 	private int timestamp;
+	
+	public enum actions{
+		Nachricht, 
+		Kontakt_Hinzufuegen,
+		Kontakt_Loeschen, 
+		Kontakt_Blockieren, 
+		Create_Group, 
+		Kick_From_Group, 
+		Delete_Group, 
+		Rename_Group
+
+	};
 
 	public Message() {}
 	
