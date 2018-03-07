@@ -99,7 +99,7 @@ public class UserDaoImpl implements UserDao{
 	 * Update den Online status eines Benutzers, Vorallem die Ip-Adresse
 	 * @param user
 	 */
-	public void updateOnlineStatus(User user)
+	public void updateIpAdresse(User user)
 	{
 		
 	}
