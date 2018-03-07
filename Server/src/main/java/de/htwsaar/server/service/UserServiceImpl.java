@@ -1,11 +1,13 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dataclass.User;
-import de.htwsaar.server.dao.interfaces.UserDao;
+import de.htwsaar.server.dao.interfaces.*;
+
 
 public class UserServiceImpl {
 	
 	UserDao userDao;
+	GroupDao groupDao;
 	
 	public void start(User user)
 	{
@@ -42,10 +44,12 @@ public class UserServiceImpl {
 		if(vergleichsUser.getPasswort() == user.getPasswort())
 		{
 			user.setReturnCode("Authentifizierung erfolgreich");
+			
 		}
 		else
 			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
 	}
+	
 	
 
 	

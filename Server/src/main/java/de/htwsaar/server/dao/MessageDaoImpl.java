@@ -70,14 +70,27 @@ public class MessageDaoImpl implements MessageDao{
 	
 	/**
 	 * Eintrag auf Datenbank, dass Benutzer blockiert werden soll
+	 * Parameter dafür aus Objekt Message auslesen
 	 */
 	public void kontaktBlockieren(Message message)
 	{
 		
 	}
 	
-
-	
+	/**
+	 * Liste mit allen Nachrichten, die noch nicht gesendet wurden,  
+	 * @param timestamp
+	 * @return Liste mit allen Nachrichten ab einem gewissen Zeitpunk
+	 */
+	public List<Message> alleUngeleseneNachrichten(int timestamp)
+	{
+		String query="";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		//paramSource.addValue();
+		
+		return jdbc.query(query,paramSource, new MessageRowMapper());
+	}
 	/**
 	 * Reads a message from DB
 	 * @return MessageObject
@@ -102,7 +115,10 @@ public class MessageDaoImpl implements MessageDao{
 			Message message = new Message();
 
 			try {
+				message.setSender(results.getString("Sender"));
+				message.setRecipient(results.getString("Empfänger"));
 				message.setMessage(results.getString("Message"));
+				message.setTimestamp(results.getInt("Timestamp"));
 				
 			
 			} catch (Exception e) {

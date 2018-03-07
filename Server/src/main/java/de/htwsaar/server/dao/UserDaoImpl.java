@@ -94,6 +94,15 @@ public class UserDaoImpl {
 		
 	}
 	
+	/**
+	 * Update den Online status eines Benutzers, Vorallem die Ip-Adresse
+	 * @param user
+	 */
+	public void updateOnlineStatus(User user)
+	{
+		
+	}
+	
 
 	/**
 	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
