@@ -51,32 +51,6 @@ public class MessageDaoImpl implements MessageDao{
                 jdbc.update(sqlStatement, paramSource);
 	}
 	
-	
-	/**
-	 * Eintrag auf Datenbank, dass Benutzer zur Kontaktliste hinzugefügt werden soll
-	 */
-	public void kontaktHinzufügen(Message message)
-	{
-		
-	}
-	
-	/**
-	 * Eintrag auf Datenbank, dass Benutzer aus Kontaktliste gelöscht werden soll
-	 */
-	public void kontaktLöschen(Message message)
-	{
-		
-	}
-	
-	/**
-	 * Eintrag auf Datenbank, dass Benutzer blockiert werden soll
-	 * Parameter dafür aus Objekt Message auslesen
-	 */
-	public void kontaktBlockieren(Message message)
-	{
-		
-	}
-	
 	/**
 	 * Liste mit allen Nachrichten, die noch nicht gesendet wurden,  
 	 * @param timestamp
