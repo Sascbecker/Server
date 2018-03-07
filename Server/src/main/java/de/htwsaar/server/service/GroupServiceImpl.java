@@ -1,5 +1,6 @@
 package de.htwsaar.server.service;
 
+import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
@@ -16,6 +17,11 @@ public class GroupServiceImpl {
 	public static final int RENAME=8;
 	public static final int ADD=9;
 	
+	public GroupServiceImpl() {
+		userDao = DaoObjectBuilder.getUserDao();
+		messageDao = DaoObjectBuilder.getMessageDao();
+		groupDao = DaoObjectBuilder.getGroupDao();
+	}
 	/**
 	 * handles incoming configuration parameters for group conversations
 	 * @param message contains the necessary information

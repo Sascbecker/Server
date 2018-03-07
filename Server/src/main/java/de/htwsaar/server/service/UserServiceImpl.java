@@ -1,6 +1,7 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dataclass.User;
+import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.*;
 
 
@@ -8,6 +9,12 @@ public class UserServiceImpl {
 	
 	UserDao userDao;
 	GroupDao groupDao;
+	
+	public UserServiceImpl()
+	{
+		userDao = DaoObjectBuilder.getUserDao();
+		groupDao = DaoObjectBuilder.getGroupDao();
+	}
 	
 	public void start(User user)
 	{
@@ -28,7 +35,7 @@ public class UserServiceImpl {
 	private void userAnlegen(User user)
 	{
 		try {
-			userDao.userAnlegen(user);
+			userDao.insertUser(user);
 		}
 		catch(Exception ex)
 		{

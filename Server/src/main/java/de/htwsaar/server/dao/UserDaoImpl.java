@@ -11,9 +11,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao{
 
 	private NamedParameterJdbcTemplate jdbc;
 

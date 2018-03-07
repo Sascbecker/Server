@@ -7,5 +7,10 @@ import de.htwsaar.server.dao.interfaces.*;
  *
  */
 public class KontaktDaoImpl implements KontaktDao{
+	
+	public void kontaktHinzufuegen()
+	{
+		
+	}
 
 }

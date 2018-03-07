@@ -1,5 +1,6 @@
 package de.htwsaar.server.dao.interfaces;
 
+import de.htwsaar.server.dataclass.*;
 /**
  * Interface Klasse für Kontaktverwaltung
  * Kontakt anlegen
@@ -11,6 +12,6 @@ package de.htwsaar.server.dao.interfaces;
  */
 public interface KontaktDao {
 
-	
+	public void kontaktHinzufuegen();
 
 }

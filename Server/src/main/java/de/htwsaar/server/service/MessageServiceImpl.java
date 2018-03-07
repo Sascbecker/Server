@@ -1,6 +1,7 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dao.interfaces.UserDao;
+import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 
 import java.util.Iterator;
@@ -12,7 +13,13 @@ public class MessageServiceImpl {
 	
 	UserDao userDao;
 	MessageDao messageDao;
-	
+
+	public MessageServiceImpl()
+	{
+		userDao = DaoObjectBuilder.getUserDao();
+		messageDao = DaoObjectBuilder.getMessageDao();
+		
+	}
 
 	private Thread messageServiceDaemon;
 	/**
