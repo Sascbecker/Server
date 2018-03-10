@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao{
 	
 	public User getPasswort(String memberId) {
             
-            String query = "SELECT Passwort FROM User WHERE RegisterNr = :Id";
+        String query = "SELECT * FROM USER WHERE User_id = :Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Id", memberId);
@@ -125,7 +125,7 @@ public class UserDaoImpl implements UserDao{
 			User user = new User();
 
 			try {
-				user.setAbsenderId(results.getString("AbsenderId"));
+				user.setAbsenderId(results.getString("User_id"));
 				user.setPasswort(results.getString("Passwort"));
 
 			
