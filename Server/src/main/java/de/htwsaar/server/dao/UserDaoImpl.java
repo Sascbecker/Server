@@ -28,16 +28,15 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	/**
-	 * Beispiel für SQl-Statement mit ParamSoruce.
+	 * Add a new User to the Table "User"
 	 * @param user
 	 */
-	public void insertUser(User user)
+	public void newUser(User user)
 	{
-		String sqlStatement= "Insert into @Tabal Values(:BenutzerId, :Passwort, :IP-Adresse)";
+		String sqlStatement= "Insert into User (User_id,Passwort) Values(:BenutzerId, :Passwort)";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("BenutzerId", user.getAbsenderId());
 		paramSource.addValue("Passwort", user.getPasswort());
-		paramSource.addValue("IP-Adresse", user.getIpAdresse());
 		
 		//Ausführen des SQL-Statements mit dem String sql-Statement und der paramSource
 		jdbc.update(sqlStatement, paramSource);
@@ -96,12 +95,19 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	/**
-	 * Update den Online status eines Benutzers, Vorallem die Ip-Adresse
+	 * Updates the Table User with the Ip-Adress
 	 * @param user
 	 */
 	public void updateIpAdresse(User user)
 	{
+		String query = "Update User set IP-Adresse = :Ip-Adresse where User_id = :User_id";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
+		paramSource.addValue("Ip-Adresse", user.getIpAdresse());
+		
+		paramSource.addValue("User_id", user.getAbsenderId());
+		
+		jdbc.update(query,paramSource);
 	}
 	
 
