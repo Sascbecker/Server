@@ -124,7 +124,9 @@ public class MessageServiceImpl implements MessageService{
 		//sende die nachricht wie empfangen an den empfänger
 		
 		//Liest empfaengerDaten aus Datenbank aus.
-		User empfaenger = userDao.getUser(message.getRecipient());
+		User empfaenger = new User();
+		empfaenger.setAbsenderId(message.getRecipient());
+		empfaenger.setIpAdresse(userDao.getIpAdresse(empfaenger.getAbsenderId()));
 				
 		sendeNachricht(message, empfaenger);
 	}

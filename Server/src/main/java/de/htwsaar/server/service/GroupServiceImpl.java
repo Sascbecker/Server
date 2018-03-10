@@ -5,7 +5,7 @@ import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.Actions;
-import de.htwsaar.server.dataclass.Message;
+import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.service.interfaces.GroupService;
 
 public class GroupServiceImpl implements GroupService{
@@ -25,28 +25,28 @@ public class GroupServiceImpl implements GroupService{
 	 * handles incoming configuration parameters for group conversations
 	 * @param message contains the necessary information
 	 */
-	public void handleGroupConfig(Message message)
+	public void handleGroupConfig(Group group)
 	{
-		switch (message.getAktion()) {
+		switch (group.getAktion()) {
 		case Actions.Create_Group:
 						
-			create(message);
+			create(group);
 			break;
 			
 		case Actions.Kick_From_Group:
-			kick(message);
+			kick(group);
 			break;
 			
 		case Actions.Delete_Group:
-			delete(message);
+			delete(group);
 			break;
 			
 		case Actions.Rename_Group:
-			rename(message);
+			rename(group);
 			break;
 			
 		case Actions.Add_To_Group:
-			add(message);
+			add(group);
 			break;
 
 		}
@@ -73,16 +73,16 @@ public class GroupServiceImpl implements GroupService{
 	/**
 	 * creates a group in the database
 	 */
-	private void create(Message message){
-		//creates a group
+	private void create(Group group){
+		groupDao.gruppeAnlegen(group);
 	}
 	
 	/**
 	 * kicks a user from the group in the database
 	 * is also used when a user leaves a group
 	 */
-	private void kick(Message message){
-		if(message.getSender()==message.getRecipient()) {//case leave
+	private void kick(Group group){
+		if(group.getSender() == group.getGroupUser()) {//case leave
 			
 		}else {//case "real" kick
 			if(/*message.getSender() == gruppe.getAdmin */true ) {
@@ -93,7 +93,7 @@ public class GroupServiceImpl implements GroupService{
 	/**
 	 * deletes a group from the database
 	 */
-	private void delete(Message message){
+	private void delete(Group group){
 		if(/*Message.getSender == gruppe.getAdmin */true) {
 			//delete the group
 		}	//else do nothing
@@ -102,7 +102,7 @@ public class GroupServiceImpl implements GroupService{
 	/**
 	 * renames a group in the database
 	 */
-	private void rename(Message message){
+	private void rename(Group group){
 		if(/*Message.getSender == gruppe.getAdmin */true) {
 			//rename the group
 		}	//else do nothing
@@ -110,7 +110,7 @@ public class GroupServiceImpl implements GroupService{
 	/**
 	 * adds a user to a group in the database
 	 */
-	private void add(Message message){
+	private void add(Group group){
 		//add a user to the group
 	}
 

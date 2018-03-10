@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import de.htwsaar.server.dao.interfaces.*;
+import de.htwsaar.server.dataclass.Group;
 
 
 
@@ -31,25 +32,44 @@ public class GroupDaoImpl  implements GroupDao{
 	/**
 	 * Gruppen Anlegen 
 	 */
-	public void gruppeAnlegen()
+	public void gruppeAnlegen(Group group)
 	{
+		String sqlStatement = "Insert Into Gruppen (GruppenName, GruppenAdmin) Values (:GroupName, :GroupAdmin)";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GroupName", group.getGroupName());
+		paramSource.addValue("GroupAdmin", group.getSender());
+		
+		jdbc.update(sqlStatement, paramSource);
 		
 	}
 	
 	/**
 	 * gruppen Löschen
 	 */
-	public void gruppeLöschen()
+	public void gruppeLöschen(Group group)
 	{
+		String sqlStatement = "Delete from Gruppen where GruppenID = :GruppenID";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GruppenId", group.getGroupId());
+		
+		jdbc.update(sqlStatement, paramSource);
 		
 	}
 	
 	/**
 	 * Gruppe verlassen bzw. Benutzer wird gekickt
 	 */
-	public void gruppeVerlassen()
+	public void gruppeVerlassen(Group group)
 	{
+		String sqlStatement = "Delete from IstGruppe where GruppenID = :GruppenID and UserID = :UserID";
 		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GruppenID", group.getGroupId());
+		paramSource.addValue("UserID", group.getGroupUser());
+		
+		jdbc.update(sqlStatement, paramSource);
 	}
 	
 	
@@ -68,6 +88,16 @@ public class GroupDaoImpl  implements GroupDao{
 	{
 		
 		
+	}
+	
+	public String selectGroupAdmin(int groupID)
+	{
+		 String query = "SELECT GruppenAdmin FROM Gruppen WHERE GruppenID = :GroupID";
+
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GroupID", groupID);
+
+		return jdbc.queryForObject(query, paramSource, String.class);
 	}
 	
 

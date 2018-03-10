@@ -1,6 +1,7 @@
 package de.htwsaar.server.dao.interfaces;
 
 import java.util.List;
+import de.htwsaar.server.dataclass.*;
 
 /**
  * Interface Klasse 
@@ -10,11 +11,12 @@ import java.util.List;
 public interface GroupDao {
 	
 	
-	public void gruppeAnlegen();
-	public void gruppeLöschen();
-	public void gruppeVerlassen();
+	public void gruppeAnlegen(Group group);
+	public void gruppeLöschen(Group group);
+	public void gruppeVerlassen(Group group);
 	public void gruppeUmbennen();
 	public void nutzerZurGruppeHinzufuegen();
+	public String selectGroupAdmin(int groupID);
 	public void selectGroupMember();
 
 }
