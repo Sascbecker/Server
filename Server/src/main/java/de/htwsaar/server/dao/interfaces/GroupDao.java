@@ -13,8 +13,9 @@ public interface GroupDao {
 	
 	public void gruppeAnlegen(Group group);
 	public void gruppeLöschen(Group group);
+	public void deleteMember(Group group);
 	public void gruppeVerlassen(Group group);
-	public void gruppeUmbennen();
+	public void gruppeUmbennen(Group group);
 	public void nutzerZurGruppeHinzufuegen(Group group);
 	public String selectGroupAdmin(int groupID);
 	public void selectGroupMember();

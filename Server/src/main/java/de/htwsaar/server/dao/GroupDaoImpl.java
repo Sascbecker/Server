@@ -52,12 +52,24 @@ public class GroupDaoImpl  implements GroupDao{
 		String sqlStatement = "Delete from Gruppen where GruppenID = :GruppenID";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("GruppenId", group.getGroupId());
+		paramSource.addValue("GruppenID", group.getGroupId());
 		
 		jdbc.update(sqlStatement, paramSource);
 		
 	}
 	
+	/**
+	 * Delets all Member from the Table IstGruppe
+	 */
+	public void deleteMember(Group group)
+	{
+		String sqlStatement = "Delete from IstGruppe where GruppenID = :GruppenID";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GruppenID", group.getGroupId());
+		
+		jdbc.update(sqlStatement, paramSource);
+		
+	}
 	/**
 	 * Gruppe verlassen bzw. Benutzer wird gekickt
 	 */
@@ -76,9 +88,16 @@ public class GroupDaoImpl  implements GroupDao{
 	/**
 	 * Name der Gruppe ändern
 	 */
-	public void gruppeUmbennen()
+	public void gruppeUmbennen(Group group)
 	{
+
+		String sqlStatement = "Update Gruppen set GruppenName = :GruppenName where GruppenID = :GruppenID";
 		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GruppenName", group.getNewGroupName());
+		paramSource.addValue("UserID", group.getGroupId());
+		
+		jdbc.update(sqlStatement, paramSource);
 	}
 	
 	/**

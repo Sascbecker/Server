@@ -72,7 +72,7 @@ public class GroupServiceImpl implements GroupService{
 	
 	/**
 	 * creates a group in the database
-	 * TODO überprüfen, ob es die Gruppe schon gibt
+	 * TODO überprüfen, ob es die Gruppe schon gibt, nach anlegen der Gruppe muss sofort die GruppenID ausgelesen werden.
 	 */
 	private void create(Group group){
 		groupDao.gruppeAnlegen(group);
@@ -83,39 +83,75 @@ public class GroupServiceImpl implements GroupService{
 	 * is also used when a user leaves a group
 	 */
 	private void kick(Group group){
-		if(group.getSender() == group.getGroupUser()) {//case leave
-			
-		}else {//case "real" kick
-			if(/*message.getSender() == gruppe.getAdmin */true ) {
-				//kick the user
-			}   //else do nothing
+		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
+		
+		//Schaut ob der Benutzer der die Anfrage geschickt hat auch der Admin der Gruppe ist, wird gebraucht auch um Leute zu kicken
+		if(group.getSender().equals(group.getGroupAdmin()))
+		{
+			//Wenn Admin und sender überrein stimmen, wird die Gruppe gelöscht
+			if(group.getSender().equals(group.getGroupUser()))
+			{
+				delete(group);
+			}
+			//Ansonsten wird der Benutzer gekickt
+			else
+			{
+				groupDao.gruppeVerlassen(group);
+			}
+		}
+		//Schaut, ob der Sender auch der ist, der aus der Gruppe raus gehen möchte
+		else if(group.getSender().equals(group.getGroupUser()))
+		{
+			groupDao.gruppeVerlassen(group);
+		}
+		//Nicht möglich wenn man vesucht andere zu kicken
+		else
+		{
+			//TODO Fehlermeldung
+			System.out.println("Keine Berechtigung um leute aus der Gruppe zu kicken");
 		}
 	}
 	/**
 	 * deletes a group from the database
 	 */
 	private void delete(Group group){
-		if(/*Message.getSender == gruppe.getAdmin */true) {
-			//delete the group
-		}	//else do nothing
+		
+		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
+		
+		if(group.getSender().equals(group.getGroupAdmin())) {
+			groupDao.gruppeLöschen(group);
+			groupDao.deleteMember(group);
+		}
+		else
+		{
+			System.out.println("Keine Berechtigung zum löschen der Gruppe");
+		}
 		
 	}
 	/**
 	 * renames a group in the database
 	 */
 	private void rename(Group group){
-		if(/*Message.getSender == gruppe.getAdmin */true) {
-			//rename the group
-		}	//else do nothing
+		
+		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
+		if(group.getSender().equals(group.getGroupAdmin())) {
+			groupDao.gruppeUmbennen(group);
+			group.setGroupName(group.getNewGroupName());
+			
+		}
+		else
+		{
+			System.out.println("Keine Berechtigung zum ändern des Namens der Gruppe");
+		}
 	}
 	/**
 	 * adds a user to a group in the database
 	 * TODO: überprüfen, ob der Benutzer schon in der Gruppe vorhanden ist
 	 */
 	private void add(Group group){
-		String admin = groupDao.selectGroupAdmin(group.getGroupId());
+		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		
-		if(group.getSender().equals(admin) == true)
+		if(group.getSender().equals(group.getGroupAdmin()) == true)
 		{
 			groupDao.nutzerZurGruppeHinzufuegen(group);
 		}
