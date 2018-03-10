@@ -12,6 +12,9 @@ import de.htwsaar.server.dataclass.*;
  */
 public interface KontaktDao {
 
-	public void kontaktHinzufuegen();
+	public void kontaktHinzufuegen(Message message);
+	public void kontaktLoeschen(Message message);
+	public void kontaktBlockieren(Message message);
+	
 
 }
