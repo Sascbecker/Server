@@ -1,11 +1,12 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dataclass.User;
+import de.htwsaar.server.service.interfaces.UserService;
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.*;
 
 
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 	
 	UserDao userDao;
 	GroupDao groupDao;
@@ -35,7 +36,7 @@ public class UserServiceImpl {
 	private void userAnlegen(User user)
 	{
 		try {
-			userDao.insertUser(user);
+			userDao.newUser(user);
 		}
 		catch(Exception ex)
 		{
@@ -48,7 +49,7 @@ public class UserServiceImpl {
 		User vergleichsUser = new User();
 		vergleichsUser = userDao.getPasswort(user.getAbsenderId());
 		
-		if(vergleichsUser.getPasswort() == user.getPasswort())
+		if(user.getPasswort().equals(vergleichsUser.getPasswort()))
 		{
 			user.setReturnCode("Authentifizierung erfolgreich");
 			

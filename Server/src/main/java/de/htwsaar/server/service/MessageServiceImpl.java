@@ -2,22 +2,26 @@ package de.htwsaar.server.service;
 
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dao.DaoObjectBuilder;
+import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 
 import java.util.Iterator;
 import java.util.List;
 import de.htwsaar.server.dataclass.*;
+import de.htwsaar.server.service.interfaces.MessageService;
 
 
-public class MessageServiceImpl {
+public class MessageServiceImpl implements MessageService{
 	
 	UserDao userDao;
 	MessageDao messageDao;
+	GroupDao groupDao;
 
 	public MessageServiceImpl()
 	{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
+		groupDao = DaoObjectBuilder.getGroupDao();
 		
 	}
 
@@ -92,18 +96,18 @@ public class MessageServiceImpl {
 					//(verwende dazu die selbe funktion wie für einzelnachricht
 		
 		
-		List<User> gruppenUser;
-		User nextUser = new User();
-		gruppenUser = userDao.selectGruppenUser(message.getGroupId());
+		//List<String> gruppenUser;
+		//User nextUser = new User();
+		//gruppenUser = groupDao.selectGruppenUser(message.getGroupId());
 		
-		Iterator<User> i = gruppenUser.iterator();
+		//Iterator<User> i = gruppenUser.iterator();
 		
 		//Durchlaufe die Liste solange es einen next eintrag gibt und sendet die Nachricht
-		while(i.hasNext() == true)
-		{
-			nextUser = i.next();
-			sendeNachricht(message, nextUser);
-		}
+		//while(i.hasNext() == true)
+		//{
+		//	nextUser = i.next();
+		//	sendeNachricht(message, nextUser);
+		//}
 	}
 	
 	

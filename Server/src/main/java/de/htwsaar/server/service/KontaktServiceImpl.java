@@ -1,7 +1,8 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dataclass.*;
-public class KontaktServiceImpl {
+import de.htwsaar.server.service.interfaces.KontaktService;
+public class KontaktServiceImpl implements KontaktService{
 
 	public void handleKontaktConfig(Message message)
 	{

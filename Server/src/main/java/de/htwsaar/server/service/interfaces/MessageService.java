@@ -4,6 +4,6 @@ import de.htwsaar.server.dataclass.Message;
 
 public interface MessageService {
 	
-	public void start(Message message);
+	public void handleMessage(Message message);
 
 }

@@ -2,11 +2,13 @@ package de.htwsaar.server.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import de.htwsaar.server.dao.interfaces.*;
@@ -14,6 +16,7 @@ import de.htwsaar.server.dao.interfaces.*;
 
 
 public class GroupDaoImpl  implements GroupDao{
+	
 	private NamedParameterJdbcTemplate jdbc;
 
 	@Autowired
@@ -66,5 +69,10 @@ public class GroupDaoImpl  implements GroupDao{
 		
 		
 	}
+	
 
+	public void selectGroupMember() {
+		// TODO Auto-generated method stub
+		
+	}
 }

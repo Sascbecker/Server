@@ -7,7 +7,7 @@ import java.util.List;
 public class Kontakte {
 
 	private String userId;
-	private List<User> kontaktliste;
+	private List<String> kontaktliste;
 	
 	public Kontakte()
 	{
@@ -15,6 +15,13 @@ public class Kontakte {
 	
 	public String getUserId() { return userId;}
 	
-	public List<User> getKontaktListe () { return kontaktliste;}
+	public List<String> getKontaktListe () { return kontaktliste;}
 	
+	
+	public void setUserId(String userId)
+	{
+		this.userId = userId;
+	}
+	
+	public void setKontaktListe(List<String> kontaktListe) { this.kontaktliste = kontaktListe;}
 }
