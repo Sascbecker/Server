@@ -33,55 +33,36 @@ public class UserDaoImpl implements UserDao{
 	 */
 	public void newUser(User user)
 	{
-		String sqlStatement= "Insert into User (User_id,Passwort) Values(:BenutzerId, :Passwort)";
+		String sqlStatement= "Insert into User (UserID, Passwort) Values (:UserID, :Passwort)";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("BenutzerId", user.getAbsenderId());
+		paramSource.addValue("UserID", user.getAbsenderId());
 		paramSource.addValue("Passwort", user.getPasswort());
 		
 		//Ausführen des SQL-Statements mit dem String sql-Statement und der paramSource
 		jdbc.update(sqlStatement, paramSource);
 	}
 	
-	/**
-	 * Auslesen eines UserObjektes aus der Datenbank anhand der empfaengerId
-	 * @param empfaengerId
-	 * @return UserObjekt 
-	 */
-	public User getUser(String empfaengerId)
-	{
-            //SQL Statement
-		String query = "SELECT * FROM User WHERE User_id = :IdEmpf";
-		
-		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("IdEmpf", empfaengerId);
-		
-		try {
-			return (User) jdbc.queryForObject(query, paramSource, new UserRowMapper());
-		} catch (EmptyResultDataAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-		
-	}
-	
-	public User getPasswort(String memberId) {
+	public String getPasswort(String memberId) {
             
-        String query = "SELECT * FROM USER WHERE User_id = :Id";
+        String query = "SELECT Passwort FROM USER WHERE UserId = :UserID";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Id", memberId);
+		paramSource.addValue("UserID", memberId);
 
-		try {
-			return (User) jdbc.queryForObject(query, paramSource, new UserRowMapper());
-		} catch (EmptyResultDataAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return jdbc.queryForObject(query, paramSource, String.class);
 
 	}
 	
-	
+	public String getIpAdresse(String userId)
+	{
+		String query = "Select IP-Adresse from User where UserId = :UserID";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("UserID", userId);
+		
+		return jdbc.queryForObject(query, paramSource, String.class);
+	}
+		
 	public List<User> selectGruppenUser(int gruppenId)
 	{
             //Insert SQL Statement

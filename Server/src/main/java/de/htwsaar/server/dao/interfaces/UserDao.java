@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface UserDao {
 	public void newUser(User user);
-	public User getUser(String empfaengerId);
-	public User getPasswort(String memberId);
+	public String getIpAdresse(String userID);
+	public String getPasswort(String userID);
 	public void updateIpAdresse(User user);
 
 }

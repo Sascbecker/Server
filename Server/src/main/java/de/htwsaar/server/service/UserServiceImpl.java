@@ -46,10 +46,10 @@ public class UserServiceImpl implements UserService {
 	
 	private void userAuthenfizierung(User user)
 	{
-		User vergleichsUser = new User();
-		vergleichsUser = userDao.getPasswort(user.getAbsenderId());
 		
-		if(user.getPasswort().equals(vergleichsUser.getPasswort()))
+		String vergleichsUser = userDao.getPasswort(user.getAbsenderId());
+		
+		if(user.getPasswort().equals(vergleichsUser))
 		{
 			user.setReturnCode("Authentifizierung erfolgreich");
 			
