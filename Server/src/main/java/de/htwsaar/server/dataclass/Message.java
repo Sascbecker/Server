@@ -21,12 +21,12 @@ public class Message {
 	private int groupId;
 	private String recipient;
 	private String message;
-	private int timestamp;
+	private long timestamp;
 	
 	
 	public Message() {}
 	
-	public Message(String sender, int groupId, String recipient, String message, int timestamp)
+	public Message(String sender, int groupId, String recipient, String message, long timestamp)
 	{
 		aktion = 0;
 		this.sender = sender;
@@ -35,7 +35,7 @@ public class Message {
 		this.message = message;
 		this.timestamp = timestamp;
 	}
-	public Message(int aktion, String sender, int groupId, String recipient, String message, int timestamp)
+	public Message(int aktion, String sender, int groupId, String recipient, String message, long timestamp)
 	{
 		this.aktion = aktion;
 		this.sender = sender;
@@ -50,7 +50,7 @@ public class Message {
 	public int getGroupId() {return groupId;}	
 	public String getRecipient() {return recipient;}	
 	public String getMessage() {return message;}
-	public int getTimestamp() {return timestamp;}
+	public long getTimestamp() {return timestamp;}
 	
 	public void setAktion(int aktion) {this.aktion = aktion;}
 	public void setSender(String sender) {this.sender = sender;}
