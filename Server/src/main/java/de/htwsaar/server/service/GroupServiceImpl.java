@@ -72,6 +72,7 @@ public class GroupServiceImpl implements GroupService{
 	
 	/**
 	 * creates a group in the database
+	 * TODO überprüfen, ob es die Gruppe schon gibt
 	 */
 	private void create(Group group){
 		groupDao.gruppeAnlegen(group);
@@ -109,9 +110,20 @@ public class GroupServiceImpl implements GroupService{
 	}
 	/**
 	 * adds a user to a group in the database
+	 * TODO: überprüfen, ob der Benutzer schon in der Gruppe vorhanden ist
 	 */
 	private void add(Group group){
-		//add a user to the group
+		String admin = groupDao.selectGroupAdmin(group.getGroupId());
+		
+		if(group.getSender().equals(admin) == true)
+		{
+			groupDao.nutzerZurGruppeHinzufuegen(group);
+		}
+		else
+		{
+			System.out.println("Kein GruppenAdmin");
+		}
+			
 	}
 
 }

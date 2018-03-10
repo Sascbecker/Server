@@ -84,9 +84,16 @@ public class GroupDaoImpl  implements GroupDao{
 	/**
 	 * Nutzer zur Gruppe hinzufügen
 	 */
-	public void nutzerZurGruppeHinzufuegen()
+	public void nutzerZurGruppeHinzufuegen(Group group)
 	{
+		String query = "Insert into IstGruppe Values(:GroupID, :UserID)";
 		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GroupID", group.getGroupId());
+		paramSource.addValue("UserID", group.getGroupUser());
+		
+		jdbc.update(query, paramSource);
+
 		
 	}
 	
