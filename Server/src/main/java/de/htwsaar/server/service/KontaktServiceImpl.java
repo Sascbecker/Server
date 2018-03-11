@@ -22,16 +22,16 @@ public class KontaktServiceImpl implements KontaktService{
 	public void handleKontaktConfig(Message message)
 	{
 		switch (message.getAktion()) {
-		case Actions.Kontakt_Hinzufuegen:
+		case MessageActions.Kontakt_Hinzufuegen:
 						
 			kontaktHinzufuegen(message);
 			break;
 			
-		case Actions.Kontakt_Loeschen:
+		case MessageActions.Kontakt_Loeschen:
 			kontaktLoeschen(message);
 			break;
 			
-		case Actions.Kontakt_Blockieren:
+		case MessageActions.Kontakt_Blockieren:
 			kontaktBlockieren(message);
 			break;
 			

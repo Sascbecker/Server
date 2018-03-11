@@ -79,7 +79,7 @@ public class GroupDaoImpl  implements GroupDao{
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("GruppenID", group.getGroupId());
-		paramSource.addValue("UserID", group.getGroupUser());
+		paramSource.addValue("UserID", group.getEmpfaengerId());
 		
 		jdbc.update(sqlStatement, paramSource);
 	}
@@ -94,7 +94,7 @@ public class GroupDaoImpl  implements GroupDao{
 		String sqlStatement = "Update Gruppen set GruppenName = :GruppenName where GruppenID = :GruppenID";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("GruppenName", group.getNewGroupName());
+		paramSource.addValue("GruppenName", group.getGroupName());
 		paramSource.addValue("UserID", group.getGroupId());
 		
 		jdbc.update(sqlStatement, paramSource);
@@ -109,7 +109,7 @@ public class GroupDaoImpl  implements GroupDao{
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("GroupID", group.getGroupId());
-		paramSource.addValue("UserID", group.getGroupUser());
+		paramSource.addValue("UserID", group.getEmpfaengerId());
 		
 		jdbc.update(query, paramSource);
 

@@ -4,7 +4,7 @@ import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
-import de.htwsaar.server.dataclass.Actions;
+import de.htwsaar.server.dataclass.GroupActions;
 import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.service.interfaces.GroupService;
 
@@ -28,24 +28,24 @@ public class GroupServiceImpl implements GroupService{
 	public void handleGroupConfig(Group group)
 	{
 		switch (group.getAktion()) {
-		case Actions.Create_Group:
+		case GroupActions.Create_Group:
 						
 			create(group);
 			break;
 			
-		case Actions.Kick_From_Group:
+		case GroupActions.Kick_From_Group:
 			kick(group);
 			break;
 			
-		case Actions.Delete_Group:
+		case GroupActions.Delete_Group:
 			delete(group);
 			break;
 			
-		case Actions.Rename_Group:
+		case GroupActions.Rename_Group:
 			rename(group);
 			break;
 			
-		case Actions.Add_To_Group:
+		case GroupActions.Add_To_Group:
 			add(group);
 			break;
 
@@ -89,7 +89,7 @@ public class GroupServiceImpl implements GroupService{
 		if(group.getSender().equals(group.getGroupAdmin()))
 		{
 			//Wenn Admin und sender überrein stimmen, wird die Gruppe gelöscht
-			if(group.getSender().equals(group.getGroupUser()))
+			if(group.getSender().equals(group.getEmpfaengerId()))
 			{
 				delete(group);
 			}
@@ -100,7 +100,7 @@ public class GroupServiceImpl implements GroupService{
 			}
 		}
 		//Schaut, ob der Sender auch der ist, der aus der Gruppe raus gehen möchte
-		else if(group.getSender().equals(group.getGroupUser()))
+		else if(group.getSender().equals(group.getEmpfaengerId()))
 		{
 			groupDao.gruppeVerlassen(group);
 		}
@@ -136,7 +136,7 @@ public class GroupServiceImpl implements GroupService{
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		if(group.getSender().equals(group.getGroupAdmin())) {
 			groupDao.gruppeUmbennen(group);
-			group.setGroupName(group.getNewGroupName());
+			
 			
 		}
 		else

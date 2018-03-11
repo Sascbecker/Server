@@ -3,19 +3,29 @@ package de.htwsaar.server.dataclass;
 public class Group {
 
 	private int aktion;
-	private String absenderId;
-	private String GroupName;
-	private int GroupID;
+	private String senderID;
+	private String groupName;
+	private int groupID;
 	private String empfaengerID;
 	private String GroupAdmin;
 	
 
 	public Group() {}
-	public Group(int aktion, String absenderId, String GroupName, int GroupID, String empfaengerID, String GroupAdmin) {
+	
+	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID )
+	{
+		this.aktion = aktion;
+		this.senderID = senderID;
+		this.groupName = groupName;
+		this.groupID = groupID;
+		this.empfaengerID = empfaengerID;
+	}
+	
+	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID, String GroupAdmin) {
 		this.aktion=aktion;
-		this.absenderId=absenderId;
-		this.GroupName=GroupName;
-		this.GroupID=GroupID;
+		this.senderID = senderID;
+		this.groupName=groupName;
+		this.groupID=groupID;
 		this.empfaengerID=empfaengerID;
 		this.GroupAdmin=GroupAdmin;
 	}
@@ -25,16 +35,16 @@ public class Group {
 	
 	
 	public int getAktion() { return aktion;}
-	public String getSender() { return absenderId;}
-	public String getGroupName() {return GroupName;}
-	public int getGroupId(){return GroupID;}
+	public String getSender() { return senderID;}
+	public String getGroupName() {return groupName;}
+	public int getGroupId(){return groupID;}
 	public String getEmpfaengerId() {return empfaengerID;}
 	public String getGroupAdmin() {return GroupAdmin;}
 	
 	public void setAktion(int aktion) { this.aktion=aktion;}
-	public void setSender(String id) { this.absenderId=id;}
-	public void setGroupName(String name) {this.GroupName=name;}
-	public void setGroupId(int id){this.GroupID=id;}
+	public void setSender(String senderID) { this.senderID = senderID;}
+	public void setGroupName(String name) {this.groupName=name;}
+	public void setGroupId(int id){this.groupID=id;}
 	public void setEmpfaengerId(String id) {this.empfaengerID=id;}
 	public void setGroupAdmin(String GroupAdmin) {this.GroupAdmin=GroupAdmin;}
 
