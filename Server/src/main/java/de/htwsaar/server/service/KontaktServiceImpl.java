@@ -1,19 +1,27 @@
 package de.htwsaar.server.service;
 
 import java.util.List;
-
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.KontaktDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.interfaces.KontaktService;
+
+/**
+ * this class handles requests for contact list changes sent from the clients.
+ * handleKontaktConfig(Message message) should be called when such a message is received from a client.
+ *
+ */
 public class KontaktServiceImpl implements KontaktService{
 
 	KontaktDao kontaktDao;
 	UserDao userDao;
 	GroupDao groupDao;
 	
+	/**
+	 * default constructor
+	 */
 	public KontaktServiceImpl()
 	{
 		kontaktDao = DaoObjectBuilder.getKontaktDao();
@@ -21,6 +29,11 @@ public class KontaktServiceImpl implements KontaktService{
 		groupDao = DaoObjectBuilder.getGroupDao();
 		
 	}
+	
+	/**
+	 * Processes a configuration prompt for the contact list of the message's sender
+	 * @param message contains the relevant information for the contact configuration
+	 */
 	public void handleKontaktConfig(Message message)
 	{
 		switch (message.getAktion()) {
@@ -45,9 +58,8 @@ public class KontaktServiceImpl implements KontaktService{
 	}
 	
 	/**
-	 * Service methode zum hinzufügen eines Benutzers zur kontaktliste
-	 * 
-	 * @param message enthält die informationen in den absender und empfänger attributen
+	 * Service method for adding the recipient of the message to the sender's contact list
+	 * @param message contains the relevant information for the contact configuration
 	 */
 	private void kontaktHinzufuegen(Message message)
 	{
@@ -56,8 +68,8 @@ public class KontaktServiceImpl implements KontaktService{
 	}
 	
 	/**
-	 * Service methode zum löschen eines kontaktes aus der kontaktliste
-	 * @param message enthält die informationen in den absender und empfänger attributen
+	 * Service method for deleting the recipient of the message from the sender's contact list
+	 * @param message contains the relevant information for the contact configuration
 	 */
 	private void kontaktLoeschen(Message message)
 	{
@@ -67,7 +79,7 @@ public class KontaktServiceImpl implements KontaktService{
 	
 	/**
 	 * Erst im späteren Verlauf zu implementieren
-	 * @param message enthält die informationen in den absender und empfänger attributen
+	 * @param message contains the relevant information for the contact configuration
 	 */
 	private void kontaktBlockieren(Message message)
 	{
