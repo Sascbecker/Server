@@ -8,6 +8,10 @@ import de.htwsaar.server.dataclass.GroupActions;
 import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.service.interfaces.GroupService;
 
+/**
+ * this class handles requests for group management.
+ * handleGroupConfig(Message message) should be called when such a message is received from a client.
+ */
 public class GroupServiceImpl implements GroupService{
 	UserDao userDao;
 	MessageDao messageDao;
@@ -15,11 +19,16 @@ public class GroupServiceImpl implements GroupService{
 	private Thread groupServiceDaemon;
 
 	
-	
+	/**
+	 * default constructor.
+	 * automatically starts a daemon thread in the background, so make sure not to create 
+	 * too many instances of this class, ideally just one.
+	 */
 	public GroupServiceImpl() {
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
+		startGroupServiceDaemon();
 	}
 	/**
 	 * handles incoming configuration parameters for group conversations
@@ -72,6 +81,7 @@ public class GroupServiceImpl implements GroupService{
 	
 	/**
 	 * creates a group in the database
+	 * @param group contains the information for the group config to take place
 	 * TODO überprüfen, ob es die Gruppe schon gibt, nach anlegen der Gruppe muss sofort die GruppenID ausgelesen werden.
 	 */
 	private void create(Group group){
@@ -82,6 +92,7 @@ public class GroupServiceImpl implements GroupService{
 	/**
 	 * kicks a user from the group in the database
 	 * is also used when a user leaves a group
+	 * @param group contains the information for the group config to take place
 	 */
 	private void kick(Group group){
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
@@ -114,6 +125,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 	/**
 	 * deletes a group from the database
+	 * @param group contains the information for the group config to take place
 	 */
 	private void delete(Group group){
 		
@@ -131,6 +143,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 	/**
 	 * renames a group in the database
+	 * @param group contains the information for the group config to take place
 	 */
 	private void rename(Group group){
 		
@@ -145,6 +158,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 	/**
 	 * adds a user to a group in the database
+	 * @param group contains the information for the group config to take place
 	 * TODO: überprüfen, ob der Benutzer schon in der Gruppe vorhanden ist
 	 */
 	private void add(Group group){
