@@ -61,6 +61,10 @@ public class KontaktServiceImpl implements KontaktService{
 		kontaktDao.kontaktLoeschen(message);
 	}
 	
+	/**
+	 * Erst im späteren Verlauf zu implementieren
+	 * @param message
+	 */
 	private void kontaktBlockieren(Message message)
 	{
 		

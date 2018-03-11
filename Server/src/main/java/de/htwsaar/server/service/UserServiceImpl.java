@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 		//User login
 		case 2: userAuthenfizierung(user);
 			break;
+		case 3: userAbmelden(user);
 		default :
 			break;
 			
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
 		
 		if(user.getPasswort().equals(vergleichsUser))
 		{
+			userDao.updateIpAdresse(user);
 			user.setReturnCode("Authentifizierung erfolgreich");
 			
 		}
@@ -58,6 +60,11 @@ public class UserServiceImpl implements UserService {
 			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
 	}
 	
+	private void userAbmelden(User user)
+	{
+		user.setIpAdresse("");
+		userDao.updateIpAdresse(user);
+	}
 	
 
 	
