@@ -17,6 +17,7 @@ package de.htwsaar.server.dataclass;
 public class Message {
 
 	private int aktion;
+	private int messageID;
 	private String sender;
 	private int groupId;
 	private String recipient;
@@ -46,6 +47,7 @@ public class Message {
 	}
 	
 	public int getAktion() {return aktion;}	
+	public int getMessageID() { return messageID;}
 	public String getSender() {return sender;}
 	public int getGroupId() {return groupId;}	
 	public String getRecipient() {return recipient;}	
@@ -53,6 +55,7 @@ public class Message {
 	public long getTimestamp() {return timestamp;}
 	
 	public void setAktion(int aktion) {this.aktion = aktion;}
+	public void setMessageID(int messageID) { this.messageID = messageID;}
 	public void setSender(String sender) {this.sender = sender;}
 	public void setGroupId(int groupId) {this.groupId = groupId;}	
 	public void setRecipient(String recipient) {this.recipient = recipient;}

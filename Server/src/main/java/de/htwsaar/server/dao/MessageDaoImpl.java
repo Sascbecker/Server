@@ -40,7 +40,7 @@ public class MessageDaoImpl implements MessageDao{
 	 */
 	public void SaveMessage(Message message, User empfaenger)
 	{
-		String sqlStatement = "INSERT INTO Nachrichten VALUES( :Time, :Content, :IdSender, :IdEmpf )";
+		String sqlStatement = "INSERT INTO Nachrichten (Zeit, Inhalt, SenderID, EmpfaengerID, Zugestellt) VALUES( :Time, :Content, :IdSender, :IdEmpf, 0 )";
                 
                 MapSqlParameterSource paramSource = new MapSqlParameterSource();
                 paramSource.addValue("Time", message.getTimestamp());
@@ -56,7 +56,7 @@ public class MessageDaoImpl implements MessageDao{
 	 * @param timestamp
 	 * @return Liste mit allen Nachrichten ab einem gewissen Zeitpunk
 	 */
-	public List<Message> alleUngeleseneNachrichten(int timestamp)
+	public List<Message> alleUngeleseneNachrichten(String userID)
 	{
 		String query="";
 		
@@ -64,6 +64,26 @@ public class MessageDaoImpl implements MessageDao{
 		//paramSource.addValue();
 		
 		return jdbc.query(query,paramSource, new MessageRowMapper());
+	}
+	
+	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp)
+	{
+		String query="Select * from Nachrichten";
+		
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		//paramSource.addValue();
+		return jdbc.query(query,paramSource, new MessageRowMapper());
+	}
+	
+	public int readMessageID()
+	{
+		String query = "Select MessageID from Nachrichten order by MessageID DESC limit 1";
+
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		//paramSource.addValue("UserID", memberId);
+
+		return jdbc.queryForObject(query, paramSource, Integer.class);
+
 	}
 	/**
 	 * Reads a message from DB
@@ -89,11 +109,11 @@ public class MessageDaoImpl implements MessageDao{
 			Message message = new Message();
 
 			try {
-				message.setSender(results.getString("Sender"));
-				message.setRecipient(results.getString("Empfänger"));
-				message.setMessage(results.getString("Message"));
-				message.setTimestamp(results.getInt("Timestamp"));
-				
+				message.setSender(results.getString("SenderID"));
+				message.setRecipient(results.getString("EmpfaengerID"));
+				message.setMessage(results.getString("Inhalt"));
+				message.setTimestamp(results.getInt("Zeit"));
+				message.setMessageID(results.getInt("MessageID"));
 			
 			} catch (Exception e) {
 				e.printStackTrace();

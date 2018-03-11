@@ -55,13 +55,13 @@ public class MessageServiceImpl implements MessageService{
 		switch (message.getAktion())
 		{
 		case MessageActions.Nachricht: 
-			if(message.getGroupId() == 0)
+			if(message.getGroupId()== 0)
 			{
-				gruppenNachrichten(message);
+				einzelNachricht(message);
 			}
 			else
 			{
-				einzelNachricht(message);
+				gruppenNachrichten(message);
 			}
 			break;
 			//Kontakt hinzufügen
@@ -78,36 +78,25 @@ public class MessageServiceImpl implements MessageService{
 		
 	}
 	
-	
-	
+
 	/**
 	 * Handles the processing of a group message
 	 * @param message
 	 */
 	private void gruppenNachrichten(Message message)
 	{
+		List<User> gruppenUser;
+		User nextUser = new User();
+		gruppenUser = userDao.selectGruppenUserOhneSender(message);
 		
-		//empfangen:
-				//entnehme der message die gruppenid
-				//frage die teilnehmer der gruppe aus der datenbank ab
-				//für jeden teilnehmer:
-					//senden:
-					//sende die nachricht wie empfangen an jeden user der gruppe
-					//(verwende dazu die selbe funktion wie für einzelnachricht
-		
-		
-		//List<String> gruppenUser;
-		//User nextUser = new User();
-		//gruppenUser = groupDao.selectGruppenUser(message.getGroupId());
-		
-		//Iterator<User> i = gruppenUser.iterator();
+		Iterator<User> i = gruppenUser.iterator();
 		
 		//Durchlaufe die Liste solange es einen next eintrag gibt und sendet die Nachricht
-		//while(i.hasNext() == true)
-		//{
-		//	nextUser = i.next();
-		//	sendeNachricht(message, nextUser);
-		//}
+		while(i.hasNext() == true)
+		{
+			nextUser = i.next();
+			sendeNachricht(message, nextUser);
+		}
 	}
 	
 	
@@ -125,8 +114,7 @@ public class MessageServiceImpl implements MessageService{
 		
 		//Liest empfaengerDaten aus Datenbank aus.
 		User empfaenger = new User();
-		empfaenger.setAbsenderId(message.getRecipient());
-		empfaenger.setIpAdresse(userDao.getIpAdresse(empfaenger.getAbsenderId()));
+		empfaenger = userDao.getUserInformation(message.getRecipient());
 				
 		sendeNachricht(message, empfaenger);
 	}
@@ -137,10 +125,11 @@ public class MessageServiceImpl implements MessageService{
 	 * @param User
 	 */
 	private void sendeNachricht(Message message, User user){
-		//schreibe nachricht-empfänger tupel in die datenbank
-		//setze den erfolgreich-gesendet wert der nachricht in der datenbank auf false
-		//der Thread in startMessageServiceDaemon hier in der Klasse erledigt dann den rest.
-		//Gibt true zurück wenn die Nachricht versendet wurde und beim Benutzer angekommen ist
+		//Schreibt die Nachricht in die Datenbank, mit dem Flag, dass die nachricht noch nicht zugestellt wurde.
+		messageDao.SaveMessage(message, user);
+		message.setMessageID(messageDao.readMessageID());
 		
+		System.out.println("Absender: "+ message.getSender()+ " Empfäenger: "+ user.getAbsenderId()+ " IpAdresse: "+ user.getIpAdresse() + " MessageID: "+ message.getMessageID());
+		//TODO: bei erfolgreichem Zustellen, muss das FLAG Zugestellt auf 1 gesetzt werden.
 	}
 }

@@ -5,7 +5,9 @@ import de.htwsaar.server.dataclass.*;
 
 public interface MessageDao {
 	public void SaveMessage(Message message, User empfaenger);
-	public List<Message> alleUngeleseneNachrichten(int timestamp);
+	public List<Message> alleUngeleseneNachrichten(String userID);
+	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp);
+	public int readMessageID();
 	public Message readMessage();
 
 }
