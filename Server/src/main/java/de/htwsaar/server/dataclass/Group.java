@@ -1,5 +1,10 @@
 package de.htwsaar.server.dataclass;
 
+/**
+ * dataclass for groups
+ * doesn't do anything, only stores information for a group
+ *
+ */
 public class Group {
 
 	private int aktion;
@@ -10,8 +15,14 @@ public class Group {
 	private String GroupAdmin;
 	
 
+	/**
+	 * empty constructor
+	 */
 	public Group() {}
 	
+	/**
+	 * constructor without admin parameter
+	 */
 	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID )
 	{
 		this.aktion = aktion;
@@ -21,6 +32,9 @@ public class Group {
 		this.empfaengerID = empfaengerID;
 	}
 	
+	/**
+	 * full constructor, not much else
+	 */
 	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID, String GroupAdmin) {
 		this.aktion=aktion;
 		this.senderID = senderID;
