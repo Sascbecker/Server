@@ -62,17 +62,41 @@ public class UserDaoImpl implements UserDao{
 		
 		return jdbc.queryForObject(query, paramSource, String.class);
 	}
+	
+	public User getUserInformation(String userID)
+	{
+		String query = "Select * from User where UserID = :UserID";
+
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("UserID", userID);
+
+		try {
+			return (User) jdbc.queryForObject(query, paramSource, new UserRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 		
 	public List<User> selectGruppenUser(int gruppenId)
 	{
             //Insert SQL Statement
-		String query="SELECT User_id FROM Gruppen WHERE Gruppen_id = :IdGroup";
-		
+		String query="Select IstGruppe.UserID, User.Passwort, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("IdGroup",gruppenId);
+		paramSource.addValue("GroupID",gruppenId);
 		
 		return jdbc.query(query,paramSource, new UserRowMapper());
 		
+	}
+	
+	public List<User> selectGruppenUserOhneSender(Message message)
+	{
+		String query="Select IstGruppe.UserID, User.Passwort, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID and IstGruppe.UserID != :Sender";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("GroupID",message.getGroupId());
+		paramSource.addValue("Sender", message.getSender());
+		
+		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
 	
 	/**
@@ -106,8 +130,9 @@ public class UserDaoImpl implements UserDao{
 			User user = new User();
 
 			try {
-				user.setAbsenderId(results.getString("User_id"));
+				user.setAbsenderId(results.getString("UserID"));
 				user.setPasswort(results.getString("Passwort"));
+				user.setIpAdresse(results.getString("IPAdresse"));
 
 			
 			} catch (Exception e) {
