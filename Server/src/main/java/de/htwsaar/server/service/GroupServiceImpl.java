@@ -76,6 +76,7 @@ public class GroupServiceImpl implements GroupService{
 	 */
 	private void create(Group group){
 		groupDao.gruppeAnlegen(group);
+		group.setGroupId(groupDao.getGroupID());
 	}
 	
 	/**

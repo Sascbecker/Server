@@ -130,6 +130,8 @@ public class MessageServiceImpl implements MessageService{
 		message.setMessageID(messageDao.readMessageID());
 		
 		System.out.println("Absender: "+ message.getSender()+ " Empfäenger: "+ user.getAbsenderId()+ " IpAdresse: "+ user.getIpAdresse() + " MessageID: "+ message.getMessageID());
+		
+		
 		//TODO: bei erfolgreichem Zustellen, muss das FLAG Zugestellt auf 1 gesetzt werden.
 	}
 }

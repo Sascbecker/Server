@@ -117,6 +117,14 @@ public class GroupDaoImpl  implements GroupDao{
 		
 	}
 	
+	public int getGroupID()
+	{
+		String query = "Select GruppenID from Gruppen order by GruppenID DESC Limit 1";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		return jdbc.queryForObject(query, paramSource, Integer.class);
+	}
+	
 	public String selectGroupAdmin(int groupID)
 	{
 		 String query = "SELECT GruppenAdmin FROM Gruppen WHERE GruppenID = :GroupID";

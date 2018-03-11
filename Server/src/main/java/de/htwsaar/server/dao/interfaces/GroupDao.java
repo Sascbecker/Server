@@ -17,6 +17,7 @@ public interface GroupDao {
 	public void gruppeVerlassen(Group group);
 	public void gruppeUmbennen(Group group);
 	public void nutzerZurGruppeHinzufuegen(Group group);
+	public int getGroupID();
 	public String selectGroupAdmin(int groupID);
 
 }
