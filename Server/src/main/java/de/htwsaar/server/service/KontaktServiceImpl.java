@@ -45,9 +45,9 @@ public class KontaktServiceImpl implements KontaktService{
 	}
 	
 	/**
-	 * Service methode zum hinzufügen eines Benutzers
+	 * Service methode zum hinzufügen eines Benutzers zur kontaktliste
 	 * 
-	 * @param message
+	 * @param message enthält die informationen in den absender und empfänger attributen
 	 */
 	private void kontaktHinzufuegen(Message message)
 	{
@@ -55,6 +55,10 @@ public class KontaktServiceImpl implements KontaktService{
 		kontaktDao.kontaktHinzufuegen(message);
 	}
 	
+	/**
+	 * Service methode zum löschen eines kontaktes aus der kontaktliste
+	 * @param message enthält die informationen in den absender und empfänger attributen
+	 */
 	private void kontaktLoeschen(Message message)
 	{
 		//TODO: Überprüfen, ob der Benutzer noch in der Liste ist
@@ -63,7 +67,7 @@ public class KontaktServiceImpl implements KontaktService{
 	
 	/**
 	 * Erst im späteren Verlauf zu implementieren
-	 * @param message
+	 * @param message enthält die informationen in den absender und empfänger attributen
 	 */
 	private void kontaktBlockieren(Message message)
 	{
