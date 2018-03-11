@@ -24,9 +24,14 @@ public class Message {
 	private String message;
 	private long timestamp;
 	
-	
+	/**
+	 * empty constructor
+	 */
 	public Message() {}
 	
+	/**
+	 * constructor without messageId and aktion
+	 */
 	public Message(String sender, int groupId, String recipient, String message, long timestamp)
 	{
 		aktion = 0;
@@ -36,6 +41,9 @@ public class Message {
 		this.message = message;
 		this.timestamp = timestamp;
 	}
+	/**
+	 * constructor without messageID
+	 */
 	public Message(int aktion, String sender, int groupId, String recipient, String message, long timestamp)
 	{
 		this.aktion = aktion;

@@ -4,14 +4,23 @@ import de.htwsaar.server.dataclass.User;
 
 import java.util.List;
 
+/**
+ * dataclass for Users
+ * doesn't do anything, only contains information about a user
+ *
+ */
 public class Kontakte {
 
 	private String userId;
 	private List<User> kontaktliste;
 	
+	/**
+	 * empty constructor
+	 */
 	public Kontakte()
 	{
 	}
+	
 	
 	public String getUserId() { return userId;}
 	
