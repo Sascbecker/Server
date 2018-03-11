@@ -1,7 +1,7 @@
 package de.htwsaar.server.dataclass;
 
 /**
- * class that contains constants used for messages
+ * class that contains constants used for messages and contact settings
  *
  */
 public class MessageActions{
