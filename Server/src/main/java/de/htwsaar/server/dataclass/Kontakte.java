@@ -5,7 +5,7 @@ import de.htwsaar.server.dataclass.User;
 import java.util.List;
 
 /**
- * dataclass for Users
+ * dataclass for Contacts
  * doesn't do anything, only contains information about a user
  *
  */

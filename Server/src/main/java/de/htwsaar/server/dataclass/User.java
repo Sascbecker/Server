@@ -5,7 +5,7 @@ package de.htwsaar.server.dataclass;
  * Speichern der IP-Adresse eines Benutzers in dieser Klasse
  * 
  * 
- * Dekleration für Aktion
+ * Deklaration für Aktion
  * 0 = nix
  * 1 = BenutzerAnlegen
  * 2 = LogIn
@@ -19,15 +19,24 @@ public class User {
 	private String returnCode;
 	
 
+	/**
+	 * empty constructor
+	 */
 	public User() {}
 	
+	/**
+	 * constructor without returnCode and ipAdresse
+	 */
 	public User(int aktion, String absenderId, String passwort)
 	{
 		this.aktion = aktion;
 		this.absenderId = absenderId;
 		this.passwort = passwort;
 	}
-	
+	/**
+	 * constructor without returnCode and ipAdresse, empfaengerId is unused
+	 */
+
 	public User(int aktion, String absenderId, String empfaengerId, String passwort)
 	{
 		this.aktion = aktion;
