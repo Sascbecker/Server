@@ -14,6 +14,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 
+/**
+ * Data Access Class for "User" objects in the database
+ *
+ */
 public class UserDaoImpl implements UserDao{
 
 	private NamedParameterJdbcTemplate jdbc;
@@ -28,7 +32,7 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	/**
-	 * Add a new User to the Table "User"
+	 * Adds a new User to the Table "User"
 	 * @param user
 	 */
 	public void newUser(User user)
@@ -42,6 +46,10 @@ public class UserDaoImpl implements UserDao{
 		jdbc.update(sqlStatement, paramSource);
 	}
 	
+	/**
+	 * returns the password of a user identified by a given userId (=username)
+	 * in a secure context we'd store the hashed password instead of the plain text
+	 */
 	public String getPasswort(String memberId) {
             
         String query = "SELECT Passwort FROM USER WHERE UserId = :UserID";
@@ -53,6 +61,9 @@ public class UserDaoImpl implements UserDao{
 
 	}
 	
+	/**
+	 * returns the IP of a user with a given userId (=username)
+	 */
 	public String getIpAdresse(String userId)
 	{
 		String query = "Select IP-Adresse from User where UserId = :UserID";
@@ -63,6 +74,9 @@ public class UserDaoImpl implements UserDao{
 		return jdbc.queryForObject(query, paramSource, String.class);
 	}
 	
+	/**
+	 * returns the User Object from the database for a user identified with a given userId (=username)
+	 */
 	public User getUserInformation(String userID)
 	{
 		String query = "Select * from User where UserID = :UserID";
@@ -77,7 +91,10 @@ public class UserDaoImpl implements UserDao{
 		}
 		return null;
 	}
-		
+	
+	/**
+	 * returns a list of users which are members of a group identified by a given groupId
+	 */
 	public List<User> selectGruppenUser(int gruppenId)
 	{
             //Insert SQL Statement
@@ -89,6 +106,10 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 	
+	/**
+	 * returns a list of users in a group without the sender of the message
+	 * @param message contains information about the group and the sender
+	 */
 	public List<User> selectGruppenUserOhneSender(Message message)
 	{
 		String query="Select IstGruppe.UserID, User.Passwort, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID and IstGruppe.UserID != :Sender";
@@ -99,6 +120,9 @@ public class UserDaoImpl implements UserDao{
 		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
 	
+	/**
+	 * returns a list of users which the given contact has in their contact list
+	 */
 	public List<User> selectKontakte(Kontakte kontakt)
 	{
 		String sqlStatement= "Select Kontakte.KontaktID as UserID, User.Passwort, User.IPAdresse from Kontakte join User on Kontakte.UserID = User.UserID where Kontakte.UserID= :UserID";
