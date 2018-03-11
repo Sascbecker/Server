@@ -1,6 +1,6 @@
 package de.htwsaar.server.dataclass;
 
-import de.htwsaar.server.dataclass.*;
+import de.htwsaar.server.dataclass.User;
 
 import java.util.List;
 

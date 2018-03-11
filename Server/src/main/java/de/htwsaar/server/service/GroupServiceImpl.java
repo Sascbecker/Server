@@ -137,8 +137,6 @@ public class GroupServiceImpl implements GroupService{
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		if(group.getSender().equals(group.getGroupAdmin())) {
 			groupDao.gruppeUmbennen(group);
-			
-			
 		}
 		else
 		{
