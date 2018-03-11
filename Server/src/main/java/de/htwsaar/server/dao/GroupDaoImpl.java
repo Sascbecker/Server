@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.Group;
+import de.htwsaar.server.dataclass.*;
 
 
 
@@ -126,9 +127,4 @@ public class GroupDaoImpl  implements GroupDao{
 		return jdbc.queryForObject(query, paramSource, String.class);
 	}
 	
-
-	public void selectGroupMember() {
-		// TODO Auto-generated method stub
-		
-	}
 }

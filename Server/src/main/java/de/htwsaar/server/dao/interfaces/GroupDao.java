@@ -18,6 +18,5 @@ public interface GroupDao {
 	public void gruppeUmbennen(Group group);
 	public void nutzerZurGruppeHinzufuegen(Group group);
 	public String selectGroupAdmin(int groupID);
-	public void selectGroupMember();
 
 }
