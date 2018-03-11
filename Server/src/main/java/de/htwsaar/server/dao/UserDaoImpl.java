@@ -99,6 +99,15 @@ public class UserDaoImpl implements UserDao{
 		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
 	
+	public List<User> selectKontakte(Kontakte kontakt)
+	{
+		String sqlStatement= "Select Kontakte.KontaktID as UserID, User.Passwort, User.IPAdresse from Kontakte join User on Kontakte.UserID = User.UserID where Kontakte.UserID= :UserID";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("UserID", kontakt.getUserId());
+		
+		return jdbc.query(sqlStatement,paramSource, new UserRowMapper());
+	}
+	
 	/**
 	 * Updates the Table User with the Ip-Adress
 	 * @param user

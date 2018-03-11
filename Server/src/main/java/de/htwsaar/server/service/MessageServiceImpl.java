@@ -64,15 +64,6 @@ public class MessageServiceImpl implements MessageService{
 				gruppenNachrichten(message);
 			}
 			break;
-			//Kontakt hinzufügen
-		case MessageActions.Kontakt_Hinzufuegen:
-			break;
-			//Kontakt löschen
-		case MessageActions.Kontakt_Loeschen:
-			break;
-			//Kontakt blockieren
-		case MessageActions.Kontakt_Blockieren:
-			break;
 		}
 		
 		

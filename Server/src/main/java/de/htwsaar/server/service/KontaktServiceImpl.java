@@ -1,5 +1,7 @@
 package de.htwsaar.server.service;
 
+import java.util.List;
+
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.KontaktDao;
@@ -34,6 +36,8 @@ public class KontaktServiceImpl implements KontaktService{
 		case MessageActions.Kontakt_Blockieren:
 			kontaktBlockieren(message);
 			break;
+		case MessageActions.Kontakt_Liste:
+			kontaktListe(message);
 			
 		
 
@@ -59,6 +63,15 @@ public class KontaktServiceImpl implements KontaktService{
 	
 	private void kontaktBlockieren(Message message)
 	{
+		
+	}
+	
+	private void kontaktListe(Message message)
+	{
+		Kontakte kontakt = new Kontakte();
+		kontakt.setUserId(message.getSender());
+		List<User> kontaktListe = userDao.selectKontakte(kontakt);
+		kontakt.setKontaktListe(kontaktListe);
 		
 	}
 }
