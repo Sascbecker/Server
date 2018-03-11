@@ -17,13 +17,14 @@ Foreign KEY (GruppenID) REFERENCES Gruppen(GruppenID) ON DELETE cascade,
  Foreign KEY (UserId) REFERENCES USER(UserID) )
 	
 	
-CREATE TABLE Nachrichten ( 
-	MessageID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	Zeit int NOT NULL,
-	Inhalt char NOT NULL,
-	SenderID char NOT NULL,
+CREATE TABLE Nachrichten (
+	MessageID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+	Zeit int NOT NULL, 
+	Inhalt char NOT NULL, 
+	SenderID char NOT NULL, 
 	EmpfaengerID char NOT NULL,
-	FOREIGN KEY(SenderID) REFERENCES User (USERID),
+	Zugestellt boolean NULL,
+	FOREIGN KEY(SenderID) REFERENCES User (USERID), 
 	FOREIGN KEY(EmpfaengerID) REFERENCES USER (USERID) )
 	
 	
