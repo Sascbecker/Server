@@ -17,10 +17,15 @@ public class UserServiceImpl implements UserService {
 	private GroupDao groupDao;
 	private Thread userServiceDaemon;
 	
+	/**
+	 * constructor, also launches a daemon thread in the background
+	 * that thread regularly pings all online users, so don't create multiple userServices, or you'll DDOS yourself
+	 */
 	public UserServiceImpl()
 	{
 		userDao = DaoObjectBuilder.getUserDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
+		startUserServiceDaemon();
 	}
 	
 	public void start(User user)
