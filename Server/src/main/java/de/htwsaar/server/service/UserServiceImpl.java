@@ -33,12 +33,12 @@ public class UserServiceImpl implements UserService {
 		switch(user.getAktion()) {
 		
 		//User anlegen
-		case UserActions.USER_ANLEGEN: userAnlegen(user);
+		case UserActions.USER_LOGIN: userAnlegen(user);
 			break;
 		//User login
 		case UserActions.USER_AUTHENTIFIZIERUNG: userAuthenfizierung(user);
 			break;
-		case UserActions.USER_ABMELDEN: userAbmelden(user);
+		case UserActions.USER_LOGOUT: userAbmelden(user);
 		default :
 			break;
 			
