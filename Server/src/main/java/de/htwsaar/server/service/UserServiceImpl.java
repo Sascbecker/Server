@@ -1,11 +1,15 @@
 package de.htwsaar.server.service;
 
 import de.htwsaar.server.dataclass.User;
+import de.htwsaar.server.dataclass.UserActions;
 import de.htwsaar.server.service.interfaces.UserService;
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.*;
 
-
+/**
+ * service class for user account configuration
+ * 
+ */
 public class UserServiceImpl implements UserService {
 	
 	UserDao userDao;
@@ -22,12 +26,12 @@ public class UserServiceImpl implements UserService {
 		switch(user.getAktion()) {
 		
 		//User anlegen
-		case 1: userAnlegen(user);
+		case UserActions.USER_ANLEGEN: userAnlegen(user);
 			break;
 		//User login
-		case 2: userAuthenfizierung(user);
+		case UserActions.USER_AUTHENTIFIZIERUNG: userAuthenfizierung(user);
 			break;
-		case 3: userAbmelden(user);
+		case UserActions.USER_ABMELDEN: userAbmelden(user);
 		default :
 			break;
 			
