@@ -7,13 +7,15 @@ import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.*;
 
 /**
- * service class for user account configuration
+ * service class for user account configuration calls from a client (login, register, logout)
+ * the start(User user) method should be called to handle such a configuration call.
  * 
  */
 public class UserServiceImpl implements UserService {
 	
-	UserDao userDao;
-	GroupDao groupDao;
+	private UserDao userDao;
+	private GroupDao groupDao;
+	private Thread userServiceDaemon;
 	
 	public UserServiceImpl()
 	{
@@ -40,6 +42,7 @@ public class UserServiceImpl implements UserService {
 	
 	private void userAnlegen(User user)
 	{
+		//TODO: pruefen ob user bereits existiert, fehler an client senden falls ja
 		try {
 			userDao.newUser(user);
 		}
@@ -68,6 +71,26 @@ public class UserServiceImpl implements UserService {
 	{
 		user.setIpAdresse("");
 		userDao.updateIpAdresse(user);
+	}
+	
+	/**
+	 * launches thread in the background to periodically check whether a user is still online
+	 * updates the database accordingly
+	 */
+	private void startUserServiceDaemon() {
+		userServiceDaemon= new Thread(new Runnable() {
+			
+			public void run() {
+				//TODO: implement database und network team
+				//datenbank nach allen nutzern die aktuell online sind abfragen
+				//all diese nutzer anpingen
+				//nutzer die nicht innerhalb der timeout zeit antworten ausloggen
+				//am ende, schlafe eine weile (mindestens 1 minute)
+				//damit das netzwerk interface nicht zu oft mit pings belastet wird
+			}
+		});
+		userServiceDaemon.start();
+
 	}
 	
 
