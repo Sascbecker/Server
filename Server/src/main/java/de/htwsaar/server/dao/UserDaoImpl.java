@@ -138,15 +138,19 @@ public class UserDaoImpl implements UserDao{
 	 */
 	public void updateIpAdresse(User user)
 	{
-		String query = "Update User set IP-Adresse = :Ip-Adresse where User_id = :User_id";
+		String query = "Update User set IP-Adresse = :Ip-Adresse where UserID = :User_id";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
 		paramSource.addValue("Ip-Adresse", user.getIpAdresse());
 		
-		paramSource.addValue("User_id", user.getAbsenderId());
+		paramSource.addValue("UserID", user.getAbsenderId());
 		
 		jdbc.update(query,paramSource);
 	}
+	
+	/**
+	 * datenbank nach allen nutzern die aktuell online sind abfragen 	
+	 */
 	
 
 	/**

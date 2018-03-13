@@ -86,12 +86,14 @@ public class KontaktServiceImpl implements KontaktService{
 		
 	}
 	
-	private void kontaktListe(Message message)
+	private Kontakte kontaktListe(Message message)
 	{
 		Kontakte kontakt = new Kontakte();
 		kontakt.setUserId(message.getSender());
 		List<User> kontaktListe = userDao.selectKontakte(kontakt);
 		kontakt.setKontaktListe(kontaktListe);
+		
+		return kontakt;
 		
 	}
 }
