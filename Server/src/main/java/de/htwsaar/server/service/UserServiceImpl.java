@@ -72,9 +72,13 @@ public class UserServiceImpl implements UserService {
 			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
 	}
 	
+	/**
+	 * IPAdresse des Clients auf NUll setzen und in der Datenbank ändern.
+	 * @param user
+	 */
 	private void userAbmelden(User user)
 	{
-		user.setIpAdresse("");
+		user.setIpAdresse(null);
 		userDao.updateIpAdresse(user);
 	}
 	
