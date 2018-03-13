@@ -2,11 +2,12 @@ package de.htwsaar.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.MapSqlParameterSource;
 import de.htwsaar.server.dao.MessageDaoImpl.MessageRowMapper;
 import de.htwsaar.server.dataclass.Message;
 import de.htwsaar.server.dataclass.User;
+
 
 public class MessageServiceDaemon 
 {
@@ -30,7 +31,7 @@ public class MessageServiceDaemon
 	 * @return
 	 */
 	public ArrayList<List> getUnreadMessages(List<User> user)
-	{
+	{   MessageDao messagedao;
 		User currentUser = new User();
 		ArrayList<List> unreadMessages = new ArrayList();
 		
@@ -38,10 +39,7 @@ public class MessageServiceDaemon
 		{
 		  currentUser=user.get(i); 
 		  String userId = currentUser.getAbsenderId();
-			String query = "Select * from Nachrichten where EmpfaengerID = :UserID";
-			MapSqlParameterSource paramSource = new MapSqlParameterSource();
-			paramSource.addValue("UserID", userId);
-			List<Message> message = jdbc.query(query,paramSource, new MessageRowMapper());
+		  List<Message> message = messagedao.alleUngeleseneNachrichten(userId);
 			unreadMessages.add(i, message);
 			
 		}
@@ -52,6 +50,17 @@ public class MessageServiceDaemon
 	
 	public void sendUnreadMessages(ArrayList<List> unreadMessages)
 	{
+		Message message = new Message();
 		
+		for(int i =0; i<unreadMessages.size(); i++)
+		{
+			List<Message>messageList= unreadMessages.get(i);
+			for(int j=0; j<messageList.size(); i++)
+			{
+				message = messageList.get(j);
+				message.getMessage();
+			}
+			
+		}
 	}
 }
