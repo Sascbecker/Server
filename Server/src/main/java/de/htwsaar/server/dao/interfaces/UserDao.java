@@ -14,5 +14,6 @@ public interface UserDao {
 	public List<User> selectGruppenUser(int gruppenId);
 	public List<User> selectGruppenUserOhneSender(Message message);
 	public List<User> selectKontakte(Kontakte kontakt);
+	public List<User> getAllOnlineUser();
 
 }
