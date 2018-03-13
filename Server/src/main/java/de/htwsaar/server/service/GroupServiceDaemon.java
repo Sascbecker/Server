@@ -3,26 +3,21 @@ package de.htwsaar.server.service;
 import java.util.List;
 
 import de.htwsaar.server.dao.DaoObjectBuilder;
+import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.User;
 
-public class UserServiceDaemon {
-
-	UserDao userDao;
+public class GroupServiceDaemon {
 	
-
-
-	public UserServiceDaemon()
+	UserDao userDao;
+	GroupDao groupDao;
+	
+	public GroupServiceDaemon()
 	{
 		userDao = DaoObjectBuilder.getUserDao();
+		groupDao = DaoObjectBuilder.getGroupDao();
 		
 	}
-	
-	
-	/**
-	 * Return a list of Users, which are Online
-	 * @return List
-	 */
 	
 	public List<User> getAllOnlineUser()
 	{
@@ -31,14 +26,8 @@ public class UserServiceDaemon {
 		return user;
 	}
 	
-	public void ping(List<User> user)
-	{
-		
-	}
 	
-	public void logout()
-	{
-		
-		
-	}
+	
+	
+
 }

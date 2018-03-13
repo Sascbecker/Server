@@ -88,7 +88,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	private void startUserServiceDaemon() {
 		userServiceDaemon= new Thread(new Runnable() {
-			
+			//TODO: Seperaten Thread für jeden User starten
+			// damit Daemon nicht zu lange warten muss
 			public void run() {
 				//TODO: implement database und network team
 				//datenbank nach allen nutzern die aktuell online sind abfragen
