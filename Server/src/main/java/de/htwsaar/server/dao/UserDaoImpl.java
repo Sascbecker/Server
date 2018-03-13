@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.*;
+import de.htwsaar.server.service.MessageRowMapper;
 
 /**
  * Data Access Class for "User" objects in the database
@@ -151,7 +152,15 @@ public class UserDaoImpl implements UserDao{
 	/**
 	 * datenbank nach allen nutzern die aktuell online sind abfragen 	
 	 */
-	
+    public List<User> getAllOnlineUser()
+    {
+		
+		String query = "Select * from User where length(IPAdresse)>5";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		return jdbc.query(query,paramSource, new MessageRowMapper());
+	}
+
+
 
 	/**
 	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
