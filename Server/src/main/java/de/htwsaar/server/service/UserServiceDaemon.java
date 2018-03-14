@@ -45,7 +45,8 @@ public class UserServiceDaemon {
 	 */
 	public void logout(User user)
 	{
-		
+		user.setIpAdresse(null);
+		userDao.updateIpAdresse(user);
 		
 	}
 }
