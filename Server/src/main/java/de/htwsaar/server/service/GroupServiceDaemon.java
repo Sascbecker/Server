@@ -5,6 +5,7 @@ import java.util.List;
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
+import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.dataclass.User;
 
 public class GroupServiceDaemon {
@@ -30,10 +31,10 @@ public class GroupServiceDaemon {
 	 * returns a List of Groups where the User is a Member
 	 * @return
 	 */
-	public List<User> getGroupListForUser()
+	public List<Group> getGroupListForUser(String userID)
 	{
-		
-		
+		List<Group> groups = groupDao.getGroupListForUser(userID);
+		return groups;
 	}
 	/**
 	 * returns a List of the Members for a given Group 

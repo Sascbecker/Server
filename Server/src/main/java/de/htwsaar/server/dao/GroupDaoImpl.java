@@ -141,7 +141,7 @@ public class GroupDaoImpl  implements GroupDao{
 	 * @param userID
 	 * @return
 	 */
-	public List<Group> getGroupListForUser(int userID)
+	public List<Group> getGroupListForUser(String userID)
 	{
 		String query = String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID where IstGruppe.UserID =:UserID";
 	

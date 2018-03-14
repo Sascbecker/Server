@@ -5,8 +5,12 @@ import de.htwsaar.server.dao.interfaces.GroupDao;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.GroupActions;
+import de.htwsaar.server.dataclass.User;
 import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.service.interfaces.GroupService;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * this class handles requests for group management.
@@ -17,6 +21,9 @@ public class GroupServiceImpl implements GroupService{
 	MessageDao messageDao;
 	GroupDao groupDao;
 	private Thread groupServiceDaemon;
+	GroupServiceDaemon daemon;
+	private User nextUser;
+	private Group nextGroup;
 
 	
 	/**
@@ -28,7 +35,10 @@ public class GroupServiceImpl implements GroupService{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
+		daemon = new GroupServiceDaemon();
 		startGroupServiceDaemon();
+		nextUser = new User();
+		nextGroup = new Group();
 	}
 	/**
 	 * handles incoming configuration parameters for group conversations
@@ -72,7 +82,21 @@ public class GroupServiceImpl implements GroupService{
 				//für jeden von denen:
 				//sende ihnen die gesamten informationen aller gruppen zu in denen sie sind
 				//schlafe für ein paar sekunden, damit das alles nicht zu oft gesendet wird
-				
+				List<User> user = daemon.getAllOnlineUser();
+				Iterator<User> i = user.iterator();
+				while(i.hasNext()==true)
+				{
+					nextUser = i.next();
+					String userID = nextUser.getAbsenderId();
+					 List<Group> groupList = daemon.getGroupListForUser(userID);
+					 Iterator<Group> j = groupList.iterator();
+					 while(i.hasNext()==true)
+					 {
+						 nextGroup = j.next();
+						 int groupID = nextGroup.getGroupId();
+						 List<User> members = daemon.getMemberListOfGroup(groupID);
+					 }
+		         }
 			}
 		});
 		groupServiceDaemon.start();
