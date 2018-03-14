@@ -72,12 +72,12 @@ public class MessageServiceDaemon
 			{
 				message = messageList.get(j);
 				//TODO 
-				//Message Objekt an die Funktion zum senden der Message übergeben
-				//mögliche Implementierung
+				//Message Objekt an die Funktion zum senden der Message uebergeben
+				//moegliche Implementierung
 				connector.sendMessage(message.getSender(), message.getMessage());
 				
 				//TODO
-				//sendMessage auf true prüfen und Datenbankeintrag für diese Nachricht aktualisien
+				//sendMessage auf true pruefen und Datenbankeintrag für diese Nachricht aktualisieren
 			}
 			
 		}
