@@ -26,6 +26,25 @@ public class GroupServiceDaemon {
 		return user;
 	}
 	
+	/**
+	 * returns a List of Groups where the User is a Member
+	 * @return
+	 */
+	public List<User> getGroupListForUser()
+	{
+		
+		
+	}
+	/**
+	 * returns a List of the Members for a given Group 
+	 * @return
+	 */
+	public List<User> getMemberListOfGroup(int gruppenId)
+	{ 
+		List<User> members= userDao.selectGruppenUser(gruppenId);
+		return members;
+	}
+	
 	public void sendAllGroupInformation(List<User> user)
 	{
    
