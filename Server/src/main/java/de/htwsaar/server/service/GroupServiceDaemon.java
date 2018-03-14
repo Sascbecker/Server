@@ -26,6 +26,14 @@ public class GroupServiceDaemon {
 		return user;
 	}
 	
+	public void sendAllGroupInformation(List<User> user)
+	{
+   
+	
+	
+	
+	
+	}
 	
 	
 	

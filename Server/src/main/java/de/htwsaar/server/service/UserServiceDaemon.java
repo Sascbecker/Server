@@ -31,12 +31,19 @@ public class UserServiceDaemon {
 		return user;
 	}
 	
-	public void ping(List<User> user)
-	{
-		
-	}
+	/**
+	 * sends a Request to each User in the List
+	 * if the Client isn´t sending a Reply before timeout, the user gets logged out
+	 */
 	
-	public void logout()
+	public boolean ping(User user)
+	{
+		return true;
+	}
+	/**
+	 * logs the User out
+	 */
+	public void logout(User user)
 	{
 		
 		
