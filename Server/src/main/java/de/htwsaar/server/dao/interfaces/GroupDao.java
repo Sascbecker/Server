@@ -19,5 +19,5 @@ public interface GroupDao {
 	public void nutzerZurGruppeHinzufuegen(Group group);
 	public int getGroupID();
 	public String selectGroupAdmin(int groupID);
-
+	public List<Group> getGroupListForUser(int userID);
 }
