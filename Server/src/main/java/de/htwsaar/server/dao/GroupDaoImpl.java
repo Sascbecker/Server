@@ -143,7 +143,7 @@ public class GroupDaoImpl  implements GroupDao{
 	 */
 	public List<Group> getGroupListForUser(String userID)
 	{
-		String query = String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID where IstGruppe.UserID =:UserID";
+	  String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID where IstGruppe.UserID =:UserID";
 	
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
