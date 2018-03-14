@@ -75,6 +75,9 @@ public class MessageServiceDaemon
 				//Message Objekt an die Funktion zum senden der Message übergeben
 				//mögliche Implementierung
 				connector.sendMessage(message.getSender(), message.getMessage());
+				
+				//TODO
+				//sendMessage auf true prüfen und Datenbankeintrag für diese Nachricht aktualisien
 			}
 			
 		}
