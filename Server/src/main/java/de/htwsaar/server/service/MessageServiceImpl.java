@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.interfaces.MessageService;
+import java.util.ArrayList;
 
 /**
  * this class handles direct and group messages.
@@ -19,7 +20,7 @@ public class MessageServiceImpl implements MessageService{
 	UserDao userDao;
 	MessageDao messageDao;
 	GroupDao groupDao;
-
+	MessageServiceDaemon daemon;
 	/**
 	 * default constructor
 	 * automatically starts a daemon thread in the background that interacts with the database and the network
@@ -30,6 +31,7 @@ public class MessageServiceImpl implements MessageService{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
+	    daemon = new MessageServiceDaemon();
 		startMessageServiceDaemon();
 	}
 
@@ -49,6 +51,9 @@ public class MessageServiceImpl implements MessageService{
 				//für jede der nachrichten, versuche sie zu senden 
 				//wenn erfolgreich, trage dies in der datenbank ein
 				//am ende, schlafe für 100ms, damit die datenbank nicht zu oft gepollt wird
+				List<User>user = daemon.getAllOnlineUser();
+				ArrayList<List> unreadMessages = daemon.getUnreadMessages(user);
+				daemon.sendUnreadMessages(unreadMessages);
 			}
 		});
 		messageServiceDaemon.start();
