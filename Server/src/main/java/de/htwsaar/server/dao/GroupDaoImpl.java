@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import de.htwsaar.server.dao.UserDaoImpl.UserRowMapper;
 import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.dataclass.*;
@@ -133,6 +134,21 @@ public class GroupDaoImpl  implements GroupDao{
 		paramSource.addValue("GroupID", groupID);
 
 		return jdbc.queryForObject(query, paramSource, String.class);
+	}
+	
+	/**
+	 * return a List of Groups, where the User is a Member
+	 * @param userID
+	 * @return
+	 */
+	public List<Group> getGroupListForUser(int userID)
+	{
+		String query = String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID where IstGruppe.UserID =:UserID";
+	
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		paramSource.addValue("UserID", userID);
+		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
 	
 }
