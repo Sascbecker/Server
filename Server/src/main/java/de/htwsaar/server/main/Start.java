@@ -38,18 +38,17 @@ public class Start implements Runnable{
 		
 	}
 
-	public void messageStart(int aktion, String absenderId, int groupId, String empfaengerId, String message, long timestamp)
+	public void messageStart(Message message)
 	{
-		Message nachricht = new Message(aktion, absenderId, groupId, empfaengerId, message, timestamp);
-		switch(nachricht.getAktion())
+		switch(message.getAktion())
 		{
-		case MessageActions.Nachricht: messageService.handleMessage(nachricht);
+		case MessageActions.Nachricht: messageService.handleMessage(message);
 			break;
 		case MessageActions.Kontakt_Hinzufuegen:
 		case MessageActions.Kontakt_Loeschen:
 		case MessageActions.Kontakt_Blockieren:
 		case MessageActions.Kontakt_Liste:
-				kontaktService.handleKontaktConfig(nachricht);
+				kontaktService.handleKontaktConfig(message);
 			break;
 		}
 		
@@ -101,7 +100,7 @@ public class Start implements Runnable{
 	{
 		
 		Start start = new Start();
-		start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
+		//start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
 		
 	}
 	
