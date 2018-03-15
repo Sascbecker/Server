@@ -26,13 +26,14 @@ public class ServerService
 	@Path("/getMessage")
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public boolean getMessage( @QueryParam( "absender" ) String absender, @QueryParam( "empfaenger" ) String  empfaenger,
-							@QueryParam( "gruppenID" ) int gruppenID, @QueryParam( "timestamp" ) int timestamp,
-							@QueryParam( "message" ) String nachricht, @QueryParam( "aktion" ) int aktion ) {
+	public boolean getMessage( @QueryParam( "nachricht" ) Message nachricht ){
+							//@QueryParam( "absender" ) String absender, @QueryParam( "empfaenger" ) String  empfaenger,
+							//@QueryParam( "gruppenID" ) int gruppenID, @QueryParam( "timestamp" ) int timestamp,
+							//@QueryParam( "message" ) String nachricht, @QueryParam( "aktion" ) int aktion ) {
 		
-		Message message = new Message( aktion, absender, gruppenID, empfaenger, nachricht, timestamp);
+		//Message message = new Message( aktion, absender, gruppenID, empfaenger, nachricht, timestamp);
 		Start start = new Start();
-		start.messageStart(message);
+		start.messageStart(nachricht);
 		
 		return true;//Nachricht angekommen
 	}
@@ -53,8 +54,6 @@ public class ServerService
 	@Produces( MediaType.APPLICATION_JSON )
 	public boolean lastTimestamp( @QueryParam( "timestamp" ) long timestamp, @QueryParam( "sender" ) String sender ) {
 		
-		Start start = new Start();
-		start.groupStart(gruppe);
 		
 		return true;//Nachricht angekommen
 	}

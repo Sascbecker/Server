@@ -11,14 +11,14 @@ import javax.ws.rs.core.MediaType;
 
 public class ClientConnector
 {
-	private static String baseUrl = "http://localhost:4434";
+	private static String baseUrl = ":4434";
 	
-	public static boolean sendMessage( String absender, String empfaenger, int gruppenID, long timestamp, String message, int aktion ) {
+	public static boolean sendMessage( Message nachricht , String ip ) {
 		String webContextPath = "/getMessage";
 		boolean angekommen = false;
 
 		Client c = ClientBuilder.newClient();
-		WebTarget target = c.target( baseUrl );
+		WebTarget target = c.target( ip + baseUrl );
 		
 		
 		angekommen = target.path( webContextPath ).queryParam( "absender", absender ).queryParam( "empfaenger", empfaenger )
@@ -28,16 +28,38 @@ public class ClientConnector
 		return angekommen;
 	}
 	
-	public static boolean sendContacts( Kontakte kontakte ) {
+	public static boolean sendContacts( Kontakte kontakte, String ip ) {
 		String webContextPath = "/kontakte";
 		boolean angekommen = false;
 
 		Client c = ClientBuilder.newClient();
-		WebTarget target = c.target( baseUrl );
+		WebTarget target = c.target( ip + baseUrl );
 		
 		angekommen = target.path( webContextPath ).queryParam( "kontakte", kontakte )
 								.request( MediaType.APPLICATION_JSON ).get( boolean.class );
 		
 		return angekommen;
+	}
+	
+	
+	public static boolean ping( String ip ) {
+		String webContextPath = "/ping";
+		boolean angekommen = false;
+
+		Client c = ClientBuilder.newClient();
+		WebTarget target = c.target( ip + baseUrl );
+		
+		angekommen = target.path( webContextPath ).request( MediaType.APPLICATION_JSON ).get( boolean.class );
+		
+		return angekommen;
+	}
+	
+	public static void lastMessage( String ip ) {
+		String webContextPath = "/lastMessage";
+
+		Client c = ClientBuilder.newClient();
+		WebTarget target = c.target( ip + baseUrl );
+		
+		target.path( webContextPath );
 	}
 }
