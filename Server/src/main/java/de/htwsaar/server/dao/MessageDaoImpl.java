@@ -58,7 +58,7 @@ public class MessageDaoImpl implements MessageDao{
 	 */
 	public List<Message> alleUngeleseneNachrichten(String userID)
 	{
-		boolean delivered = false;
+		int delivered = 0;
 		String query = "Select * from Nachrichten where EmpfaengerID = :UserID and Zugestellt = :delivered order by Zeit";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("UserID", userID);

@@ -48,11 +48,7 @@ public class GroupServiceDaemon {
 	
 	public void sendAllGroupInformation(List<User> user)
 	{
-   
-	
-	
-	
-	
+  
 	}
 	
 	

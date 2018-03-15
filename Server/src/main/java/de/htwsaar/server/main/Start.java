@@ -4,6 +4,7 @@ import de.htwsaar.server.service.ServiceObjektBuilder;
 
 import de.htwsaar.server.service.interfaces.*;
 import de.htwsaar.server.dataclass.*;
+import de.htwsaar.server.service.*;
 
 /*
  * Hauptprogramm des Servers, aufruf dieser Klasse bei ankommenen der Nachricht.
@@ -24,6 +25,9 @@ public class Start {
 	UserService userService;
 	GroupService groupService;
 	KontaktService kontaktService;
+	GroupServiceDaemon groupServiceDeamon;
+	MessageServiceDaemon messageServiceDeamon;
+	UserServiceDaemon userServiceDeamon;
 	
 	
 	public Start()
@@ -32,6 +36,9 @@ public class Start {
 		userService = ServiceObjektBuilder.getUserService();
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
+		groupServiceDeamon = new GroupServiceDaemon();
+		messageServiceDeamon = new MessageServiceDaemon();
+		userServiceDeamon = new UserServiceDaemon();
 	}
 
 	public void messageStart(int aktion, String absenderId, int groupId, String empfaengerId, String message, long timestamp)
