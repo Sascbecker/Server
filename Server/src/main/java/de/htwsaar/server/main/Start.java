@@ -21,6 +21,9 @@ public class Start implements Runnable{
 	GroupServiceDaemon groupServiceDeamon;
 	MessageServiceDaemon messageServiceDeamon;
 	UserServiceDaemon userServiceDeamon;
+	Thread messageStart;
+	Thread userStart;
+	Thread groupStart;
 	
 	public Start()
 	{
@@ -45,27 +48,36 @@ public class Start implements Runnable{
 		
 	}
 
-	public void messageStart(Message message)
+	public void messageStart(final Message message)
 	{
-		switch(message.getAktion())
-		{
-		case MessageActions.Nachricht: messageService.handleMessage(message);
-			break;
-		case MessageActions.Kontakt_Hinzufuegen:
-		case MessageActions.Kontakt_Loeschen:
-		case MessageActions.Kontakt_Blockieren:
-		case MessageActions.Kontakt_Liste:
-				kontaktService.handleKontaktConfig(message);
-			break;
-		}
+		messageStart = new Thread(new Runnable() {
+			
+			public void run() {
+				switch(message.getAktion())
+				{
+				case MessageActions.Nachricht: messageService.handleMessage(message);
+					break;
+				case MessageActions.Kontakt_Hinzufuegen:
+				case MessageActions.Kontakt_Loeschen:
+				case MessageActions.Kontakt_Blockieren:
+				case MessageActions.Kontakt_Liste:
+						kontaktService.handleKontaktConfig(message);
+					break;
+				}
+			}
+		});
+		
 	}
 	
-	public void userStart(User user)
+	public void userStart(final User user)
 	{
+		userStart = new Thread(new Runnable() {
+			
+			public void run() {
+				userService.start(user);
+			}
+		});
 		
-		userService.start(user);
-		
-		System.out.println(user.getReturnCode());
 	}
 	
 	/**
@@ -76,24 +88,30 @@ public class Start implements Runnable{
 	 * @param groupAdmin Admin der Gruppe / nicht unbedingt benötigt
 	 * @param UserID Benutzer für den die Aktion in der Gruppe ausgeführt werden soll. Also welcher Benutzer hinzugefügt/ gelöscht werden soll
 	 */
-	public void groupStart(Group group)
+	public void groupStart(final Group group)
 	{
+		groupStart = new Thread(new Runnable() {
+			
+			public void run() {
+				switch(group.getAktion())
+				{
+				case GroupActions.Create_Group:
+					groupService.handleGroupConfig(group);
+					break;
+				case GroupActions.Kick_From_Group:
+					groupService.handleGroupConfig(group);
+					break;
+				case GroupActions.Delete_Group:
+					groupService.handleGroupConfig(group);
+					break;
+				case GroupActions.Add_To_Group:
+					groupService.handleGroupConfig(group);
+					break;
+				}
+			}
+		});
 		
-		switch(group.getAktion())
-		{
-		case GroupActions.Create_Group:
-			groupService.handleGroupConfig(group);
-			break;
-		case GroupActions.Kick_From_Group:
-			groupService.handleGroupConfig(group);
-			break;
-		case GroupActions.Delete_Group:
-			groupService.handleGroupConfig(group);
-			break;
-		case GroupActions.Add_To_Group:
-			groupService.handleGroupConfig(group);
-			break;
-		}
+		
 		
 	}
 	public static void main(String[] args)
