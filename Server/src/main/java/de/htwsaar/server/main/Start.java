@@ -13,6 +13,7 @@ import de.htwsaar.server.service.*;
  */
 public class Start implements Runnable{
 
+	private Start instance;
 	MessageService messageService;
 	UserService userService;
 	GroupService groupService;
@@ -20,7 +21,6 @@ public class Start implements Runnable{
 	GroupServiceDaemon groupServiceDeamon;
 	MessageServiceDaemon messageServiceDeamon;
 	UserServiceDaemon userServiceDeamon;
-	
 	
 	public Start()
 	{
@@ -33,6 +33,14 @@ public class Start implements Runnable{
 		userServiceDeamon = new UserServiceDaemon();
 	}
 	
+	public synchronized Start getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new Start();
+		}
+		return instance;
+	}
 	public void run()
 	{
 		
@@ -72,25 +80,21 @@ public class Start implements Runnable{
 	 * @param groupAdmin Admin der Gruppe / nicht unbedingt benötigt
 	 * @param UserID Benutzer für den die Aktion in der Gruppe ausgeführt werden soll. Also welcher Benutzer hinzugefügt/ gelöscht werden soll
 	 */
-	public void groupStart(int aktion, String absenderID, String groupName, int groupID, String empfaengerID)
+	public void groupStart(Group group)
 	{
-		Group group;
-		switch(aktion)
+		
+		switch(group.getAktion())
 		{
 		case GroupActions.Create_Group:
-			group = new Group(aktion,absenderID,groupName, groupID,empfaengerID);
 			groupService.handleGroupConfig(group);
 			break;
 		case GroupActions.Kick_From_Group:
-			group = new Group(aktion,absenderID,groupName, groupID,empfaengerID);
 			groupService.handleGroupConfig(group);
 			break;
 		case GroupActions.Delete_Group:
-			group = new Group(aktion,absenderID,groupName, groupID,empfaengerID);
 			groupService.handleGroupConfig(group);
 			break;
 		case GroupActions.Add_To_Group:
-			group = new Group(aktion,absenderID,groupName, groupID,empfaengerID);
 			groupService.handleGroupConfig(group);
 			break;
 		}
