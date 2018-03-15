@@ -115,6 +115,15 @@ public class GroupDaoImpl  implements GroupDao{
 
 		
 	}
+	public List<Group> selectGroupInformation(String userID)
+	{
+		String query = "Select Gruppen.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin "
+				+ "from Gruppen join IstGruppe on Gruppen.GruppenID = IstGruppe.GruppenID "
+				+ "where IstGruppe.UserID =:UserID";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("UserID", userID);
+		return jdbc.query(query,paramSource, new GroupRowMapper());
+	}
 	
 	public int getGroupID()
 	{
@@ -141,7 +150,9 @@ public class GroupDaoImpl  implements GroupDao{
 	 */
 	public List<Group> getGroupListForUser(String userID)
 	{
-	  String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID where IstGruppe.UserID =:UserID";
+	    String query="Select IstGruppe.GruppenID, Gruppen.GruppenName, Gruppen.GruppenAdmin"
+	    		+ "from istGruppe join Gruppen on IstGruppe.GruppenID = Gruppen.GruppenID" 
+	    		+ "where IstGruppe.UserID =:UserID";
 	
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
@@ -157,9 +168,9 @@ public class GroupDaoImpl  implements GroupDao{
 
 			Group group = new Group();
 			try {
-				group.setGroupId(results.getInt("GroupID"));
-				group.setGroupName(results.getString("GroupName"));
-				group.setGroupAdmin(results.getString("Admin"));
+				group.setGroupId(results.getInt("GruppenID"));
+				group.setGroupName(results.getString("GruppenName"));
+				group.setGroupAdmin(results.getString("GruppenAdmin"));
 				
 
 			

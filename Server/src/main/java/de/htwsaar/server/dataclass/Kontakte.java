@@ -13,6 +13,7 @@ public class Kontakte {
 
 	private String userId;
 	private List<User> kontaktliste;
+	private List<Group> groupliste;
 	
 	/**
 	 * empty constructor
@@ -25,7 +26,7 @@ public class Kontakte {
 	public String getUserId() { return userId;}
 	
 	public List<User> getKontaktListe () { return kontaktliste;}
-	
+	public List<Group> getGroupListe() { return groupliste;}
 	
 	public void setUserId(String userId)
 	{
@@ -33,4 +34,5 @@ public class Kontakte {
 	}
 	
 	public void setKontaktListe(List<User> kontaktListe) { this.kontaktliste = kontaktListe;}
+	public void setGroupListe(List<Group> groupliste) { this.groupliste = groupliste; }
 }

@@ -12,22 +12,13 @@ import de.htwsaar.server.service.*;
  */
 public class Start {
 
-	public static final int Nachricht=0; 
-	public static final int Kontakt_Hinzufuegen=1;
-	public static final int Kontakt_Loeschen=2;
-	public static final int Kontakt_Blockieren=3; 
-	public static final int Create_Group=4;
-	public static final int Kick_From_Group=5; 
-	public static final int Delete_Group=6; 
-	public static final int Rename_Group=7;
-	public static final int Add_To_Group=8;
 	MessageService messageService;
 	UserService userService;
 	GroupService groupService;
 	KontaktService kontaktService;
-	GroupServiceDaemon groupServiceDeamon;
-	MessageServiceDaemon messageServiceDeamon;
-	UserServiceDaemon userServiceDeamon;
+	//GroupServiceDaemon groupServiceDeamon;
+	//MessageServiceDaemon messageServiceDeamon;
+	//UserServiceDaemon userServiceDeamon;
 	
 	
 	public Start()
@@ -36,9 +27,9 @@ public class Start {
 		userService = ServiceObjektBuilder.getUserService();
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
-		groupServiceDeamon = new GroupServiceDaemon();
-		messageServiceDeamon = new MessageServiceDaemon();
-		userServiceDeamon = new UserServiceDaemon();
+		//groupServiceDeamon = new GroupServiceDaemon();
+		//messageServiceDeamon = new MessageServiceDaemon();
+		//userServiceDeamon = new UserServiceDaemon();
 	}
 
 	public void messageStart(int aktion, String absenderId, int groupId, String empfaengerId, String message, long timestamp)
@@ -105,54 +96,8 @@ public class Start {
 	{
 		
 		Start start = new Start();
+		start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
 		
-		//start.userStart(1, "Marco", "Test");
-		//start.userStart(1, "Alex", "Test");
-		//start.userStart(1, "Daniela", "Test");
-		//start.userStart(1, "Robin", "Test");
-		//start.userStart(1, "Sascha", "Test");
-		//start.userStart(1, "Maurice", "Test");
-		
-		//user Anmeldung
-		
-		//start.userStart(2, "Marco", "Test");
-		//start.userStart(2,"Marco","aaaa");
-		
-		//User zur kontaktListe hinzufügen
-		//start.messageStart(1,"Marco",0 , "Alex", "", (System.currentTimeMillis() / 1000L));
-		//start.messageStart(1,"Marco",0 , "Daniela", "", (System.currentTimeMillis() / 1000L));
-		
-		//User von kontaktliste löschen
-		//start.messageStart(2, "Marco", 0,"Daniela" ,"", 0);
-		
-		//Gruppe gründen
-		//start.groupStart(Create_Group, 0, "Versuch", "Marco", "");
-		
-		//User zur Gruppe hinzufügen
-		//start.groupStart(Add_To_Group, 1, "Versuch", "Marco", "Marco");
-		//start.groupStart(Add_To_Group, 1, "Versuch", "Marco", "Alex");
-		//start.groupStart(Add_To_Group, 1, "Versuch", "Marco", "Daniela");
-		//start.groupStart(Add_To_Group, 1, "Versuch", "Marco", "Robin");
-		//start.groupStart(Add_To_Group, 1, "Versuch", "Alex", "Marco");
-		
-		//User von Gruppe kicken
-		
-		//start.groupStart(Kick_From_Group, 1, "Versuch", "Marco", "Daniela");
-		//start.groupStart(Kick_From_Group, 1, "Versuch", "Alex", "Robin");
-		//start.groupStart(Kick_From_Group, 1, "Versuch", "Alex", "Alex");
-		//start.groupStart(Kick_From_Group, 1, "Versuch", "Marco", "Marco");
-		//Gruppe löschen
-		
-		//start.groupStart(Delete_Group, 1, "Versuch", "Marco", "");
-		
-		//Gruppe umbennen
-		
-		
-		start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "",  (System.currentTimeMillis() / 1000L));
-		//Gruppennachricht versenden
-		//start.messageStart(0, "Marco", 2, "", "Dies ist eine neue Test nachricht", (System.currentTimeMillis() / 1000L));
-		//Nachrichten versenden
-		//start.messageStart(absenderId, groupId, empfaengerId, message, timestamp);
 	}
 	
 }

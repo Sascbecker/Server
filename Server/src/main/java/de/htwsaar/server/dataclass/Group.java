@@ -1,5 +1,9 @@
 package de.htwsaar.server.dataclass;
 
+import java.util.List;
+
+import de.htwsaar.server.dataclass.*;
+
 /**
  * dataclass for groups
  * doesn't do anything, only stores information for a group
@@ -12,7 +16,9 @@ public class Group {
 	private String groupName;
 	private int groupID;
 	private String empfaengerID;
-	private String GroupAdmin;
+	private String groupAdmin;
+	private List<User> groupMember;
+	
 	
 
 	/**
@@ -41,7 +47,7 @@ public class Group {
 		this.groupName=groupName;
 		this.groupID=groupID;
 		this.empfaengerID=empfaengerID;
-		this.GroupAdmin=GroupAdmin;
+		this.groupAdmin=groupAdmin;
 	}
 	
 	
@@ -53,14 +59,16 @@ public class Group {
 	public String getGroupName() {return groupName;}
 	public int getGroupId(){return groupID;}
 	public String getEmpfaengerId() {return empfaengerID;}
-	public String getGroupAdmin() {return GroupAdmin;}
+	public String getGroupAdmin() {return groupAdmin;}
+	public List<User> getGroupMember(){ return groupMember;}
 	
 	public void setAktion(int aktion) { this.aktion=aktion;}
 	public void setSender(String senderID) { this.senderID = senderID;}
 	public void setGroupName(String name) {this.groupName=name;}
 	public void setGroupId(int id){this.groupID=id;}
 	public void setEmpfaengerId(String id) {this.empfaengerID=id;}
-	public void setGroupAdmin(String GroupAdmin) {this.GroupAdmin=GroupAdmin;}
+	public void setGroupAdmin(String groupAdmin) {this.groupAdmin=groupAdmin;}
+	public void setGroupMember(List <User> groupMember) {this.groupMember = groupMember;}
 
 	
 	

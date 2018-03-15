@@ -20,4 +20,5 @@ public interface GroupDao {
 	public int getGroupID();
 	public String selectGroupAdmin(int groupID);
 	public List<Group> getGroupListForUser(String userID);
+	public List<Group> selectGroupInformation(String UserID);
 }

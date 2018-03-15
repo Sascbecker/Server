@@ -1,5 +1,6 @@
 package de.htwsaar.server.service;
 
+import java.util.Iterator;
 import java.util.List;
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.GroupDao;
@@ -92,7 +93,14 @@ public class KontaktServiceImpl implements KontaktService{
 		kontakt.setUserId(message.getSender());
 		List<User> kontaktListe = userDao.selectKontakte(kontakt);
 		kontakt.setKontaktListe(kontaktListe);
+		kontakt.setGroupListe(groupDao.selectGroupInformation(kontakt.getUserId()));
 		
+		Iterator<Group> i = kontakt.getGroupListe().iterator();
+		int j = 0;
+		while(i.hasNext() == true)
+		{
+			kontakt.getGroupListe().get(j).setGroupMember(userDao.selectGruppenUser(kontakt.getGroupListe().get(j).getGroupId()));
+		}
 		return kontakt;
 		
 	}
