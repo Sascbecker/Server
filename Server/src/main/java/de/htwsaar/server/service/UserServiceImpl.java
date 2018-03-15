@@ -1,5 +1,6 @@
 package de.htwsaar.server.service;
 
+
 import de.htwsaar.server.dataclass.User;
 import de.htwsaar.server.dataclass.UserActions;
 import de.htwsaar.server.service.interfaces.UserService;
@@ -8,7 +9,7 @@ import de.htwsaar.server.dao.interfaces.*;
 
 import java.util.Iterator;
 import java.util.List;
-
+import de.htwsaar.server.service.interfaces.*;
 
 /**
  * service class for user account configuration calls from a client (login, register, logout)
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 	private Thread userServiceDaemon;
 	private UserServiceDaemon daemon;
 	private static final int sleeptime = 60000;
+	private MessageService messageService;
 	private User nextUser;
 	/**
 	 * constructor, also launches a daemon thread in the background
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
 	{
 		userDao = DaoObjectBuilder.getUserDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
+		messageService = ServiceObjektBuilder.getMessageService(); 
 	    daemon = new UserServiceDaemon();
 		startUserServiceDaemon();
 		nextUser = new User();
@@ -74,6 +77,7 @@ public class UserServiceImpl implements UserService {
 		{
 			userDao.updateIpAdresse(user);
 			user.setUserAuthentifizierung(true);
+			messageService.getAndSendAllMessages(user);
 			
 		}
 		else

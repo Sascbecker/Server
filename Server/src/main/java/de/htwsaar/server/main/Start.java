@@ -58,9 +58,6 @@ public class Start implements Runnable{
 				kontaktService.handleKontaktConfig(message);
 			break;
 		}
-		
-		
-		
 	}
 	
 	public void userStart(User user)
