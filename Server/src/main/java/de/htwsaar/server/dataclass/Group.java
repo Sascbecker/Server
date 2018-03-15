@@ -27,6 +27,16 @@ public class Group {
 	public Group() {}
 	
 	/**
+	 * constructor for new Group
+	 */
+	public Group(int aktion, String senderID, String groupName)
+	{
+		this.aktion = aktion;
+		this.senderID = senderID;
+		this.groupName = groupName;
+	}
+	
+	/**
 	 * constructor without admin parameter
 	 */
 	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID )

@@ -105,7 +105,6 @@ public class Start implements Runnable{
 		
 		Start start = new Start();
 		//start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
-		
 	}
 	
 }
