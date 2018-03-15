@@ -47,15 +47,4 @@ public class ServerService
 		
 		return true;//Nachricht angekommen
 	}
-	
-	@Path("/lastTimestamp")
-	@GET
-	@Produces( MediaType.APPLICATION_JSON )
-	public boolean lastTimestamp( @QueryParam( "timestamp" ) long timestamp, @QueryParam( "sender" ) String sender ) {
-		
-		
-		return true;//Nachricht angekommen
-	}
-	
-	// gruppenamen, gruppenadmin, liste der nuzter, gruppenID
 }
