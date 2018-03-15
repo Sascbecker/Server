@@ -21,9 +21,10 @@ public class ClientConnector
 		WebTarget target = c.target( ip + baseUrl );
 		
 		
-		angekommen = target.path( webContextPath ).queryParam( "absender", absender ).queryParam( "empfaenger", empfaenger )
-									.queryParam( "gruppenID", gruppenID ).queryParam( "timestamp", timestamp )
-									.queryParam( "message", message ).queryParam( "aktion", absender )
+		angekommen = target.path( webContextPath ).queryParam( "nachricht", nachricht )
+									//.queryParam( "absender", absender ).queryParam( "empfaenger", empfaenger )
+									//.queryParam( "gruppenID", gruppenID ).queryParam( "timestamp", timestamp )
+									//.queryParam( "message", message ).queryParam( "aktion", absender )
 									.request(MediaType.APPLICATION_JSON).get(boolean.class);
 		return angekommen;
 	}
