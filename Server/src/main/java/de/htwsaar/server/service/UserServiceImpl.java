@@ -73,11 +73,11 @@ public class UserServiceImpl implements UserService {
 		if(user.getPasswort().equals(vergleichsUser))
 		{
 			userDao.updateIpAdresse(user);
-			user.setReturnCode("Authentifizierung erfolgreich");
+			user.setUserAuthentifizierung(true);
 			
 		}
 		else
-			user.setReturnCode("Authentifizierung fehlgeschlagen, bitte erneut versuchen");
+			user.setUserAuthentifizierung(false);
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
 			nextUser = i.next();
 		
 		userServiceDaemon= new Thread(new Runnable() {
-			//TODO: Seperaten Thread für jeden User starten
+			//TODO: Seperaten Thread fï¿½r jeden User starten
 			// damit Daemon nicht zu lange warten muss
 			
 			public void run() {
