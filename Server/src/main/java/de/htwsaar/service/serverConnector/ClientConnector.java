@@ -1,11 +1,10 @@
 package de.htwsaar.service.serverConnector;
 
 
-import java.io.StringReader;
-
-import javax.json.*;
-import javax.json.JsonObject;
-import javax.ws.rs.QueryParam;
+//import java.io.StringReader;
+//import javax.json.*;
+//import javax.json.JsonObject;
+//import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import de.htwsaar.server.dataclass.*;

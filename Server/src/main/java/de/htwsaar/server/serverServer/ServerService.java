@@ -1,13 +1,13 @@
 package de.htwsaar.server.serverServer;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+//import javax.json.Json;
+//import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.main.Start;
-import de.htwsaar.server.service.*;
-import de.htwsaar.server.main;
+//import de.htwsaar.server.service.*;
+//import de.htwsaar.server.main.*;
 
 @Path( "/{parameter: login|getMessage|kontakte}" )
 public class ServerService
