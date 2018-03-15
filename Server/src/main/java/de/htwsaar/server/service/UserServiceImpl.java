@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	private void userAnlegen(User user)
+	public void userAnlegen(User user)
 	{
 		//TODO: pruefen ob user bereits existiert, fehler an client senden falls ja
 		try {
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	private void userAuthenfizierung(User user)
+	public void userAuthenfizierung(User user)
 	{
 		
 		String vergleichsUser = userDao.getPasswort(user.getAbsenderId());
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	 * IPAdresse des Clients auf NUll setzen und in der Datenbank ändern.
 	 * @param user
 	 */
-	private void userAbmelden(User user)
+	public void userAbmelden(User user)
 	{
 		user.setIpAdresse(null);
 		userDao.updateIpAdresse(user);
