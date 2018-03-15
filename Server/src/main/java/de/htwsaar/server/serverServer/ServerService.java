@@ -9,13 +9,13 @@ import de.htwsaar.server.main.Start;
 //import de.htwsaar.server.service.*;
 //import de.htwsaar.server.main.*;
 
-@Path( "/{parameter: login|getMessage|kontakte}" )
+@Path( "/{parameter: login|getMessage|getGroup}" )
 public class ServerService
 {
 	@Path("/login")
 	@GET
    	@Produces( MediaType.APPLICATION_JSON )
-   	public boolean loginService( @QueryParam("user") User user, @QueryParam("ip") String ip ){
+   	public boolean loginService( @QueryParam( "user" ) User user, @QueryParam( "ip" ) String ip ){
 		//User user = new User( 2, name, password, ip );
 		Start start = new Start();
 		start.userStart(user);
@@ -40,7 +40,7 @@ public class ServerService
 	@Path("/getGroup")
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public boolean getMessage( @QueryParam( "gruppe" ) Group gruppe ) {
+	public boolean getGroup( @QueryParam( "gruppe" ) Group gruppe ) {
 		
 		Start start = new Start();
 		start.groupStart(gruppe);
