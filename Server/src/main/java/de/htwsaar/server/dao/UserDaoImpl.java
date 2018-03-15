@@ -98,7 +98,7 @@ public class UserDaoImpl implements UserDao{
 	public List<User> selectGruppenUser(int gruppenId)
 	{
             //Insert SQL Statement
-		String query="Select IstGruppe.UserID, User.Passwort, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID";
+		String query="Select IstGruppe.UserID, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("GroupID",gruppenId);
 		
@@ -125,7 +125,7 @@ public class UserDaoImpl implements UserDao{
 	 */
 	public List<User> selectKontakte(Kontakte kontakt)
 	{
-		String sqlStatement= "Select Kontakte.KontaktID as UserID, User.Passwort, User.IPAdresse from Kontakte join User on Kontakte.UserID = User.UserID where Kontakte.UserID= :UserID";
+		String sqlStatement= "Select Kontakte.KontaktID as UserID, User.IPAdresse from Kontakte join User on Kontakte.UserID = User.UserID where Kontakte.UserID= :UserID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("UserID", kontakt.getUserId());
 		
@@ -154,7 +154,7 @@ public class UserDaoImpl implements UserDao{
     public List<User> getAllOnlineUser()
     {
 		
-		String query = "Select * from User where length(IPAdresse)>5";
+		String query = "Select UserID, IPAdresse from User where length(IPAdresse)>5";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		return jdbc.query(query,paramSource, new UserRowMapper());
 	}
@@ -176,7 +176,6 @@ public class UserDaoImpl implements UserDao{
 
 			try {
 				user.setAbsenderId(results.getString("UserID"));
-				user.setPasswort(results.getString("Passwort"));
 				user.setIpAdresse(results.getString("IPAdresse"));
 
 			
