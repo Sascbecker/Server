@@ -100,6 +100,7 @@ public class KontaktServiceImpl implements KontaktService{
 		while(i.hasNext() == true)
 		{
 			kontakt.getGroupListe().get(j).setGroupMember(userDao.selectGruppenUser(kontakt.getGroupListe().get(j).getGroupId()));
+			j++;
 		}
 		return kontakt;
 		
