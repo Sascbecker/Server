@@ -2,10 +2,12 @@ package de.htwsaar.server.main;
 
 import de.htwsaar.server.service.ServiceObjektBuilder;
 
+import java.io.IOException;
 import java.lang.Thread;
 import de.htwsaar.server.service.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.*;
+import de.htwsaar.server.serverServer.*;
 
 /*
  * Hauptprogramm des Servers, aufruf dieser Klasse bei ankommenen der Nachricht.
@@ -48,6 +50,7 @@ public class Start implements Runnable{
 		
 	}
 
+	
 	public void messageStart(final Message message)
 	{
 		messageStart = new Thread(new Runnable() {
@@ -116,7 +119,15 @@ public class Start implements Runnable{
 	}
 	public static void main(String[] args)
 	{
-		
+		try {
+			ServerConnector.main(new String[] {"10.9.40.161"});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Start start = new Start();
 		//start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
 	}
