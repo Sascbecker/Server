@@ -65,7 +65,7 @@ public class GroupServiceDaemon {
 				//schlafe für ein paar sekunden, damit das alles nicht zu oft gesendet wird
 				while (true)
 				{
-				List<User> user = daemon.getAllOnlineUser();
+				List<User> user = getAllOnlineUser();
 				Iterator<User> i = user.iterator();
 				
 				while(i.hasNext()==true)
@@ -73,13 +73,14 @@ public class GroupServiceDaemon {
 					final User nextUser;
 					nextUser = i.next();
 					String userID = nextUser.getAbsenderId();
-					 List<Group> groupList = daemon.getGroupListForUser(userID);
+					 List<Group> groupList = getGroupListForUser(userID);
 					 Iterator<Group> j = groupList.iterator();
 					 while(i.hasNext()==true)
 					 {
+						 final Group nextGroup;
 						 nextGroup = j.next();
 						 int groupID = nextGroup.getGroupId();
-						 List<User> members = daemon.getMemberListOfGroup(groupID);
+						 List<User> members = getMemberListOfGroup(groupID);
 					 }
 		         }
 				try {
