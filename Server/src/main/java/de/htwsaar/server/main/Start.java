@@ -2,6 +2,7 @@ package de.htwsaar.server.main;
 
 import de.htwsaar.server.service.ServiceObjektBuilder;
 
+import java.lang.Thread;
 import de.htwsaar.server.service.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.*;
@@ -10,15 +11,15 @@ import de.htwsaar.server.service.*;
  * Hauptprogramm des Servers, aufruf dieser Klasse bei ankommenen der Nachricht.
  * Verteilt die Logik auf andere Klassen
  */
-public class Start {
+public class Start implements Runnable{
 
 	MessageService messageService;
 	UserService userService;
 	GroupService groupService;
 	KontaktService kontaktService;
-	//GroupServiceDaemon groupServiceDeamon;
-	//MessageServiceDaemon messageServiceDeamon;
-	//UserServiceDaemon userServiceDeamon;
+	GroupServiceDaemon groupServiceDeamon;
+	MessageServiceDaemon messageServiceDeamon;
+	UserServiceDaemon userServiceDeamon;
 	
 	
 	public Start()
@@ -27,9 +28,14 @@ public class Start {
 		userService = ServiceObjektBuilder.getUserService();
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
-		//groupServiceDeamon = new GroupServiceDaemon();
-		//messageServiceDeamon = new MessageServiceDaemon();
-		//userServiceDeamon = new UserServiceDaemon();
+		groupServiceDeamon = new GroupServiceDaemon();
+		messageServiceDeamon = new MessageServiceDaemon();
+		userServiceDeamon = new UserServiceDaemon();
+	}
+	
+	public void run()
+	{
+		
 	}
 
 	public void messageStart(int aktion, String absenderId, int groupId, String empfaengerId, String message, long timestamp)

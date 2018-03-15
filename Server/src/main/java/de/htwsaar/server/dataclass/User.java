@@ -37,11 +37,12 @@ public class User {
 	 * constructor without returnCode and ipAdresse, empfaengerId is unused
 	 */
 
-	public User(int aktion, String absenderId, String empfaengerId, String passwort)
+	public User(int aktion, String absenderId, String passwort, String ipAdresse)
 	{
 		this.aktion = aktion;
 		this.absenderId = absenderId;
 		this.passwort = passwort;
+		this.ipAdresse = ipAdresse;
 	}
 	
 	
