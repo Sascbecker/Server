@@ -13,7 +13,8 @@ public class ServerService
 	@Path("/login")
 	@GET
    	@Produces( MediaType.APPLICATION_JSON )
-   	public String loginService( @QueryParam("name") String name, @QueryParam("password") String password ){
+   	public String loginService( @QueryParam("name") String name, @QueryParam("password") String password, 
+   								@QueryParam("ip") String ipAdresse ){
    		JsonObjectBuilder builder = Json.createObjectBuilder();
    		
    		//; PLATZHALTER
@@ -28,28 +29,14 @@ public class ServerService
 	@Path("/getMessage")
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
-	public boolean getMessage( @QueryParam("absender") String absender, @QueryParam( "empfaenger" ) String  empfaenger,
-							@QueryParam( "absenderID" ) int absenderID, @QueryParam( "empfaengerID" ) int empfaengerID,
+	public boolean getMessage( @QueryParam( "absender" ) String absender, @QueryParam( "empfaenger" ) String  empfaenger,
 							@QueryParam( "gruppenID" ) int gruppenID, @QueryParam( "timestamp" ) int timestamp,
-							@QueryParam( "message" ) String message ) {
-		//JsonObjectBuilder builder = Json.createObjectBuilder();
-   		//builder.add("Message", Singleton.getMessage());// VON WEM .... NAME REQUIRED !!!!!
+							@QueryParam( "message" ) String message, @QueryParam( "aktion" ) int aktion ) {
 		
 		//EVENT HANDLER FUER MESSAGE EMPFANGEN
 		
 		return true;//Nachricht angekommen
 	}
 	
-	@Path("/kontakte")
-   	@GET
-   	public void kontaktVerwaltung( @QueryParam("absender") String absender, @QueryParam("empfaenger") String empfaenger, @QueryParam("aktion") int aktion ){
-   		switch(aktion) {
-   		case 1: //kontakt hinzufuegen;
-   				break;
-   		case 2: //kontakt loeschen;
-   				break;
-   		case 3: //kontakt blockieren;
-   				break;
-   		}
-   	}
+	// gruppenamen, gruppenadmin, liste der nuzter, gruppenID
 }

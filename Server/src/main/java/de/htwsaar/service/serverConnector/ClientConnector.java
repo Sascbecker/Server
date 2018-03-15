@@ -5,7 +5,7 @@ import java.io.StringReader;
 
 import javax.json.*;
 import javax.json.JsonObject;
-
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 
@@ -14,37 +14,20 @@ import de.htwsaar.service.serverConnector.Singleton;
 
 public class ClientConnector
 {
-	public static void getMessage( String absender )//muss boolean sein?
-	{
-		//String baseUrl        = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
-		
-		String baseUrl = "http://localhost:4434";
-		String webContextPath = "/requestMessage";
-		
-		Client c = ClientBuilder.newClient();
-		WebTarget target = c.target( baseUrl );
-		
-		String jsonObjectString = target.path( webContextPath )
-				.request( MediaType.APPLICATION_JSON ).get( String.class );
-		
-		JsonObject jsonObject = jsonFromString(jsonObjectString);
-		String message = jsonObject.getString("Message");
-		
-		System.out.println(message);
-		//return message;
-		
-		//EVENT HANLDER (EVENT WERFEN FÃœR DATENBANK) ALEX FRAGEN
-	}
-	public static void sendMessage( String absender, String message ) {
-		String baseUrl = "http://localhost:4434";
+	private static String baseUrl = "http://localhost:4434";
+	
+	public static boolean sendMessage( String absender, String empfaenger, int gruppenID, int timestamp, String message, int aktion ) {
 		String webContextPath = "/getMessage";
 		
+		boolean angekommen = false;
+		
 		Client c = ClientBuilder.newClient();
 		WebTarget target = c.target( baseUrl );
 		
-		Singleton.setInstanceAndMessage(message);
-		
-		target.path( webContextPath ).queryParam( "absender", absender );
+		angekommen = target.path( webContextPath ).queryParam( "absender", absender ).queryParam( "empfaenger", empfaenger )
+									.queryParam( "gruppenID", gruppenID ).queryParam( "timestamp", timestamp )
+									.queryParam( "message", message ).queryParam( "aktion", absender )
+									.request(MediaType.APPLICATION_JSON).get(boolean.class);
 	}
 	
 	private static JsonObject jsonFromString(String jsonObjectStr) {
