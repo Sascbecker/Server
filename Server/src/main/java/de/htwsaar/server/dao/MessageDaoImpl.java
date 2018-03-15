@@ -95,6 +95,21 @@ public class MessageDaoImpl implements MessageDao{
 		
 		return message;
 	}
+	
+	public void updateDeliveredState(int messageID)
+	{
+		int delivered = 1;
+		String query = "Update Nachrichten set Zugestellt = :delivered where MessageID = :messageID";
+        
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		paramSource.addValue("messageID", messageID);
+		paramSource.addValue("delivered", delivered);
+		
+		
+		
+		jdbc.update(query,paramSource);
+	}
 
 	/**
 	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
