@@ -15,9 +15,8 @@ public class ServerService
 	@Path("/login")
 	@GET
    	@Produces( MediaType.APPLICATION_JSON )
-   	public boolean loginService( @QueryParam("name") String name, @QueryParam("password") String password, 
-   								@QueryParam("ip") String ip ){
-		User user = new User( 2, name, password, ip );
+   	public boolean loginService( @QueryParam("user") User user, @QueryParam("ip") String ip ){
+		//User user = new User( 2, name, password, ip );
 		Start start = new Start();
 		start.userStart(user);
 		return user.getUserAuthentifizierung();
