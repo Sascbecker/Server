@@ -57,9 +57,8 @@ public class Start implements Runnable{
 		
 	}
 	
-	public void userStart(int aktion, String absender,  String passwort)
+	public void userStart(User user)
 	{
-		User user = new User(aktion, absender, passwort);
 		
 		userService.start(user);
 		
