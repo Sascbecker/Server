@@ -18,11 +18,12 @@ public class MessageServiceDaemon
 {
 	UserDao userDao;
 	MessageDao messageDao;
-	
+	boolean delivered;
 	public MessageServiceDaemon()
 	{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
+		delivered = false;
 	}
 
 	/**
@@ -71,13 +72,25 @@ public class MessageServiceDaemon
 			for(int j=0; j<messageList.size(); i++)
 			{
 				message = messageList.get(j);
+				String sender = message.getSender();
+				String empfaenger = message.getRecipient();
+				int groupID = message.getGroupId();
+				long timestamp = message.getTimestamp();
+				String inhalt = message.getMessage();
+				int aktion = message.getAktion();
+				int messageID = message.getMessageID();
 				//TODO 
 				//Message Objekt an die Funktion zum senden der Message uebergeben
 				//moegliche Implementierung
-				connector.sendMessage(message.getSender(), message.getMessage());
+				delivered = connector.sendMessage(sender, empfaenger, groupID, timestamp, inhalt, aktion);
+				
+				if (delivered = true)
+				{ 
+					messageDao.updateDeliveredState(messageID);
+				}
 				
 				//TODO
-				//sendMessage auf true pruefen und Datenbankeintrag für diese Nachricht aktualisieren
+				//sendMessage auf true pruefen und Datenbankeintrag fï¿½r diese Nachricht aktualisieren
 			}
 			
 		}
