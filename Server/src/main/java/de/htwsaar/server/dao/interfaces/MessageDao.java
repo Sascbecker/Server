@@ -9,6 +9,6 @@ public interface MessageDao {
 	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp);
 	public int readMessageID();
 	public Message readMessage();
-	public void updateDeliveredState(int messageID);
+	public void updateDeliveredState(Message message);
 
 }

@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.interfaces.MessageService;
+import de.htwsaar.service.serverConnector.ClientConnector;
+
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,7 @@ public class MessageServiceImpl implements MessageService{
 	MessageDao messageDao;
 	GroupDao groupDao;
 	MessageServiceDaemon daemon;
+	ClientConnector clientconnector;
 	/**
 	 * default constructor
 	 * automatically starts a daemon thread in the background that interacts with the database and the network
@@ -31,32 +34,6 @@ public class MessageServiceImpl implements MessageService{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
-	    daemon = new MessageServiceDaemon();
-		startMessageServiceDaemon();
-	}
-
-	private Thread messageServiceDaemon;
-	
-	/**
-	 * Starts a Thread in the background.
-	 * This thread will periodically check for unsent messages in the database and send them if possible.
-	 */
-	private void startMessageServiceDaemon(){
-		messageServiceDaemon= new Thread(new Runnable() {
-			
-			public void run() {
-				//TODO: implement
-				//datenbank nach allen nutzern die aktuell online sind abfragen
-				//datenbank abfragen nach ungesendeten nachrichten für diese nutzer
-				//für jede der nachrichten, versuche sie zu senden 
-				//wenn erfolgreich, trage dies in der datenbank ein
-				//am ende, schlafe für 100ms, damit die datenbank nicht zu oft gepollt wird
-				List<User>user = daemon.getAllOnlineUser();
-				ArrayList<List> unreadMessages = daemon.getUnreadMessages(user);
-				daemon.sendUnreadMessages(unreadMessages);
-			}
-		});
-		messageServiceDaemon.start();
 	}
 	
 	/**
@@ -78,17 +55,13 @@ public class MessageServiceImpl implements MessageService{
 				gruppenNachrichten(message);
 			}
 			break;
-		}
-		
-		
+		}	
 	}
-	
-
 	/**
 	 * Handles the processing of a group message
 	 * @param message the message to send to a group
 	 */
-	private void gruppenNachrichten(Message message)
+	public void gruppenNachrichten(Message message)
 	{
 		List<User> gruppenUser;
 		User nextUser = new User();
@@ -109,19 +82,30 @@ public class MessageServiceImpl implements MessageService{
 	 * handles the processing of a direct message
 	 * @param message
 	 */
-	private void einzelNachricht(Message message)
+	public void einzelNachricht(Message message)
 	{
-		//empfangen:
-		//entnehme der nachricht den Empfänger
-		
-		//senden:
-		//sende die nachricht wie empfangen an den empfänger
-		
-		//Liest empfaengerDaten aus Datenbank aus.
 		User empfaenger = new User();
 		empfaenger = userDao.getUserInformation(message.getRecipient());
 				
 		sendeNachricht(message, empfaenger);
+	}
+	
+	public void getAndSendAllMessages(User user)
+	{
+		List<Message> allMessages = messageDao.alleNachrichtenTimestamp(user.getAbsenderId(), 0);
+		Iterator<Message> iterator = allMessages.iterator();
+		
+		while(iterator.hasNext() == true)
+		{
+			boolean angekommen = false;
+			Message message = iterator.next();
+			angekommen = ClientConnector.sendMessage(message, user.getIpAdresse());
+			if(angekommen == true && message.getRecipient() == user.getAbsenderId())
+			{
+				message.setDelivered(1);
+				messageDao.updateDeliveredState(message);
+			}
+		}
 	}
 	
 	/**
@@ -129,14 +113,19 @@ public class MessageServiceImpl implements MessageService{
 	 * @param message the message to send
 	 * @param empfaenger the recipient of the message
 	 */
-	private void sendeNachricht(Message message, User empfaenger){
+	public void sendeNachricht(Message message, User empfaenger){
+		boolean angekommen;
 		//Schreibt die Nachricht in die Datenbank, mit dem Flag, dass die nachricht noch nicht zugestellt wurde.
 		messageDao.SaveMessage(message, empfaenger);
 		message.setMessageID(messageDao.readMessageID());
+		angekommen = ClientConnector.sendMessage(message, empfaenger.getIpAdresse());
 		
-		System.out.println("Absender: "+ message.getSender()+ " Empfäenger: "+ empfaenger.getAbsenderId()+ " IpAdresse: "+ empfaenger.getIpAdresse() + " MessageID: "+ message.getMessageID());
-		
-		
+		if (angekommen == true)
+		{
+			message.setDelivered(1);
+			messageDao.updateDeliveredState(message);
+		}
+		//ClientConnector.sendMessage()
 		//TODO: bei erfolgreichem Zustellen, muss das FLAG Zugestellt auf 1 gesetzt werden.
 	}
 }

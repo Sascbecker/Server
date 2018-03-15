@@ -8,7 +8,7 @@ import javax.json.JsonObject;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
-
+import de.htwsaar.server.dataclass.*;
 public class ClientConnector
 {
 	private static String baseUrl = ":4434";

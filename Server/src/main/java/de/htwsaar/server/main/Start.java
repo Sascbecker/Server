@@ -29,7 +29,6 @@ public class Start implements Runnable{
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
 		groupServiceDeamon = new GroupServiceDaemon();
-		messageServiceDeamon = new MessageServiceDaemon();
 		userServiceDeamon = new UserServiceDaemon();
 	}
 	

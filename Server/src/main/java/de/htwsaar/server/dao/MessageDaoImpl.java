@@ -69,10 +69,11 @@ public class MessageDaoImpl implements MessageDao{
 	
 	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp)
 	{
-		String query="Select * from Nachrichten";
+		String query="Select * from Nachrichten where (EmpfaengerID =:EmpfaengerID or SenderID = :SenderID ";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		//paramSource.addValue();
+		paramSource.addValue("EmpfaengerID", userID);
+		paramSource.addValue("SenderID", userID);
 		return jdbc.query(query,paramSource, new MessageRowMapper());
 	}
 	
@@ -96,15 +97,15 @@ public class MessageDaoImpl implements MessageDao{
 		return message;
 	}
 	
-	public void updateDeliveredState(int messageID)
+	public void updateDeliveredState(Message message)
 	{
-		int delivered = 1;
+		
 		String query = "Update Nachrichten set Zugestellt = :delivered where MessageID = :messageID";
         
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-		paramSource.addValue("messageID", messageID);
-		paramSource.addValue("delivered", delivered);
+		paramSource.addValue("messageID", message.getMessageID());
+		paramSource.addValue("delivered", message.getDelivered());
 		
 		
 		

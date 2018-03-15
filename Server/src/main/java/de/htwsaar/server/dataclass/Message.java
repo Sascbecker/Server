@@ -23,6 +23,7 @@ public class Message {
 	private String recipient;
 	private String message;
 	private long timestamp;
+	private int delivered;
 	
 	/**
 	 * empty constructor
@@ -61,6 +62,7 @@ public class Message {
 	public String getRecipient() {return recipient;}	
 	public String getMessage() {return message;}
 	public long getTimestamp() {return timestamp;}
+	public int getDelivered() {return delivered;}
 	
 	public void setAktion(int aktion) {this.aktion = aktion;}
 	public void setMessageID(int messageID) { this.messageID = messageID;}
@@ -69,5 +71,6 @@ public class Message {
 	public void setRecipient(String recipient) {this.recipient = recipient;}
 	public void setMessage(String message) {this.message = message;}
 	public void setTimestamp(int timestamp) {this.timestamp = timestamp;}
+	public void setDelivered(int delivered) { this.delivered = delivered;}
 	
 }
