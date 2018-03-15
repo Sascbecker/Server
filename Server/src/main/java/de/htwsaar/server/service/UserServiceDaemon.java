@@ -5,17 +5,18 @@ import java.util.List;
 import de.htwsaar.server.dao.DaoObjectBuilder;
 import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.User;
+import de.htwsaar.server.service.interfaces.UserService;
 
 public class UserServiceDaemon {
 
 	UserDao userDao;
-	
+	UserService userService;
 
 
 	public UserServiceDaemon()
 	{
 		userDao = DaoObjectBuilder.getUserDao();
-		
+		userService = ServiceObjektBuilder.getUserService();
 	}
 	
 	
@@ -33,20 +34,22 @@ public class UserServiceDaemon {
 	
 	/**
 	 * sends a Request to each User in the List
-	 * if the Client isn´t sending a Reply before timeout, the user gets logged out
+	 * if the Client isnï¿½t sending a Reply before timeout, the user gets logged out
 	 */
 	
 	public boolean ping(User user)
 	{
-		return true;
+		boolean online;
+		String ip = user.getIpAdresse();
+		online = de.htwsaar.service.serverConnector.ClientConnector.ping(ip);
+		return online;
 	}
 	/**
 	 * logs the User out
 	 */
 	public void logout(User user)
 	{
-		user.setIpAdresse(null);
-		userDao.updateIpAdresse(user);
+		userService.userAbmelden(user);
 		
 	}
 }
