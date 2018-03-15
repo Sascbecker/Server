@@ -5,8 +5,6 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import de.htwsaar.service.serverConnector.*;
-
 @Path( "/{parameter: login|getMessage|kontakte}" )
 public class ServerService
 {
