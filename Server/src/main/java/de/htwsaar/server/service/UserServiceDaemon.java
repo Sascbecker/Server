@@ -12,11 +12,13 @@ public class UserServiceDaemon extends Thread {
 
 	UserDao userDao;
 	UserService userService;
+	private Thread t;
 
 	public UserServiceDaemon() {
 		userDao = DaoObjectBuilder.getUserDao();
 		userService = ServiceObjektBuilder.getUserService();
 		this.startUserServiceDaemon();
+		
 	}
 
 	/**
@@ -50,42 +52,54 @@ public class UserServiceDaemon extends Thread {
 		userService.userAbmelden(user);
 
 	}
+	
+	public void run()
+	{
+		while (true)
+		{
+			List<User> user = getAllOnlineUser();
+			
+			for(User userOnline : user)
+			{
+				System.out.println("Ping User: "+ userOnline.getAbsenderId() + " an die IPAdresse = "+ userOnline.getIpAdresse());
+				
+			}
+			
+			try {
+				t.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	private void startUserServiceDaemon() {
 		
-			Thread userServiceDaemon = new Thread(new Runnable() {
-				public void run() {
-					while (true)
-					{
-						List<User> user = getAllOnlineUser();
-						Iterator<User> i = user.iterator();
-						
-						while (i.hasNext() == true) 
-						{
-							final User nextUser;
-							nextUser = i.next();
-							boolean online = ping(nextUser);
-							if (online == true) {
-
-							} else {
-								logout(nextUser);
-							}
-						}
-						try {
-							Thread.sleep(60000);
-						} catch (InterruptedException e) {
-							
-						}
-					}
-					
-
-				}
-
-			});
-			userServiceDaemon.start();
-		}
-	
-
-	
-	
+//		/*	
+//						while (i.hasNext() == true) 
+//						{
+//							final User nextUser;
+//							nextUser = i.next();
+//							boolean online = ping(nextUser);
+//							if (online == true) {
+//
+//							} else {
+//								logout(nextUser);
+//							}
+//*/						//}
+//						try {
+//							Thread.sleep(60000);
+//						} catch (InterruptedException e) {
+//							
+//						}
+//					}
+//					
+//
+//				}
+//
+//			});
+//			//userServiceDaemon.start();
+//		}
+	}
 }

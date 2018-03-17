@@ -37,7 +37,8 @@ public class Start{
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
 		//groupServiceDeamon = new GroupServiceDaemon();
-		//userServiceDeamon = new UserServiceDaemon();
+		userServiceDeamon = new UserServiceDaemon();
+		userServiceDeamon.start();
 	}
 	
 	public synchronized Start getInstance()
