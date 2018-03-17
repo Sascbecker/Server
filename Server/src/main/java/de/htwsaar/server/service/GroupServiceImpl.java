@@ -35,8 +35,8 @@ public class GroupServiceImpl implements GroupService{
 		userDao = DaoObjectBuilder.getUserDao();
 		messageDao = DaoObjectBuilder.getMessageDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
-		daemon = new GroupServiceDaemon();
-		startGroupServiceDaemon();
+		//daemon = new GroupServiceDaemon();
+		//startGroupServiceDaemon();
 		nextUser = new User();
 		nextGroup = new Group();
 	}
@@ -111,6 +111,13 @@ public class GroupServiceImpl implements GroupService{
 	private void create(Group group){
 		groupDao.gruppeAnlegen(group);
 		group.setGroupId(groupDao.getGroupID());
+		group.setEmpfaengerId(group.getSender());
+		group.setGroupAdmin(group.getSender());
+		System.out.println("Gruppe wurde erfolgreich angelegt mit der\nID: "+ group.getGroupId()
+		+" mit dem Namen "+ group.getGroupName()
+		+" Gruppenadmin: "+ group.getGroupAdmin());
+		add(group);
+		
 	}
 	
 	/**
@@ -128,17 +135,20 @@ public class GroupServiceImpl implements GroupService{
 			if(group.getSender().equals(group.getEmpfaengerId()))
 			{
 				delete(group);
+				System.out.println("Gruppe:" + group.getGroupName()+ " wurde gelöscht da Admin die Gruppe verlassen hat");
 			}
 			//Ansonsten wird der Benutzer gekickt
 			else
 			{
 				groupDao.gruppeVerlassen(group);
+				System.out.println("User: "+group.getEmpfaengerId() + " wurder aus der Gruppe gekickt");
 			}
 		}
 		//Schaut, ob der Sender auch der ist, der aus der Gruppe raus gehen möchte
 		else if(group.getSender().equals(group.getEmpfaengerId()))
 		{
 			groupDao.gruppeVerlassen(group);
+			System.out.println("User :" + group.getSender()+ " hat erfolgreich die Gruppe verlassen");
 		}
 		//Nicht möglich wenn man vesucht andere zu kicken
 		else
@@ -174,6 +184,7 @@ public class GroupServiceImpl implements GroupService{
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		if(group.getSender().equals(group.getGroupAdmin())) {
 			groupDao.gruppeUmbennen(group);
+			System.out.println("Gruppe wurde in " + group.getGroupName()+ " umbennant");
 		}
 		else
 		{
@@ -191,6 +202,7 @@ public class GroupServiceImpl implements GroupService{
 		if(group.getSender().equals(group.getGroupAdmin()) == true)
 		{
 			groupDao.nutzerZurGruppeHinzufuegen(group);
+			System.out.println("User: "+group.getEmpfaengerId()+ " wurde erfolgreich zur gruppe hinzugefügt");
 		}
 		else
 		{

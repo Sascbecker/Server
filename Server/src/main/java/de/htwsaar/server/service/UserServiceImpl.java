@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 		userDao = DaoObjectBuilder.getUserDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
 		messageService = ServiceObjektBuilder.getMessageService(); 
-	    daemon = new UserServiceDaemon();
-		startUserServiceDaemon();
+	   // daemon = new UserServiceDaemon();
+		// startUserServiceDaemon();
 		nextUser = new User();
 	}
 	
@@ -61,10 +61,11 @@ public class UserServiceImpl implements UserService {
 		//TODO: pruefen ob user bereits existiert, fehler an client senden falls ja
 		try {
 			userDao.newUser(user);
+			System.out.println("User: "+ user.getAbsenderId() + " wurde mit dem Passwort: " + user.getPasswort() + " angelegt");
 		}
 		catch(Exception ex)
 		{
-			user.setReturnCode("User konnte nicht angelegt werden");
+			user.setReturnCode("User: "+ user.getAbsenderId() +" konnte nicht angelegt werden");
 		}
 	}
 	
@@ -77,11 +78,15 @@ public class UserServiceImpl implements UserService {
 		{
 			userDao.updateIpAdresse(user);
 			user.setUserAuthentifizierung(true);
+			System.out.println("User: "+ user.getAbsenderId()+ " wurde erfolgreich eingeloggt" );
 			messageService.getAndSendAllMessages(user);
 			
 		}
 		else
+		{
 			user.setUserAuthentifizierung(false);
+			System.out.println("User: "+ user.getAbsenderId() + " konnte nicht eingeloggt werden. Passwort falsch");
+		}
 	}
 	
 	/**
@@ -92,6 +97,7 @@ public class UserServiceImpl implements UserService {
 	{
 		user.setIpAdresse(null);
 		userDao.updateIpAdresse(user);
+		System.out.println("User: "+ user.getAbsenderId() + " wurde erfolgreich ausgeloggt");
 	}
 	
 	/**

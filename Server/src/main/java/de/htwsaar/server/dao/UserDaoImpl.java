@@ -138,10 +138,10 @@ public class UserDaoImpl implements UserDao{
 	 */
 	public void updateIpAdresse(User user)
 	{
-		String query = "Update User set IP-Adresse = :Ip-Adresse where UserID = :User_id";
+		String query = "Update User set IPAdresse = :IpAdresse where UserID = :UserID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-		paramSource.addValue("Ip-Adresse", user.getIpAdresse());
+		paramSource.addValue("IpAdresse", user.getIpAdresse());
 		
 		paramSource.addValue("UserID", user.getAbsenderId());
 		

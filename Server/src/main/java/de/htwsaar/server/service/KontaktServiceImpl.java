@@ -51,7 +51,7 @@ public class KontaktServiceImpl implements KontaktService{
 			kontaktBlockieren(message);
 			break;
 		case MessageActions.Kontakt_Liste:
-			kontaktListe(message);
+			sendeKontaktListe(message);
 			
 		
 
@@ -66,6 +66,7 @@ public class KontaktServiceImpl implements KontaktService{
 	{
 		//TODO: Überprüfen ob Benutzer schon in Liste ist
 		kontaktDao.kontaktHinzufuegen(message);
+		System.out.println("kontakt: "+ message.getRecipient()+ " wurde zu der KontaktListe von "+message.getSender()+" hinzugefügt");
 	}
 	
 	/**
@@ -76,6 +77,7 @@ public class KontaktServiceImpl implements KontaktService{
 	{
 		//TODO: Überprüfen, ob der Benutzer noch in der Liste ist
 		kontaktDao.kontaktLoeschen(message);
+		System.out.println("kontakt: "+ message.getRecipient()+ " wurde aus der KontaktListe von "+message.getSender()+" gelöscht");
 	}
 	
 	/**
@@ -87,22 +89,40 @@ public class KontaktServiceImpl implements KontaktService{
 		
 	}
 	
-	private Kontakte kontaktListe(Message message)
+	private Kontakte kontaktListe(Kontakte kontakt)
 	{
-		Kontakte kontakt = new Kontakte();
-		kontakt.setUserId(message.getSender());
+		
 		List<User> kontaktListe = userDao.selectKontakte(kontakt);
 		kontakt.setKontaktListe(kontaktListe);
 		kontakt.setGroupListe(groupDao.selectGroupInformation(kontakt.getUserId()));
-		
-		Iterator<Group> i = kontakt.getGroupListe().iterator();
-		int j = 0;
-		while(i.hasNext() == true)
+		for(Group group : kontakt.getGroupListe())
 		{
-			kontakt.getGroupListe().get(j).setGroupMember(userDao.selectGruppenUser(kontakt.getGroupListe().get(j).getGroupId()));
-			j++;
+			group.setGroupMember(userDao.selectGruppenUser(group.getGroupId()));
 		}
 		return kontakt;
 		
+	}
+	
+	private void sendeKontaktListe(Message message)
+	{
+		
+		Kontakte kontakt = new Kontakte();
+		kontakt.setUserId(message.getSender());
+		kontakt = kontaktListe(kontakt);
+		
+		System.out.println("Übertragen der Kontaktliste\nAlle Kontakte:");
+		for(User user : kontakt.getKontaktListe())
+		{
+			System.out.println("User: "+ user.getAbsenderId() + " IPAdresse: " +user.getIpAdresse());
+		}
+		System.out.println("Alle zugehörigen Gruppen: ");
+		for(Group group: kontakt.getGroupListe())
+		{
+			System.out.println("Gruppenname: "+ group.getGroupName());
+			for(User user: group.getGroupMember())
+			{
+				System.out.println("\t Zugehörigen Gruppenmitglieder: "+user.getAbsenderId());
+			}
+		}
 	}
 }

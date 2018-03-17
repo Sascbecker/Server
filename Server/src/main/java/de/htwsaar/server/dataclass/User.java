@@ -26,6 +26,16 @@ public class User {
 	public User() {}
 	
 	/**
+	 * Constructor for user logout. Doesn't require passwort or IP-Adress
+	 * @param aktion
+	 * @param absenderId
+	 */
+	public User(int aktion, String absenderId)
+	{
+		this.aktion = aktion;
+		this.absenderId = absenderId;
+	}
+	/**
 	 * constructor without returnCode and ipAdresse
 	 */
 	public User(int aktion, String absenderId, String passwort)

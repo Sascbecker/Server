@@ -4,6 +4,9 @@ import de.htwsaar.server.service.ServiceObjektBuilder;
 
 import java.io.IOException;
 import java.lang.Thread;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import de.htwsaar.server.service.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.*;
@@ -13,7 +16,7 @@ import de.htwsaar.server.serverServer.*;
  * Hauptprogramm des Servers, aufruf dieser Klasse bei ankommenen der Nachricht.
  * Verteilt die Logik auf andere Klassen
  */
-public class Start implements Runnable{
+public class Start{
 
 	private Start instance;
 	MessageService messageService;
@@ -33,8 +36,8 @@ public class Start implements Runnable{
 		userService = ServiceObjektBuilder.getUserService();
 		groupService = ServiceObjektBuilder.getGroupService();
 		kontaktService = ServiceObjektBuilder.getKontaktService();
-		groupServiceDeamon = new GroupServiceDaemon();
-		userServiceDeamon = new UserServiceDaemon();
+		//groupServiceDeamon = new GroupServiceDaemon();
+		//userServiceDeamon = new UserServiceDaemon();
 	}
 	
 	public synchronized Start getInstance()
@@ -45,17 +48,10 @@ public class Start implements Runnable{
 		}
 		return instance;
 	}
-	public void run()
-	{
-		
-	}
 
-	
 	public void messageStart(final Message message)
 	{
-		messageStart = new Thread(new Runnable() {
-			
-			public void run() {
+				//System.out.println("messageStart");
 				switch(message.getAktion())
 				{
 				case MessageActions.Nachricht: messageService.handleMessage(message);
@@ -67,19 +63,14 @@ public class Start implements Runnable{
 						kontaktService.handleKontaktConfig(message);
 					break;
 				}
-			}
-		});
+			
 		
 	}
 	
 	public void userStart(final User user)
 	{
-		userStart = new Thread(new Runnable() {
-			
-			public void run() {
+				//System.out.println("userStart");
 				userService.start(user);
-			}
-		});
 		
 	}
 	
@@ -93,9 +84,7 @@ public class Start implements Runnable{
 	 */
 	public void groupStart(final Group group)
 	{
-		groupStart = new Thread(new Runnable() {
-			
-			public void run() {
+				//System.out.println("Groupstart");
 				switch(group.getAktion())
 				{
 				case GroupActions.Create_Group:
@@ -111,24 +100,75 @@ public class Start implements Runnable{
 					groupService.handleGroupConfig(group);
 					break;
 				}
-			}
-		});
-		
 		
 		
 	}
-	public static void main(String[] args)
+	public static void main(String[] args) throws Throwable
 	{
-		try {
-			ServerConnector.main(new String[] {"10.9.40.161"});
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		Start start = new Start();
+		//Neuen Benutzer anlegen
+		start.userStart(new User(UserActions.USER_LOGIN, "Marco", "Test"));
+		start.userStart(new User(UserActions.USER_LOGIN,"Alex","Test"));
+		start.userStart(new User(UserActions.USER_LOGIN,"Daniela","Test"));
+		start.userStart(new User(UserActions.USER_LOGIN,"Robin","Test"));
+		start.userStart(new User(UserActions.USER_LOGIN,"Maurice","Test"));
+		start.userStart(new User(UserActions.USER_LOGIN,"Sascha","Test"));
+		//Benutzer einloggen
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Marco", "Test",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Alex", "Test",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Daniela", "dasdas",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Maurice", "Test",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Sascha", "Test",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Robin", "Test", InetAddress.getLocalHost().getHostAddress()));
+		//Benutzer ausloggen
+		start.userStart(new User(UserActions.USER_LOGOUT, "Maurice"));
+		start.userStart(new User(UserActions.USER_LOGOUT,"Sascha"));
+		
+		//Gruppe erstellen
+		start.groupStart(new Group(GroupActions.Create_Group, "Marco", "Test"));
+		//Benutzer zur Gruppen hinzufügen
+		start.groupStart(new Group(GroupActions.Add_To_Group,"Marco","Test",1,"Alex"));
+		start.groupStart(new Group(GroupActions.Add_To_Group,"Marco","Test",1,"Daniela"));
+		start.groupStart(new Group(GroupActions.Add_To_Group,"Marco","Test",1,"Maurice"));
+		start.groupStart(new Group(GroupActions.Add_To_Group,"Marco","Test",1,"Sascha"));
+		start.groupStart(new Group(GroupActions.Add_To_Group,"Marco","Test",1,"Robin"));
+		//Benutzer von der Gruppe löschen
+		
+		//Benutzer versuchen aus der Gruppe zu kicken
+		
+		//Benutzer aus der Gruppe kicken
+		start.groupStart(new Group(GroupActions.Kick_From_Group,"Sascha","Test",1,"Sascha"));
+		
+		//Benutzer zur Kontaktliste hinzufügen
+		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
+		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Alex","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Daniela","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Maurice","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Sascha","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Robin","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
+		
+		start.messageStart(new Message(MessageActions.Kontakt_Loeschen,"Marco",0,"Alex","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
+		
+		//Nachricht an einzel Person
+		start.messageStart(new Message("Marco",0,"Alex", "Dies ist eine Test nachricht",System.currentTimeMillis()));
+		start.messageStart(new Message("Marco",0,"Sascha", "Dies ist eine 2Test nachricht",System.currentTimeMillis()));
+		start.messageStart(new Message("Marco",0,"Robin", "Dies ist eine Test nachricht",System.currentTimeMillis()));
+		//Nachricht an einzel Person, die aktuell nicht online ist
+		start.messageStart(new Message("Marco",1,"", "Dies ist eine Test nachricht für Personen die offline sind",System.currentTimeMillis()));
+		start.messageStart(new Message("Marco",0,"Sascha", "Dies ist eine Test nachricht für Personen die Offline sind",System.currentTimeMillis()));
+		
+		//Nachricht an Gruppe
+		
+		start.messageStart(new Message("Marco",1,"","Dies ist eine test nachricht", System.currentTimeMillis()));
+		
+		//Kontaktliste ausgeben
+	
+		
+		//Kontakt die eben offline waren neu anmelden für die anderen Nachrichten
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Maurice", "Test",InetAddress.getLocalHost().getHostAddress()));
+		start.userStart(new User(UserActions.USER_AUTHENTIFIZIERUNG, "Sascha", "Test",InetAddress.getLocalHost().getHostAddress()));
 		//start.messageStart(MessageActions.Kontakt_Liste, "Marco", 0, "", "", 0);
 	}
 	

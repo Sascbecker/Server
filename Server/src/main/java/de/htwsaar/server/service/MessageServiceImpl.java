@@ -63,6 +63,7 @@ public class MessageServiceImpl implements MessageService{
 	 */
 	public void gruppenNachrichten(Message message)
 	{
+		System.out.println("\n Gruppennachricht:");
 		List<User> gruppenUser;
 		User nextUser = new User();
 		gruppenUser = userDao.selectGruppenUserOhneSender(message);
@@ -84,6 +85,7 @@ public class MessageServiceImpl implements MessageService{
 	 */
 	public void einzelNachricht(Message message)
 	{
+		System.out.println("\nEinzelnachricht:");
 		User empfaenger = new User();
 		empfaenger = userDao.getUserInformation(message.getRecipient());
 				
@@ -93,8 +95,18 @@ public class MessageServiceImpl implements MessageService{
 	public void getAndSendAllMessages(User user)
 	{
 		List<Message> allMessages = messageDao.alleNachrichtenTimestamp(user.getAbsenderId(), 0);
-		Iterator<Message> iterator = allMessages.iterator();
 		
+		for(Message message : allMessages)
+		{
+			if(message.getGroupId() == 0)
+			System.out.println("Nachricht von: " + message.getSender() + " für: " + message.getRecipient() + " mit dem Inhalt  "+ message.getMessage() );
+			else
+				System.out.println("Nachricht in der Gruppe " + message.getGroupId() + " von " + message.getSender()+ " mit dem Inhalt" + message.getMessage());
+			
+			message.setDelivered(1);
+			messageDao.updateDeliveredState(message);
+		}
+	/*	
 		while(iterator.hasNext() == true)
 		{
 			boolean angekommen = false;
@@ -105,7 +117,7 @@ public class MessageServiceImpl implements MessageService{
 				message.setDelivered(1);
 				messageDao.updateDeliveredState(message);
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -118,10 +130,21 @@ public class MessageServiceImpl implements MessageService{
 		//Schreibt die Nachricht in die Datenbank, mit dem Flag, dass die nachricht noch nicht zugestellt wurde.
 		messageDao.SaveMessage(message, empfaenger);
 		message.setMessageID(messageDao.readMessageID());
-		angekommen = ClientConnector.sendMessage(message, empfaenger.getIpAdresse());
+		//angekommen = ClientConnector.sendMessage(message, empfaenger.getIpAdresse());
 		
-		if (angekommen == true)
+//		if (angekommen == true)
+//		{
+//			message.setDelivered(1);
+//			messageDao.updateDeliveredState(message);
+//		}
+		
+		if(empfaenger.getIpAdresse() == null)
 		{
+			System.out.println("User: "+ empfaenger.getAbsenderId() + " aktuell offline.");
+		}
+		else
+		{
+			System.out.println("Versenden der Nachricht von "+message.getSender() +" zu "+empfaenger.getAbsenderId() + " mit der Nachricht: " +message.getMessage());
 			message.setDelivered(1);
 			messageDao.updateDeliveredState(message);
 		}

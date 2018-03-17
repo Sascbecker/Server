@@ -69,7 +69,7 @@ public class MessageDaoImpl implements MessageDao{
 	
 	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp)
 	{
-		String query="Select * from Nachrichten where (EmpfaengerID =:EmpfaengerID or SenderID = :SenderID ";
+		String query="Select * from Nachrichten where (EmpfaengerID =:EmpfaengerID or SenderID = :SenderID) ";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("EmpfaengerID", userID);

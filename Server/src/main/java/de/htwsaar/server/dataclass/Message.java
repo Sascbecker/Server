@@ -30,6 +30,12 @@ public class Message {
 	 */
 	public Message() {}
 	
+	public Message(int aktion, String sender)
+	{
+		this.aktion = aktion;
+		this.sender = sender;
+	}
+	
 	/**
 	 * constructor without messageId and aktion
 	 */

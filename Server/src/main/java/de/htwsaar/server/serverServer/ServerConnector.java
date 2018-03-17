@@ -15,7 +15,7 @@ public class ServerConnector
 	public static void main( String[] args ) throws IOException, InterruptedException 
 	{
 		
-		String baseUrl = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
+		String baseUrl = "localhost:4434";
 		
 		InetAddress ip = null;
 		

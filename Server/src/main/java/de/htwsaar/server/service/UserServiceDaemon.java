@@ -54,7 +54,6 @@ public class UserServiceDaemon extends Thread {
 	private void startUserServiceDaemon() {
 		
 			Thread userServiceDaemon = new Thread(new Runnable() {
-				@Override
 				public void run() {
 					while (true)
 					{
