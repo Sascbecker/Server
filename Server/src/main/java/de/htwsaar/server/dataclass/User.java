@@ -1,14 +1,8 @@
 package de.htwsaar.server.dataclass;
 
 /**
- * Klasse für alle aktionen mit Benutzer.
- * Speichern der IP-Adresse eines Benutzers in dieser Klasse
- * 
- * 
- * Deklaration für Aktion
- * 0 = nix
- * 1 = BenutzerAnlegen
- * 2 = LogIn
+ * Class for all User.
+ * Includes the getter and setter
  */
 public class User {
 	

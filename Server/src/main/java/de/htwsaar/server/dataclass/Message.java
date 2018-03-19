@@ -2,14 +2,7 @@ package de.htwsaar.server.dataclass;
 
 
 /**
- * Klasse für alle aktionen von Nachrichten
- * 
- * 
- * Deklaration Nachrichten
- * Aktion = 0 Message
- * Aktion = 1 add Contact
- * Aktion = 2 delete Contact
- * Aktion = 3 block Contact
+ * Class for all Types of Messages
  * 
  * @author mabecker
  *
