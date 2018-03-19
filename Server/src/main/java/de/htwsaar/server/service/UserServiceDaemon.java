@@ -8,6 +8,13 @@ import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.User;
 import de.htwsaar.server.service.interfaces.UserService;
 
+/**
+ * Class for UserServiceDaemon
+ * Creat a UserServiceDaemon which ping every User every 60 seconds.
+ * If user doesn't answer. User gets loged out.
+ * @author Marco
+ *
+ */
 public class UserServiceDaemon extends Thread {
 
 	UserDao userDao;

@@ -9,6 +9,12 @@ import de.htwsaar.server.dao.interfaces.UserDao;
 import de.htwsaar.server.dataclass.Group;
 import de.htwsaar.server.dataclass.User;
 
+/**
+ * Creats the GroupServiceDaemon
+ * GroupServiceDaeom is for
+ * @author Marco
+ *
+ */
 public class GroupServiceDaemon {
 	
 	UserDao userDao;
