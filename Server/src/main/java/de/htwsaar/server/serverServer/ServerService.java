@@ -9,6 +9,12 @@ import de.htwsaar.server.main.Start;
 //import de.htwsaar.server.service.*;
 //import de.htwsaar.server.main.*;
 
+/**
+ * Rest-operations
+ * Specified all things with the rest server gets. 
+ * @author Marco
+ *
+ */
 @Path( "/{parameter: login|getMessage|getGroup}" )
 public class ServerService
 {

@@ -12,9 +12,12 @@ import de.htwsaar.server.dataclass.*;
 import de.htwsaar.server.service.*;
 import de.htwsaar.server.serverServer.*;
 
-/*
- * Hauptprogramm des Servers, aufruf dieser Klasse bei ankommenen der Nachricht.
- * Verteilt die Logik auf andere Klassen
+/**
+ * Main Class. Starts Server and had all Operations for Actions.
+ * Knows all Service-Class
+ * Gets an Object and call the Service-Methode for the Class
+ * @author Marco
+ *
  */
 public class Start{
 
