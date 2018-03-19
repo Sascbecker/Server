@@ -33,10 +33,10 @@ public class MessageDaoImpl implements MessageDao{
 
 	
 	/**
-	 * Speichert eine Nachricht auf Server
-	 * bekommt Message objekt für Absender, Nachricht, Timestamp,
-	 * bekommt User objekt für Empfänger
-	 * Speichert die Nachricht mit dem Flag, dass die Nachricht noch nicht zugestellt wurde
+	 * Saves a Message on the Server.
+	 * gets a Message Object for Sender, Message, Timestamp,
+	 * gets a User Object for the recipient
+	 * Saves the Message with the Flag, that the Message is not delivered yet.
 	 */
 	public void SaveMessage(Message message, User empfaenger)
 	{
@@ -46,17 +46,17 @@ public class MessageDaoImpl implements MessageDao{
                 paramSource.addValue("Time", message.getTimestamp());
                 paramSource.addValue("Content", message.getMessage());
                 paramSource.addValue("IdSender", message.getSender());
-                paramSource.addValue("IdEmpf", empfaenger.getAbsenderId());
+                paramSource.addValue("IdEmpf", empfaenger.getUserID());
                 
                 jdbc.update(sqlStatement, paramSource);
 	}
 	
 	/**
-	 * Liste mit allen Nachrichten, die noch nicht gesendet wurden,  
-	 * @param timestamp
-	 * @return Liste mit allen Nachrichten ab einem gewissen Zeitpunk
+	 *   
+	 * @param userID 
+	 * @return A List containing all unread Messages for a given UserID
 	 */
-	public List<Message> alleUngeleseneNachrichten(String userID)
+	public List<Message> allUnreadMessages(String userID)
 	{
 		int delivered = 0;
 		String query = "Select * from Nachrichten where EmpfaengerID = :UserID and Zugestellt = :delivered order by Zeit";
@@ -67,7 +67,7 @@ public class MessageDaoImpl implements MessageDao{
 		return jdbc.query(query,paramSource, new MessageRowMapper());
 	}
 	
-	public List<Message> alleNachrichtenTimestamp(String userID, int timestamp)
+	public List<Message> allMessagesTimestamp(String userID, int timestamp)
 	{
 		String query="Select * from Nachrichten where (EmpfaengerID =:EmpfaengerID or SenderID = :SenderID) ";
 		
@@ -113,8 +113,7 @@ public class MessageDaoImpl implements MessageDao{
 	}
 
 	/**
-	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
-	 * Ergebnis einer Datenbankanfrage war
+	 * This class creates Member Objects from a resultset containing the result of a Database request
 	 * 
 	 * @return Member - object
 	 */

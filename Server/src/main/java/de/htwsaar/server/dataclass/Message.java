@@ -6,10 +6,10 @@ package de.htwsaar.server.dataclass;
  * 
  * 
  * Deklaration Nachrichten
- * Aktion = 0 Nachricht
- * Aktion = 1 Kontakt hinzufügen
- * Aktion = 2 Kontakt löschen
- * Aktion = 3 Kontakt blockieren
+ * Aktion = 0 Message
+ * Aktion = 1 add Contact
+ * Aktion = 2 delete Contact
+ * Aktion = 3 block Contact
  * 
  * @author mabecker
  *

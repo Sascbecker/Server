@@ -48,11 +48,11 @@ public class MessageServiceImpl implements MessageService{
 		case MessageActions.Nachricht: 
 			if(message.getGroupId()== 0)
 			{
-				einzelNachricht(message);
+				singleMessage(message);
 			}
 			else
 			{
-				gruppenNachrichten(message);
+				groupMessage(message);
 			}
 			break;
 		}	
@@ -61,12 +61,12 @@ public class MessageServiceImpl implements MessageService{
 	 * Handles the processing of a group message
 	 * @param message the message to send to a group
 	 */
-	public void gruppenNachrichten(Message message)
+	public void groupMessage(Message message)
 	{
 		System.out.println("\n Gruppennachricht:");
 		List<User> gruppenUser;
 		User nextUser = new User();
-		gruppenUser = userDao.selectGruppenUserOhneSender(message);
+		gruppenUser = userDao.selectGroupUserWithoutSender(message);
 		
 		Iterator<User> i = gruppenUser.iterator();
 		
@@ -74,7 +74,7 @@ public class MessageServiceImpl implements MessageService{
 		while(i.hasNext() == true)
 		{
 			nextUser = i.next();
-			sendeNachricht(message, nextUser);
+			sendMessage(message, nextUser);
 		}
 	}
 	
@@ -83,18 +83,18 @@ public class MessageServiceImpl implements MessageService{
 	 * handles the processing of a direct message
 	 * @param message
 	 */
-	public void einzelNachricht(Message message)
+	public void singleMessage(Message message)
 	{
 		System.out.println("\nEinzelnachricht:");
 		User empfaenger = new User();
 		empfaenger = userDao.getUserInformation(message.getRecipient());
 				
-		sendeNachricht(message, empfaenger);
+		sendMessage(message, empfaenger);
 	}
 	
 	public void getAndSendAllMessages(User user)
 	{
-		List<Message> allMessages = messageDao.alleNachrichtenTimestamp(user.getAbsenderId(), 0);
+		List<Message> allMessages = messageDao.allMessagesTimestamp(user.getUserID(), 0);
 		
 		for(Message message : allMessages)
 		{
@@ -123,12 +123,12 @@ public class MessageServiceImpl implements MessageService{
 	/**
 	 * sends a message as it was received to its recipient
 	 * @param message the message to send
-	 * @param empfaenger the recipient of the message
+	 * @param recipient the recipient of the message
 	 */
-	public void sendeNachricht(Message message, User empfaenger){
+	public void sendMessage(Message message, User recipient){
 		boolean angekommen;
 		//Schreibt die Nachricht in die Datenbank, mit dem Flag, dass die nachricht noch nicht zugestellt wurde.
-		messageDao.SaveMessage(message, empfaenger);
+		messageDao.SaveMessage(message, recipient);
 		message.setMessageID(messageDao.readMessageID());
 		//angekommen = ClientConnector.sendMessage(message, empfaenger.getIpAdresse());
 		
@@ -138,13 +138,13 @@ public class MessageServiceImpl implements MessageService{
 //			messageDao.updateDeliveredState(message);
 //		}
 		
-		if(empfaenger.getIpAdresse() == null)
+		if(recipient.getIpAdress() == null)
 		{
-			System.out.println("User: "+ empfaenger.getAbsenderId() + " aktuell offline.");
+			System.out.println("User: "+ recipient.getUserID() + " aktuell offline.");
 		}
 		else
 		{
-			System.out.println("Versenden der Nachricht von "+message.getSender() +" zu "+empfaenger.getAbsenderId() + " mit der Nachricht: " +message.getMessage());
+			System.out.println("Versenden der Nachricht von "+message.getSender() +" zu "+recipient.getUserID() + " mit der Nachricht: " +message.getMessage());
 			message.setDelivered(1);
 			messageDao.updateDeliveredState(message);
 		}

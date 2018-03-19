@@ -14,7 +14,7 @@ public class DaoObjectBuilder {
 	/*
 	 * KontaktDao
 	 */
-	public static KontaktDao getKontaktDao() {
+	public static KontaktDao getContactDao() {
 		return new KontaktDaoImpl();
 	}
 	

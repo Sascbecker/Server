@@ -12,8 +12,8 @@ import java.util.List;
 public class Kontakte {
 
 	private String userId;
-	private List<User> kontaktliste;
-	private List<Group> groupliste;
+	private List<User> contactList;
+	private List<Group> grouplist;
 	
 	/**
 	 * empty constructor
@@ -25,14 +25,14 @@ public class Kontakte {
 	
 	public String getUserId() { return userId;}
 	
-	public List<User> getKontaktListe () { return kontaktliste;}
-	public List<Group> getGroupListe() { return groupliste;}
+	public List<User> getContactList () { return contactList;}
+	public List<Group> getGroupListe() { return grouplist;}
 	
 	public void setUserId(String userId)
 	{
 		this.userId = userId;
 	}
 	
-	public void setKontaktListe(List<User> kontaktListe) { this.kontaktliste = kontaktListe;}
-	public void setGroupListe(List<Group> groupliste) { this.groupliste = groupliste; }
+	public void setContactList(List<User> contactList) { this.contactList = contactList;}
+	public void setGroupList(List<Group> grouplist) { this.grouplist = grouplist; }
 }

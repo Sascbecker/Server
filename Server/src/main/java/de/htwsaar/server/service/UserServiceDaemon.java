@@ -40,7 +40,7 @@ public class UserServiceDaemon extends Thread {
 
 	public boolean ping(User user) {
 		boolean online;
-		String ip = user.getIpAdresse();
+		String ip = user.getIpAdress();
 		online = de.htwsaar.service.serverConnector.ClientConnector.ping(ip);
 		return online;
 	}
@@ -49,7 +49,7 @@ public class UserServiceDaemon extends Thread {
 	 * logs the User out
 	 */
 	public void logout(User user) {
-		userService.userAbmelden(user);
+		userService.logOutUser(user);
 
 	}
 	
@@ -61,7 +61,7 @@ public class UserServiceDaemon extends Thread {
 			
 			for(User userOnline : user)
 			{
-				System.out.println("Ping User: "+ userOnline.getAbsenderId() + " an die IPAdresse = "+ userOnline.getIpAdresse());
+				System.out.println("Ping User: "+ userOnline.getUserID() + " an die IPAdresse = "+ userOnline.getIpAdress());
 				
 			}
 			

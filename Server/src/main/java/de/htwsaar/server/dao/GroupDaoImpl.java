@@ -30,9 +30,9 @@ public class GroupDaoImpl  implements GroupDao{
 	}
 	
 	/**
-	 * Gruppen Anlegen 
+	 * Create a Group 
 	 */
-	public void gruppeAnlegen(Group group)
+	public void createGroup(Group group)
 	{
 		String sqlStatement = "Insert Into Gruppen (GruppenName, GruppenAdmin) Values (:GroupName, :GroupAdmin)";
 		
@@ -45,9 +45,9 @@ public class GroupDaoImpl  implements GroupDao{
 	}
 	
 	/**
-	 * gruppen Löschen
+	 * Delete a Group
 	 */
-	public void gruppeLöschen(Group group)
+	public void deleteGroup(Group group)
 	{
 		String sqlStatement = "Delete from Gruppen where GruppenID = :GruppenID";
 		
@@ -71,24 +71,24 @@ public class GroupDaoImpl  implements GroupDao{
 		
 	}
 	/**
-	 * Gruppe verlassen bzw. Benutzer wird gekickt
+	 * Leave the Group or User is kicked
 	 */
-	public void gruppeVerlassen(Group group)
+	public void leaveGroup(Group group)
 	{
 		String sqlStatement = "Delete from IstGruppe where GruppenID = :GruppenID and UserID = :UserID";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("GruppenID", group.getGroupId());
-		paramSource.addValue("UserID", group.getEmpfaengerId());
+		paramSource.addValue("UserID", group.getRecipientId());
 		
 		jdbc.update(sqlStatement, paramSource);
 	}
 	
 	
 	/**
-	 * Name der Gruppe ändern
+	 * Change the Name of the Group
 	 */
-	public void gruppeUmbennen(Group group)
+	public void renameGroup(Group group)
 	{
 
 		String sqlStatement = "Update Gruppen set GruppenName = :GruppenName where GruppenID = :GruppenID";
@@ -101,15 +101,15 @@ public class GroupDaoImpl  implements GroupDao{
 	}
 	
 	/**
-	 * Nutzer zur Gruppe hinzufügen
+	 * Adds a User to the Group
 	 */
-	public void nutzerZurGruppeHinzufuegen(Group group)
+	public void addUserToGroup(Group group)
 	{
 		String query = "Insert into IstGruppe Values(:GroupID, :UserID)";
 		
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("GroupID", group.getGroupId());
-		paramSource.addValue("UserID", group.getEmpfaengerId());
+		paramSource.addValue("UserID", group.getRecipientId());
 		
 		jdbc.update(query, paramSource);
 
@@ -124,7 +124,9 @@ public class GroupDaoImpl  implements GroupDao{
 		paramSource.addValue("UserID", userID);
 		return jdbc.query(query,paramSource, new GroupRowMapper());
 	}
-	
+	/**
+	 * return the GroupID
+	 */
 	public int getGroupID()
 	{
 		String query = "Select GruppenID from Gruppen order by GruppenID DESC Limit 1";
@@ -132,7 +134,9 @@ public class GroupDaoImpl  implements GroupDao{
 		
 		return jdbc.queryForObject(query, paramSource, Integer.class);
 	}
-	
+	/**
+	 * return the Admin of a Group by a given GroupID
+	 */
 	public String selectGroupAdmin(int groupID)
 	{
 		 String query = "SELECT GruppenAdmin FROM Gruppen WHERE GruppenID = :GroupID";

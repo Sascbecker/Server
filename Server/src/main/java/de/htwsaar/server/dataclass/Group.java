@@ -15,7 +15,7 @@ public class Group {
 	private String senderID;
 	private String groupName;
 	private int groupID;
-	private String empfaengerID;
+	private String recipientId;
 	private String groupAdmin;
 	private List<User> groupMember;
 	
@@ -39,24 +39,24 @@ public class Group {
 	/**
 	 * constructor without admin parameter
 	 */
-	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID )
+	public Group(int aktion, String senderID, String groupName, int groupID, String recipientID )
 	{
 		this.aktion = aktion;
 		this.senderID = senderID;
 		this.groupName = groupName;
 		this.groupID = groupID;
-		this.empfaengerID = empfaengerID;
+		this.recipientId = recipientID;
 	}
 	
 	/**
 	 * full constructor, not much else
 	 */
-	public Group(int aktion, String senderID, String groupName, int groupID, String empfaengerID, String GroupAdmin) {
+	public Group(int aktion, String senderID, String groupName, int groupID, String recipientId, String GroupAdmin) {
 		this.aktion=aktion;
 		this.senderID = senderID;
 		this.groupName=groupName;
 		this.groupID=groupID;
-		this.empfaengerID=empfaengerID;
+		this.recipientId=recipientId;
 		this.groupAdmin=groupAdmin;
 	}
 	
@@ -68,7 +68,7 @@ public class Group {
 	public String getSender() { return senderID;}
 	public String getGroupName() {return groupName;}
 	public int getGroupId(){return groupID;}
-	public String getEmpfaengerId() {return empfaengerID;}
+	public String getRecipientId() {return recipientId;}
 	public String getGroupAdmin() {return groupAdmin;}
 	public List<User> getGroupMember(){ return groupMember;}
 	
@@ -76,7 +76,7 @@ public class Group {
 	public void setSender(String senderID) { this.senderID = senderID;}
 	public void setGroupName(String name) {this.groupName=name;}
 	public void setGroupId(int id){this.groupID=id;}
-	public void setEmpfaengerId(String id) {this.empfaengerID=id;}
+	public void setRecipientId(String id) {this.recipientId=id;}
 	public void setGroupAdmin(String groupAdmin) {this.groupAdmin=groupAdmin;}
 	public void setGroupMember(List <User> groupMember) {this.groupMember = groupMember;}
 

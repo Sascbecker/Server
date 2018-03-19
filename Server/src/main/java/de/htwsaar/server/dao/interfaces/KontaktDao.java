@@ -2,19 +2,19 @@ package de.htwsaar.server.dao.interfaces;
 
 import de.htwsaar.server.dataclass.*;
 /**
- * Interface Klasse für Kontaktverwaltung
- * Kontakt anlegen
- * Kontakt löschen
+ * Interface Class for contact management
+ * create Contact
+ * delete Contact
  * Kontakte ausgeben
- * Kontakt blockieren
+ * block Contact
  * @author Marco
  *
  */
 public interface KontaktDao {
 
-	public void kontaktHinzufuegen(Message message);
-	public void kontaktLoeschen(Message message);
-	public void kontaktBlockieren(Message message);
+	public void addContact(Message message);
+	public void deleteContact(Message message);
+	public void blockContact(Message message);
 	
 
 }

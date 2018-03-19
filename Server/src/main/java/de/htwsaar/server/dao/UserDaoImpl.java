@@ -39,8 +39,8 @@ public class UserDaoImpl implements UserDao{
 	{
 		String sqlStatement= "Insert into User (UserID, Passwort) Values (:UserID, :Passwort)";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("UserID", user.getAbsenderId());
-		paramSource.addValue("Passwort", user.getPasswort());
+		paramSource.addValue("UserID", user.getUserID());
+		paramSource.addValue("Passwort", user.getPassword());
 		
 		//Ausführen des SQL-Statements mit dem String sql-Statement und der paramSource
 		jdbc.update(sqlStatement, paramSource);
@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao{
 	 * returns the password of a user identified by a given userId (=username)
 	 * in a secure context we'd store the hashed password instead of the plain text
 	 */
-	public String getPasswort(String memberId) {
+	public String getPassword(String memberId) {
             
         String query = "SELECT Passwort FROM USER WHERE UserId = :UserID";
 
@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao{
 	/**
 	 * returns the IP of a user with a given userId (=username)
 	 */
-	public String getIpAdresse(String userId)
+	public String getIpAddress(String userId)
 	{
 		String query = "Select IP-Adresse from User where UserId = :UserID";
 		
@@ -95,12 +95,12 @@ public class UserDaoImpl implements UserDao{
 	/**
 	 * returns a list of users which are members of a group identified by a given groupId
 	 */
-	public List<User> selectGruppenUser(int gruppenId)
+	public List<User> selectGroupUser(int groupId)
 	{
             //Insert SQL Statement
 		String query="Select IstGruppe.UserID, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("GroupID",gruppenId);
+		paramSource.addValue("GroupID",groupId);
 		
 		return jdbc.query(query,paramSource, new UserRowMapper());
 		
@@ -110,7 +110,7 @@ public class UserDaoImpl implements UserDao{
 	 * returns a list of users in a group without the sender of the message
 	 * @param message contains information about the group and the sender
 	 */
-	public List<User> selectGruppenUserOhneSender(Message message)
+	public List<User> selectGroupUserWithoutSender(Message message)
 	{
 		String query="Select IstGruppe.UserID, User.Passwort, User.IPAdresse from IstGruppe join User on IstGruppe.UserID = User.UserID where IstGruppe.GruppenID =:GroupID and IstGruppe.UserID != :Sender";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
@@ -123,33 +123,33 @@ public class UserDaoImpl implements UserDao{
 	/**
 	 * returns a list of users which the given contact has in their contact list
 	 */
-	public List<User> selectKontakte(Kontakte kontakt)
+	public List<User> selectContacts(Kontakte contact)
 	{
 		String sqlStatement= "Select Kontakte.KontaktID as UserID, User.IPAdresse from Kontakte join User on Kontakte.UserID = User.UserID where Kontakte.UserID= :UserID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("UserID", kontakt.getUserId());
+		paramSource.addValue("UserID", contact.getUserId());
 		
 		return jdbc.query(sqlStatement,paramSource, new UserRowMapper());
 	}
 	
 	/**
-	 * Updates the Table User with the Ip-Adress
+	 * Updates the Table User with the IP-Address
 	 * @param user
 	 */
-	public void updateIpAdresse(User user)
+	public void updateIpAddress(User user)
 	{
 		String query = "Update User set IPAdresse = :IpAdresse where UserID = :UserID";
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-		paramSource.addValue("IpAdresse", user.getIpAdresse());
+		paramSource.addValue("IpAdresse", user.getIpAdress());
 		
-		paramSource.addValue("UserID", user.getAbsenderId());
+		paramSource.addValue("UserID", user.getUserID());
 		
 		jdbc.update(query,paramSource);
 	}
 	
 	/**
-	 * datenbank nach allen nutzern die aktuell online sind abfragen 	
+	 * Return a List of all Users, which are online 	
 	 */
     public List<User> getAllOnlineUser()
     {
@@ -162,8 +162,8 @@ public class UserDaoImpl implements UserDao{
 
 
 	/**
-	 * Diese Klasse erstellt Member-Objekte aus einem Resultset welches das
-	 * Ergebnis einer Datenbankanfrage war
+	 * This Class creates Member-Objects from a result set which was the result
+	 * of a database request
 	 * 
 	 * @return Member - object
 	 */
@@ -175,8 +175,8 @@ public class UserDaoImpl implements UserDao{
 			User user = new User();
 
 			try {
-				user.setAbsenderId(results.getString("UserID"));
-				user.setIpAdresse(results.getString("IPAdresse"));
+				user.setUserID(results.getString("UserID"));
+				user.setIpAdress(results.getString("IPAdresse"));
 
 			
 			} catch (Exception e) {

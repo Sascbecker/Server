@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface UserDao {
 	public void newUser(User user);
-	public String getIpAdresse(String userID);
-	public String getPasswort(String userID);
+	public String getIpAddress(String userID);
+	public String getPassword(String userID);
 	public User getUserInformation(String userID);
-	public void updateIpAdresse(User user);
-	public List<User> selectGruppenUser(int gruppenId);
-	public List<User> selectGruppenUserOhneSender(Message message);
-	public List<User> selectKontakte(Kontakte kontakt);
+	public void updateIpAddress(User user);
+	public List<User> selectGroupUser(int gruppenId);
+	public List<User> selectGroupUserWithoutSender(Message message);
+	public List<User> selectContacts(Kontakte kontakt);
 	public List<User> getAllOnlineUser();
 
 }

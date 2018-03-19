@@ -22,7 +22,7 @@ public class Start{
 	MessageService messageService;
 	UserService userService;
 	GroupService groupService;
-	KontaktService kontaktService;
+	KontaktService contactService;
 	GroupServiceDaemon groupServiceDeamon;
 	MessageServiceDaemon messageServiceDeamon;
 	UserServiceDaemon userServiceDeamon;
@@ -35,7 +35,7 @@ public class Start{
 		messageService = ServiceObjektBuilder.getMessageService();
 		userService = ServiceObjektBuilder.getUserService();
 		groupService = ServiceObjektBuilder.getGroupService();
-		kontaktService = ServiceObjektBuilder.getKontaktService();
+		contactService = ServiceObjektBuilder.getKontaktService();
 		//groupServiceDeamon = new GroupServiceDaemon();
 		userServiceDeamon = new UserServiceDaemon();
 		userServiceDeamon.start();
@@ -57,11 +57,11 @@ public class Start{
 				{
 				case MessageActions.Nachricht: messageService.handleMessage(message);
 					break;
-				case MessageActions.Kontakt_Hinzufuegen:
-				case MessageActions.Kontakt_Loeschen:
-				case MessageActions.Kontakt_Blockieren:
-				case MessageActions.Kontakt_Liste:
-						kontaktService.handleKontaktConfig(message);
+				case MessageActions.Add_Contact:
+				case MessageActions.Delete_Contact:
+				case MessageActions.Block_Contact:
+				case MessageActions.Kontakt_List:
+						contactService.handleContactConfig(message);
 					break;
 				}
 			
@@ -141,16 +141,16 @@ public class Start{
 		start.groupStart(new Group(GroupActions.Kick_From_Group,"Sascha","Test",1,"Sascha"));
 		
 		//Benutzer zur Kontaktliste hinzufügen
-		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
-		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Alex","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Daniela","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Maurice","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Sascha","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Hinzufuegen,"Marco",0,"Robin","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
+		start.messageStart(new Message(MessageActions.Kontakt_List,"Marco"));
+		start.messageStart(new Message(MessageActions.Add_Contact,"Marco",0,"Alex","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Add_Contact,"Marco",0,"Daniela","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Add_Contact,"Marco",0,"Maurice","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Add_Contact,"Marco",0,"Sascha","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Add_Contact,"Marco",0,"Robin","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_List,"Marco"));
 		
-		start.messageStart(new Message(MessageActions.Kontakt_Loeschen,"Marco",0,"Alex","",System.currentTimeMillis()));
-		start.messageStart(new Message(MessageActions.Kontakt_Liste,"Marco"));
+		start.messageStart(new Message(MessageActions.Delete_Contact,"Marco",0,"Alex","",System.currentTimeMillis()));
+		start.messageStart(new Message(MessageActions.Kontakt_List,"Marco"));
 		
 		//Nachricht an einzel Person
 		start.messageStart(new Message("Marco",0,"Alex", "Dies ist eine Test nachricht",System.currentTimeMillis()));

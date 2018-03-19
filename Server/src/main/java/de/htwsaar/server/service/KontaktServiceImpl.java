@@ -25,7 +25,7 @@ public class KontaktServiceImpl implements KontaktService{
 	 */
 	public KontaktServiceImpl()
 	{
-		kontaktDao = DaoObjectBuilder.getKontaktDao();
+		kontaktDao = DaoObjectBuilder.getContactDao();
 		userDao = DaoObjectBuilder.getUserDao();
 		groupDao = DaoObjectBuilder.getGroupDao();
 		
@@ -35,23 +35,23 @@ public class KontaktServiceImpl implements KontaktService{
 	 * Processes a configuration prompt for the contact list of the message's sender
 	 * @param message contains the relevant information for the contact configuration
 	 */
-	public void handleKontaktConfig(Message message)
+	public void handleContactConfig(Message message)
 	{
 		switch (message.getAktion()) {
-		case MessageActions.Kontakt_Hinzufuegen:
+		case MessageActions.Add_Contact:
 						
-			kontaktHinzufuegen(message);
+			addContact(message);
 			break;
 			
-		case MessageActions.Kontakt_Loeschen:
-			kontaktLoeschen(message);
+		case MessageActions.Delete_Contact:
+			deleteContact(message);
 			break;
 			
-		case MessageActions.Kontakt_Blockieren:
-			kontaktBlockieren(message);
+		case MessageActions.Block_Contact:
+			blockContact(message);
 			break;
-		case MessageActions.Kontakt_Liste:
-			sendeKontaktListe(message);
+		case MessageActions.Kontakt_List:
+			sendContactList(message);
 			
 		
 
@@ -62,10 +62,10 @@ public class KontaktServiceImpl implements KontaktService{
 	 * Service method for adding the recipient of the message to the sender's contact list
 	 * @param message contains the relevant information for the contact configuration
 	 */
-	private void kontaktHinzufuegen(Message message)
+	private void addContact(Message message)
 	{
 		//TODO: Überprüfen ob Benutzer schon in Liste ist
-		kontaktDao.kontaktHinzufuegen(message);
+		kontaktDao.addContact(message);
 		System.out.println("kontakt: "+ message.getRecipient()+ " wurde zu der KontaktListe von "+message.getSender()+" hinzugefügt");
 	}
 	
@@ -73,10 +73,10 @@ public class KontaktServiceImpl implements KontaktService{
 	 * Service method for deleting the recipient of the message from the sender's contact list
 	 * @param message contains the relevant information for the contact configuration
 	 */
-	private void kontaktLoeschen(Message message)
+	private void deleteContact(Message message)
 	{
 		//TODO: Überprüfen, ob der Benutzer noch in der Liste ist
-		kontaktDao.kontaktLoeschen(message);
+		kontaktDao.deleteContact(message);
 		System.out.println("kontakt: "+ message.getRecipient()+ " wurde aus der KontaktListe von "+message.getSender()+" gelöscht");
 	}
 	
@@ -84,36 +84,36 @@ public class KontaktServiceImpl implements KontaktService{
 	 * Erst im späteren Verlauf zu implementieren
 	 * @param message contains the relevant information for the contact configuration
 	 */
-	private void kontaktBlockieren(Message message)
+	private void blockContact(Message message)
 	{
 		
 	}
 	
-	private Kontakte kontaktListe(Kontakte kontakt)
+	private Kontakte contactList(Kontakte contact)
 	{
 		
-		List<User> kontaktListe = userDao.selectKontakte(kontakt);
-		kontakt.setKontaktListe(kontaktListe);
-		kontakt.setGroupListe(groupDao.selectGroupInformation(kontakt.getUserId()));
-		for(Group group : kontakt.getGroupListe())
+		List<User> kontaktListe = userDao.selectContacts(contact);
+		contact.setContactList(kontaktListe);
+		contact.setGroupList(groupDao.selectGroupInformation(contact.getUserId()));
+		for(Group group : contact.getGroupListe())
 		{
-			group.setGroupMember(userDao.selectGruppenUser(group.getGroupId()));
+			group.setGroupMember(userDao.selectGroupUser(group.getGroupId()));
 		}
-		return kontakt;
+		return contact;
 		
 	}
 	
-	private void sendeKontaktListe(Message message)
+	private void sendContactList(Message message)
 	{
 		
 		Kontakte kontakt = new Kontakte();
 		kontakt.setUserId(message.getSender());
-		kontakt = kontaktListe(kontakt);
+		kontakt = contactList(kontakt);
 		
 		System.out.println("Übertragen der Kontaktliste\nAlle Kontakte:");
-		for(User user : kontakt.getKontaktListe())
+		for(User user : kontakt.getContactList())
 		{
-			System.out.println("User: "+ user.getAbsenderId() + " IPAdresse: " +user.getIpAdresse());
+			System.out.println("User: "+ user.getUserID() + " IPAdresse: " +user.getIpAdress());
 		}
 		System.out.println("Alle zugehörigen Gruppen: ");
 		for(Group group: kontakt.getGroupListe())
@@ -121,7 +121,7 @@ public class KontaktServiceImpl implements KontaktService{
 			System.out.println("Gruppenname: "+ group.getGroupName());
 			for(User user: group.getGroupMember())
 			{
-				System.out.println("\t Zugehörigen Gruppenmitglieder: "+user.getAbsenderId());
+				System.out.println("\t Zugehörigen Gruppenmitglieder: "+user.getUserID());
 			}
 		}
 	}

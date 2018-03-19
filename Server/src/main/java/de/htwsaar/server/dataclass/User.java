@@ -17,7 +17,7 @@ public class User {
 	private String passwort;
 	private String ipAdresse;
 	private String returnCode;
-	private boolean userAuthentifizierung;
+	private boolean userAuthentication;
 	
 
 	/**
@@ -58,17 +58,17 @@ public class User {
 	
 	
 	public int getAktion() { return aktion;}
-	public String getAbsenderId() { return absenderId;}
-	public String getPasswort() { return passwort;}
-	public String getIpAdresse() { return ipAdresse;}
+	public String getUserID() { return absenderId;}
+	public String getPassword() { return passwort;}
+	public String getIpAdress() { return ipAdresse;}
 	public String getReturnCode() { return returnCode;}
-	public boolean getUserAuthentifizierung() { return userAuthentifizierung;}
+	public boolean getUserAuthentifizierung() { return userAuthentication;}
 	
 	public void setAktion(int aktion) { this.aktion = aktion;}
-	public void setAbsenderId(String absenderId) {this.absenderId = absenderId;}
+	public void setUserID(String absenderId) {this.absenderId = absenderId;}
 	public void setPasswort(String passwort) {this.passwort = passwort;}
-	public void setIpAdresse(String ipAdresse) { this.ipAdresse = ipAdresse;}
+	public void setIpAdress(String ipAdresse) { this.ipAdresse = ipAdresse;}
 	public void setReturnCode(String returnCode) {this.returnCode = returnCode;}
-	public void setUserAuthentifizierung(boolean userAuthentifizierung) { this.userAuthentifizierung = userAuthentifizierung;}
+	public void setUserAuthentication(boolean userAuthentication) { this.userAuthentication = userAuthentication;}
 	
 }

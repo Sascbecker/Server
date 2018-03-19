@@ -4,5 +4,5 @@ import de.htwsaar.server.dataclass.Message;
 
 public interface KontaktService {
 
-	public void handleKontaktConfig(Message message);
+	public void handleContactConfig(Message message);
 }

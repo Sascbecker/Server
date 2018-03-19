@@ -6,8 +6,8 @@ import de.htwsaar.server.dataclass.User;
 public interface MessageService {
 	
 	public void handleMessage(Message message);
-	public void gruppenNachrichten(Message message);
-	public void einzelNachricht (Message message);
-	public void sendeNachricht (Message message, User user);
+	public void groupMessage(Message message);
+	public void singleMessage (Message message);
+	public void sendMessage (Message message, User user);
 	public void getAndSendAllMessages(User user);
 }

@@ -26,9 +26,9 @@ public class KontaktDaoImpl implements KontaktDao{
 		this.jdbc = new NamedParameterJdbcTemplate(SQLiteJDBC.getConnection());
 	}
 	/**
-	 * Methode zum hinzufügen eines Kontaktes
+	 * Method to add a Contact
 	 */
-	public void kontaktHinzufuegen(Message message)
+	public void addContact(Message message)
 	{
 		String sqlStatement = "Insert into Kontakte (UserID, KontaktID) Values(:UserID, :KontaktID)";
 		
@@ -39,8 +39,11 @@ public class KontaktDaoImpl implements KontaktDao{
 		jdbc.update(sqlStatement, paramSource);
 		
 	}
+	/**
+	 * Delete a Contact
+	 */
 	
-	public void kontaktLoeschen(Message message)
+	public void deleteContact(Message message)
 	{
 		String sqlStatement = "Delete from Kontakte where UserID = :UserID and KontaktID = :KontaktID";
 		
@@ -51,7 +54,7 @@ public class KontaktDaoImpl implements KontaktDao{
 		jdbc.update(sqlStatement, paramSource);
 	}
 	
-	public void kontaktBlockieren(Message message)
+	public void blockContact(Message message)
 	{
 		
 	}

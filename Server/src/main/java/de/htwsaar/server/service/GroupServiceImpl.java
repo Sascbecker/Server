@@ -87,7 +87,7 @@ public class GroupServiceImpl implements GroupService{
 				while(i.hasNext()==true)
 				{
 					nextUser = i.next();
-					String userID = nextUser.getAbsenderId();
+					String userID = nextUser.getUserID();
 					 List<Group> groupList = daemon.getGroupListForUser(userID);
 					 Iterator<Group> j = groupList.iterator();
 					 while(i.hasNext()==true)
@@ -109,9 +109,9 @@ public class GroupServiceImpl implements GroupService{
 	 * TODO überprüfen, ob es die Gruppe schon gibt, nach anlegen der Gruppe muss sofort die GruppenID ausgelesen werden.
 	 */
 	private void create(Group group){
-		groupDao.gruppeAnlegen(group);
+		groupDao.createGroup(group);
 		group.setGroupId(groupDao.getGroupID());
-		group.setEmpfaengerId(group.getSender());
+		group.setRecipientId(group.getSender());
 		group.setGroupAdmin(group.getSender());
 		System.out.println("Gruppe wurde erfolgreich angelegt mit der\nID: "+ group.getGroupId()
 		+" mit dem Namen "+ group.getGroupName()
@@ -132,7 +132,7 @@ public class GroupServiceImpl implements GroupService{
 		if(group.getSender().equals(group.getGroupAdmin()))
 		{
 			//Wenn Admin und sender überrein stimmen, wird die Gruppe gelöscht
-			if(group.getSender().equals(group.getEmpfaengerId()))
+			if(group.getSender().equals(group.getRecipientId()))
 			{
 				delete(group);
 				System.out.println("Gruppe:" + group.getGroupName()+ " wurde gelöscht da Admin die Gruppe verlassen hat");
@@ -140,14 +140,14 @@ public class GroupServiceImpl implements GroupService{
 			//Ansonsten wird der Benutzer gekickt
 			else
 			{
-				groupDao.gruppeVerlassen(group);
-				System.out.println("User: "+group.getEmpfaengerId() + " wurder aus der Gruppe gekickt");
+				groupDao.leaveGroup(group);
+				System.out.println("User: "+group.getRecipientId() + " wurder aus der Gruppe gekickt");
 			}
 		}
 		//Schaut, ob der Sender auch der ist, der aus der Gruppe raus gehen möchte
-		else if(group.getSender().equals(group.getEmpfaengerId()))
+		else if(group.getSender().equals(group.getRecipientId()))
 		{
-			groupDao.gruppeVerlassen(group);
+			groupDao.leaveGroup(group);
 			System.out.println("User :" + group.getSender()+ " hat erfolgreich die Gruppe verlassen");
 		}
 		//Nicht möglich wenn man vesucht andere zu kicken
@@ -166,7 +166,7 @@ public class GroupServiceImpl implements GroupService{
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		
 		if(group.getSender().equals(group.getGroupAdmin())) {
-			groupDao.gruppeLöschen(group);
+			groupDao.deleteGroup(group);
 			groupDao.deleteMember(group);
 		}
 		else
@@ -183,7 +183,7 @@ public class GroupServiceImpl implements GroupService{
 		
 		group.setGroupAdmin(groupDao.selectGroupAdmin(group.getGroupId()));
 		if(group.getSender().equals(group.getGroupAdmin())) {
-			groupDao.gruppeUmbennen(group);
+			groupDao.renameGroup(group);
 			System.out.println("Gruppe wurde in " + group.getGroupName()+ " umbennant");
 		}
 		else
@@ -201,8 +201,8 @@ public class GroupServiceImpl implements GroupService{
 		
 		if(group.getSender().equals(group.getGroupAdmin()) == true)
 		{
-			groupDao.nutzerZurGruppeHinzufuegen(group);
-			System.out.println("User: "+group.getEmpfaengerId()+ " wurde erfolgreich zur gruppe hinzugefügt");
+			groupDao.addUserToGroup(group);
+			System.out.println("User: "+group.getRecipientId()+ " wurde erfolgreich zur gruppe hinzugefügt");
 		}
 		else
 		{

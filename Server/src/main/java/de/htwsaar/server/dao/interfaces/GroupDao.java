@@ -11,12 +11,12 @@ import de.htwsaar.server.dataclass.*;
 public interface GroupDao {
 	
 	
-	public void gruppeAnlegen(Group group);
-	public void gruppeLöschen(Group group);
+	public void createGroup(Group group);
+	public void deleteGroup(Group group);
 	public void deleteMember(Group group);
-	public void gruppeVerlassen(Group group);
-	public void gruppeUmbennen(Group group);
-	public void nutzerZurGruppeHinzufuegen(Group group);
+	public void leaveGroup(Group group);
+	public void renameGroup(Group group);
+	public void addUserToGroup(Group group);
 	public int getGroupID();
 	public String selectGroupAdmin(int groupID);
 	public List<Group> getGroupListForUser(String userID);

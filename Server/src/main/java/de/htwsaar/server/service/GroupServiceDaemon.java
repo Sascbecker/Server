@@ -43,7 +43,7 @@ public class GroupServiceDaemon {
 	 */
 	public List<User> getMemberListOfGroup(int gruppenId)
 	{ 
-		List<User> members= userDao.selectGruppenUser(gruppenId);
+		List<User> members= userDao.selectGroupUser(gruppenId);
 		return members;
 	}
 	
@@ -72,7 +72,7 @@ public class GroupServiceDaemon {
 				{
 					final User nextUser;
 					nextUser = i.next();
-					String userID = nextUser.getAbsenderId();
+					String userID = nextUser.getUserID();
 					 List<Group> groupList = getGroupListForUser(userID);
 					 Iterator<Group> j = groupList.iterator();
 					 while(i.hasNext()==true)

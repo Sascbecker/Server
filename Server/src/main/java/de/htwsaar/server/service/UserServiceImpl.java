@@ -44,60 +44,60 @@ public class UserServiceImpl implements UserService {
 		switch(user.getAktion()) {
 		
 		//User anlegen
-		case UserActions.USER_LOGIN: userAnlegen(user);
+		case UserActions.USER_LOGIN: createUser(user);
 			break;
 		//User login
-		case UserActions.USER_AUTHENTIFIZIERUNG: userAuthenfizierung(user);
+		case UserActions.USER_AUTHENTIFIZIERUNG: userAuthentication(user);
 			break;
-		case UserActions.USER_LOGOUT: userAbmelden(user);
+		case UserActions.USER_LOGOUT: logOutUser(user);
 		default :
 			break;
 			
 		}
 	}
 	
-	public void userAnlegen(User user)
+	public void createUser(User user)
 	{
 		//TODO: pruefen ob user bereits existiert, fehler an client senden falls ja
 		try {
 			userDao.newUser(user);
-			System.out.println("User: "+ user.getAbsenderId() + " wurde mit dem Passwort: " + user.getPasswort() + " angelegt");
+			System.out.println("User: "+ user.getUserID() + " wurde mit dem Passwort: " + user.getPassword() + " angelegt");
 		}
 		catch(Exception ex)
 		{
-			user.setReturnCode("User: "+ user.getAbsenderId() +" konnte nicht angelegt werden");
+			user.setReturnCode("User: "+ user.getUserID() +" konnte nicht angelegt werden");
 		}
 	}
 	
-	public void userAuthenfizierung(User user)
+	public void userAuthentication(User user)
 	{
 		
-		String vergleichsUser = userDao.getPasswort(user.getAbsenderId());
+		String vergleichsUser = userDao.getPassword(user.getUserID());
 		
-		if(user.getPasswort().equals(vergleichsUser))
+		if(user.getPassword().equals(vergleichsUser))
 		{
-			userDao.updateIpAdresse(user);
-			user.setUserAuthentifizierung(true);
-			System.out.println("User: "+ user.getAbsenderId()+ " wurde erfolgreich eingeloggt" );
+			userDao.updateIpAddress(user);
+			user.setUserAuthentication(true);
+			System.out.println("User: "+ user.getUserID()+ " wurde erfolgreich eingeloggt" );
 			messageService.getAndSendAllMessages(user);
 			
 		}
 		else
 		{
-			user.setUserAuthentifizierung(false);
-			System.out.println("User: "+ user.getAbsenderId() + " konnte nicht eingeloggt werden. Passwort falsch");
+			user.setUserAuthentication(false);
+			System.out.println("User: "+ user.getUserID() + " konnte nicht eingeloggt werden. Passwort falsch");
 		}
 	}
 	
 	/**
-	 * IPAdresse des Clients auf NUll setzen und in der Datenbank ändern.
+	 * Set IPAddress of the Client to NULL and update database.
 	 * @param user
 	 */
-	public void userAbmelden(User user)
+	public void logOutUser(User user)
 	{
-		user.setIpAdresse(null);
-		userDao.updateIpAdresse(user);
-		System.out.println("User: "+ user.getAbsenderId() + " wurde erfolgreich ausgeloggt");
+		user.setIpAdress(null);
+		userDao.updateIpAddress(user);
+		System.out.println("User: "+ user.getUserID() + " wurde erfolgreich ausgeloggt");
 	}
 	
 	/**
