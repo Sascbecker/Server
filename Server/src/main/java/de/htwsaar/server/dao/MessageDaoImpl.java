@@ -18,6 +18,12 @@ import de.htwsaar.server.dao.SQLiteJDBC;
 import de.htwsaar.server.dao.interfaces.MessageDao;
 import de.htwsaar.server.dataclass.*;
 
+/**
+ * Class for Databank-operations for alle MessageOperations like SaveMessage etc.
+ * Implements interface MessageDao
+ * @author Marco
+ *
+ */
 public class MessageDaoImpl implements MessageDao{
 	
 	private NamedParameterJdbcTemplate jdbc;

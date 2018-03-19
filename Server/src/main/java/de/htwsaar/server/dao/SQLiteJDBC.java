@@ -9,9 +9,7 @@ import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.Pragma;
 
 /**
- * Klasse zum herstellen der Verbindung zur Datenbank durch Unterstuetzung des
- * Springframeworks
- * 
+ * Class for the SQLite connection to the Databnk.
  * @author Marco Becker
  * 
  */
@@ -26,7 +24,7 @@ public class SQLiteJDBC {
 	private static DriverManagerDataSource dataSource;
 	
 	/**
-	 * Initialisiert eine JDBC Connection
+	 * Initialised the JDBC Connection
 	 */
 	private static void initDataSource() {
 		try {
@@ -48,7 +46,7 @@ public class SQLiteJDBC {
 	}
 	
 	/**
-	 * Zugriffsmethode, gibt eine Instanz dieser Klasse in Form eines Singletons zurueck.
+	 * Methode for the singelton object. So that there are not more than one class
 	 * @return
 	 */
 	public static synchronized DataSource getConnection() {

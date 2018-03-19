@@ -14,7 +14,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import de.htwsaar.server.dao.interfaces.*;
 import de.htwsaar.server.dataclass.*;
 
-
+/**
+ * Class for the SQL-Statements for Group-Operations.
+ * Implements the Class GroupDao
+ * @author Marco
+ *
+ */
 
 public class GroupDaoImpl  implements GroupDao{
 	
